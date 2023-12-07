@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALTA - EDITAR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="altaProductos.css" type="text/css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="cabecera">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+                <a class="navbar-brand" href="/1° Entrega/Inicio/inicio.html">Empresa</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/1° Entrega/Proveedores/proveedores.html">Proveedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/1° Entrega/Productos_Servicios/productos.html">Productos -
+                                Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/1° Entrega/OrdenCompa/ordenCompra.html">Orden de Compra</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Facturación</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="productos">
+            <h4>Ingrese los datos:</h4>
+            <form action="">
+                <!-- Sección Proveedor -->
+                <fieldset>
+                    <legend>Información Proveedor:</legend>
+                    <label for="codigo">Código:</label>
+                    <input type="text" name="codigo" id="codigo" required><br>
+                    <label for="proveedorNombre">Proveedor:</label>
+                    <select name="proveedorNombre" id="proveedorNombre">
+                        <option value="proveedor1">Proveedor 1</option>
+                        <option value="proveedor2">Proveedor 2</option>
+                        <option value="proveedor3">Proveedor 3</option>
+                    </select>
+                </fieldset>
+
+                <!-- Sección Producto/Servicio -->
+                <fieldset>
+                    <legend>Producto/Servicio</legend>
+                    <label for="categoria">Categoria:</label>
+                    <select name="categoria" id="categoria">
+                        <option value="categoria1">Categoria 1</option>
+                        <option value="categoria2">Categoria 2</option>
+                        <option value="categoria3">Categoria 3</option>
+                    </select>
+                    <label for="nombreProducto">Nombre:</label>
+                    <input type="text" name="nombreProducto" id="nombreProducto" required><br>
+                    <label for="descripcionProducto">Descripcion:</label>
+                    <input type="text" name="descripcionProducto" id="descripcionProducto" required><br>
+                    <label for="precioProducto">Precio:</label>
+                    <input type="text" name="precioProducto" id="precioProducto" required><br>
+                </fieldset>
+
+
+                <button type="button" class="btn btn-success" id="botonCargar">Cargar</button>
+            </form>
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="altaProductos.js"></script>
+</body>
+
+</html>

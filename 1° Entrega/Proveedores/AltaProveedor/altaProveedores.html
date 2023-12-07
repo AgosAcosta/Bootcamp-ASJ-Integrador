@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALTA - EDITAR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="altaProveedores.css" type="text/css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="cabecera">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+                <a class="navbar-brand" href="/1° Entrega/Inicio/inicio.html">Empresa</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/1° Entrega/Proveedores/proveedores.html">Proveedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/1° Entrega/Productos_Servicios/productos.html">Productos -
+                                Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/1° Entrega/OrdenCompa/ordenCompra.html">Orden de Compra</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Facturación</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="proveedores">
+            <h4>Ingrese los datos:</h4>
+            <form action="">
+                <!-- Sección Información Empresa -->
+                <fieldset>
+                    <legend>Información Empresa</legend>
+                    <label for="codigo">Código:</label>
+                    <input type="text" name="codigo" id="codigo" required><br>
+                    <label for="razonSocial">Razón Social o Nombre:</label>
+                    <input type="text" name="razonSocial" id="razonSocial" required>
+                    <label for="cuit">CUIT/CUIL:</label>
+                    <input type="text" name="cuit" id="cuit" required><br>
+                    <label for="condicionAfip">Condición AFIP:</label>
+                    <select name="condicionAfip" id="condicionAfip">
+                        <option value="condicion_responsable">Responsable Inscripto</option>
+                        <option value="condicion_monotributista">Monotributista</option>
+                        <option value="condicion_consumidor">Consumidor Final</option>
+                    </select>
+                    <label for="rubro">Rubro:</label>
+                    <select name="rubro" id="rubro">
+                        <option value="rubro_producto">Productos</option>
+                        <option value="rubro_servicios">Servicios</option>
+                    </select><br>
+                </fieldset>
+
+                <!-- Sección Contacto Empresa (Dirección) -->
+                <fieldset>
+                    <legend>Contacto Empresa (Dirección)</legend>
+                    <label for="calle">Calle:</label>
+                    <input type="text" name="calle" id="calle" required>
+                    <label for="numero_Calle">Número:</label>
+                    <input type="text" name="numero_Calle" id="numero_Calle" required>
+                    <label for="cp_Domicilio">CP:</label>
+                    <input type="text" name="cp_Domicilio" id="cp_Domicilio" required><br>
+                    <label for="localidad">Localidad:</label>
+                    <input type="text" name="localidad" id="localidad" required>
+                    <label for="provincia">Provincia:</label>
+                    <input type="text" name="provincia" id="provincia" required>
+                    <label for="pais">País:</label>
+                    <input type="text" name="pais" id="pais" required><br>
+                </fieldset>
+
+                <!-- Sección Contacto Empresa (Información de Contacto) -->
+                <fieldset>
+                    <legend>Contacto Empresa (Información de Contacto)</legend>
+                    <label for="sitio_web">Sitio Web:</label>
+                    <input type="text" name="sitio_web" id="sitio_web">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" name="telefono" id="telefono" required>
+                </fieldset>
+
+                <!-- Sección Contacto Encargado (Información de Contacto) -->
+                <fieldset>
+                    <legend>Contacto Encargado (Información de Contacto)</legend>
+                    <label for="nombre_contacto">Nombre:</label>
+                    <input type="text" name="nombre_contacto" id="nombre_contacto" required>
+                    <label for="apellido_contacto">Apellido:</label>
+                    <input type="text" name="apellido_contacto" id="apellido_contacto" required><br>
+                    <label for="telefono_contacto">Teléfono:</label>
+                    <input type="text" name="telefono_contacto" id="telefono_contacto" required>
+                    <label for="email_contacto">Email:</label>
+                    <input type="email" name="email_contacto" id="email_contacto" required>
+                    <label for="rol_contacto">Rol:</label>
+                    <input type="text" name="rol_contacto" id="rol_contacto" required><br>
+                </fieldset>
+
+                <button type="button" class="btn btn-success" id="botonCargar">Cargar</button>
+            </form>
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="proveedoresAltaEditar.js"></script>
+</body>
+
+</html>
