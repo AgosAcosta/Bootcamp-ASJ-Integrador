@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <h4>Listado Productos:</h4>
+      </div>
+      <div class="col-6">
+        <a routerLink="/Alta-Productos" class="btn btn-success" id="altaProductos">Creación</a>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12">
+        <table>
+          <thead>
+            <th>NOMBRE</th>
+            <th>CATEGORÍA</th>
+            <th>DESCRIPCIÓN</th>
+            <th>PRECIO</th>
+            <th>OPCIONES</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of formulario">
+              <td>{{ item.nombre |uppercase }}</td>
+              <td>{{ item.categoria | uppercase }}</td>
+              <td>{{ item.descripcion | uppercase }}</td>
+              <td>{{ item.precio | uppercase }}</td>
+              <td>
+                <a href="#" class="btn btn-primary btn-sm">EDITAR</a>
+                <a href="#" class="btn btn-danger btn-sm ml-2">ELIMINAR</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

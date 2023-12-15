@@ -6,13 +6,13 @@ function cargarProducto(){
     contenidoProductos.innerHTML = "";
 
     let table = document.createElement("table");
-    table.classList.add("table", "table-bordered");
+    table.classList.add("table");
 
     let titulo = document.createElement("thead");
     let cabeceraFila = document.createElement("tr");
-    ["Nombre", "Descripcion", "Precio", "Proveedor", "Acciones"].forEach(headerText => {
+    ["Nombre", "Descripcion", "Precio", "Proveedor", "Acciones"].forEach(tituloCabecera => {
         let cabecera = document.createElement("th");
-        cabecera.textContent = headerText;
+        cabecera.textContent = tituloCabecera;
         cabeceraFila.appendChild(cabecera);
     });
     titulo.appendChild(cabeceraFila);

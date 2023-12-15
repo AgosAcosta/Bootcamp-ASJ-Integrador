@@ -1,0 +1,14 @@
+# Feedback
+
+> [!NOTE]  
+> Intenta escribir en ingles los nombres de los archivos y el codigo.
+> Muy buen uso de javaScript.
+
+> [!TIP]
+> Podes encapsular la lógica del localStorage en una función para reutilizar el código.
+> Intentaría encapsular los loops dentro de funciones autónomas para evitar la propagación de errores.
+> Usaría "const" para los elementos del DOM.
+
+> [!IMPORTANT]  
+> El index principal no debe estar dentro de una carpeta, sino en la raiz del proyecto.
+> La función cargar proveedor se llama así misma en la línea 60 de proveedores.

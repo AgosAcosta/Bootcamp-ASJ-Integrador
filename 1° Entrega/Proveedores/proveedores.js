@@ -6,13 +6,13 @@ function CargarProveedor() {
     contenidoProveedores.innerHTML = "";
 
     let table = document.createElement("table");
-    table.classList.add("table", "table-bordered");
+    table.classList.add("table"); // propiedad de dom que permite acceso a la tabla
 
     let titulo = document.createElement("thead");
     let cabeceraFila = document.createElement("tr");
-    ["Razon Social", "CUIT", "Condición AFIP", "Rubro", "Acciones"].forEach(headerText => {
+    ["Razon Social", "CUIT", "Condición AFIP", "Rubro", "Acciones"].forEach(tituloCabecera => {
         let cabecera = document.createElement("th");
-        cabecera.textContent = headerText;
+        cabecera.textContent = tituloCabecera;
         cabeceraFila.appendChild(cabecera);
     });
     titulo.appendChild(cabeceraFila);
@@ -57,7 +57,6 @@ function CargarProveedor() {
             let i = parseInt(btnEliminar.getAttribute("borrar"));
             proveedoresLista.splice(i, 1);
             localStorage.setItem("proveedores", JSON.stringify(proveedoresLista));
-            CargarProveedor();
         });
 
         row.appendChild(col5);
