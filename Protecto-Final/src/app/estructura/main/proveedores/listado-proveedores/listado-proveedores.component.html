@@ -19,8 +19,8 @@
           <th>OPCIONES</th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of formulario">
-            <td>{{ item.razonsocial }}</td>
+          <tr *ngFor="let item of proveedoresList">
+            <td>{{ item.razonSocial }}</td>
             <td>{{ item.cuit | uppercase }}</td>
             <td>{{ item.condicionAfip | uppercase }}</td>
             <td>{{ item.rubro | uppercase }}</td>

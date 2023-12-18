@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,8 @@ import { OrdenCompraComponent } from './estructura/main/orden-compra/orden-compr
 import { OrdenAltaComponent } from './estructura/main/orden-compra/orden-alta/orden-alta.component'; 
 import { ListadoOrdenComponent } from './estructura/main/orden-compra/listado-orden/listado-orden.component';
 import { OpcionesComponent } from './estructura/main/opciones/opciones.component';
+
+import { ServiceProveedoresService } from './Service/service-proveedores.service';
 
 @NgModule({
   declarations: [
@@ -38,9 +41,10 @@ import { OpcionesComponent } from './estructura/main/opciones/opciones.component
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [ServiceProveedoresService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

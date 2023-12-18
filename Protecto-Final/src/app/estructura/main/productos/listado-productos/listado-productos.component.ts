@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ServiceProductoService } from '../../../../Service/service-producto.service';
 
 @Component({
   selector: 'app-listado-productos',
@@ -6,25 +7,23 @@ import { Component } from '@angular/core';
   styleUrl: './listado-productos.component.css'
 })
 export class ListadoProductosComponent {
-  formulario: any [] = [
-    {
-      nombre: 'Producto 1',
-      categoria: 'Alimenticio',
-      descripcion: 'Producto 1 color bla bla',
-      precio: '$1.200'
-    },
-    {
-      nombre: 'Producto 2',
-      categoria: 'Tecnologico',
-      descripcion: 'Producto 2 color bla bla',
-      precio: '$5.200'
-    },
-    {
-      nombre: 'Producto 3',
-      categoria: 'Insumos',
-      descripcion: 'Producto 3 color bla bla',
-      precio: '$8.200'
-    },
-  ]
+  productosList: any = [];
+
+    constructor(private productosService: ServiceProductoService) {}
+  
+    ngOnInit(): void {
+      /*
+      NO FUNCIONA
+      this.proveedoresService.getProveedores().subscribe((data: any) => {
+  
+        console.log(data);
+        this.proveedoresList = data;
+      }); */
+  
+      this.productosList =  this.productosService.getProductos()
+      
+   
+    }
+ 
 
 }

@@ -7,19 +7,19 @@
           <legend>Detalle Orden:</legend>
           <div class="form-group">
             <label for="numOrden">N° Orden:</label>
-            <input type="text" class="form-control" name="numOrden" id="numOrden" required />
+            <input type="text" class="form-control" name="numOrden" id="numOrden" required [(ngModel)]="id"/>
           </div>
           <div class="form-group">
             <label for="fechaEmision">Fecha Emision:</label>
-            <input type="datetime-local" class="form-control" name="fechaEmision" id="fechaEmision" required />
+            <input type="datetime-local" class="form-control" name="fechaEmision" id="fechaEmision" required [(ngModel)]="fechaEmision" />
           </div>
           <div class="form-group">
             <label for="fechaEntrega">Fecha de Entrega:</label>
-            <input type="datetime-local" class="form-control" name="fechaEntrega" id="fechaEntrega" required />
+            <input type="datetime-local" class="form-control" name="fechaEntrega" id="fechaEntrega" required [(ngModel)]="fechaEntrega"/>
           </div>
           <div class="form-group">
             <label for="calle">Direccion de entrega (Calle):</label>
-            <input type="text" class="form-control" name="calle" id="calle" required />
+            <input type="text" class="form-control" name="calle" id="calle" required [(ngModel)]="direccion"/>
           </div>
           <div class="form-group">
             <label for="numero_Calle">Direccion de entrega (Número):</label>
@@ -49,7 +49,7 @@
           </div>
           <div class="form-group">
             <label for="precioProducto">Precio:</label>
-            <input type="text" class="form-control" name="precioProducto" id="precioProducto" required />
+            <input type="text" class="form-control" name="precioProducto" id="precioProducto" required [(ngModel)]="precio"/>
           </div>
           <div class="form-group">
             <label for="cantidadProducto">Cantidad:</label>
@@ -57,7 +57,15 @@
           </div>
         </fieldset>
   
-        <button type="button" class="btn btn-success" id="botonCargar">Cargar</button>
+        <button type="button" class="btn btn-success" id="botonCargar" (click)="agregarOrden()">Cargar</button>
+        
+      <button
+      type="button"
+      class="btn btn-primary"
+      routerLink="/Listado-Orden-de-compra"
+    >
+      Volver
+    </button>
       </div>
     </div>
   </div>
