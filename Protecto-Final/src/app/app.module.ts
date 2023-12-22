@@ -15,7 +15,7 @@ import { ProductosComponent } from './estructura/main/productos/productos.compon
 import { AltaProductosComponent } from './estructura/main/productos/alta-productos/alta-productos.component';
 import { ListadoProductosComponent } from './estructura/main/productos/listado-productos/listado-productos.component';
 import { OrdenCompraComponent } from './estructura/main/orden-compra/orden-compra.component';
-import { OrdenAltaComponent } from './estructura/main/orden-compra/orden-alta/orden-alta.component'; 
+import { OrdenAltaComponent } from './estructura/main/orden-compra/orden-alta/orden-alta.component';
 import { ListadoOrdenComponent } from './estructura/main/orden-compra/listado-orden/listado-orden.component';
 import { OpcionesComponent } from './estructura/main/opciones/opciones.component';
 
@@ -36,15 +36,10 @@ import { ServiceProveedoresService } from './Service/service-proveedores.service
     OrdenCompraComponent,
     OrdenAltaComponent,
     ListadoOrdenComponent,
-    OpcionesComponent
+    OpcionesComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [ServiceProveedoresService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,4 +1,4 @@
-export const proveedor = [
+/* export const proveedor = [
   {
     id: 1,
     razonSocial: 'Proveedor 1',
@@ -20,4 +20,26 @@ export const proveedor = [
     condicionAfip: 'Consumidor Final',
     rubro: 'Insumos',
   },
-];
+]; */
+
+export interface Supplier {
+  idSupplier?: undefined;
+  nameSupplier: string;
+  cuitSupplier: string;
+  condicionAfipSupplier: string;
+  categorySupplier: string;
+  streetSupplier: string;
+  numSupplier: undefined;
+  cpSupplier: undefined;
+  locationSupplier: string;
+  provinceSupplier: string;
+  countrySupplier: string;
+  webSupplier: string;
+  emailSupplier: string;
+  telSupplier: string;
+  namecontactSupplier: string;
+  lastNamecontactSupplier: string;
+  telcontactSupplier: string;
+  emailcontactSupplier: string;
+  rolcontactSupplier: string;
+}

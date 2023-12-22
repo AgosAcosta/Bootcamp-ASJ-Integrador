@@ -4,7 +4,9 @@
       <h4>Listado Proveedores:</h4>
     </div>
     <div class="col-6">
-      <a routerLink="/Alta-Proveedores" class="btn btn-success" id="altaProveedores">Creación</a>
+      <a routerLink="new" class="btn btn-success" id="altaProveedores"
+        >Creación</a
+      >
     </div>
   </div>
 
@@ -19,14 +21,23 @@
           <th>OPCIONES</th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of proveedoresList">
-            <td>{{ item.razonSocial }}</td>
-            <td>{{ item.cuit | uppercase }}</td>
-            <td>{{ item.condicionAfip | uppercase }}</td>
-            <td>{{ item.rubro | uppercase }}</td>
+          <tr *ngFor="let item of supplierList">
+            <td>{{ item.nameSupplier }}</td>
+            <td>{{ item.cuitSupplier | uppercase }}</td>
+            <td>{{ item.condicionAfipSupplier | uppercase }}</td>
+            <td>{{ item.categorySupplier | uppercase }}</td>
             <td>
-              <a href="#" class="btn btn-primary btn-sm">EDITAR</a>
-              <a href="#" class="btn btn-danger btn-sm ml-2">ELIMINAR</a>
+              <a
+                href="#"
+                class="btn btn-primary btn-sm"
+                [routerLink]="item.idSupplier"
+                >EDITAR</a
+              >
+              <a
+                class="btn btn-danger btn-sm ml-2"
+                (click)="deleteSupplier(item.idSupplier)"
+                >ELIMINAR</a
+              >
             </td>
           </tr>
         </tbody>

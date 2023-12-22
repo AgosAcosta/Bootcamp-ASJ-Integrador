@@ -7,6 +7,7 @@ import { ServiceOrdenCompraService } from '../../../../Service/service-orden-com
   styleUrl: './listado-orden.component.css',
 })
 export class ListadoOrdenComponent {
+  
   productosList: any = [];
 
   constructor(private ordenCompraService: ServiceOrdenCompraService) {}

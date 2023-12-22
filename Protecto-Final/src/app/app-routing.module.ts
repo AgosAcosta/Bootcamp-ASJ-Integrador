@@ -9,18 +9,26 @@ import { OrdenAltaComponent } from './estructura/main/orden-compra/orden-alta/or
 import { ListadoOrdenComponent } from './estructura/main/orden-compra/listado-orden/listado-orden.component';
 
 const routes: Routes = [
-  {path:'', component: MainComponent},
-  {path:'Alta-Proveedores', component: AltaProveedoresComponent},
-  {path:'Listado-Proveedores', component: ListadoProveedoresComponent},
-  {path:'Alta-Productos', component: AltaProductosComponent},
-  {path:'Listado-Productos', component: ListadoProductosComponent},
-  {path:'Alta-Orden-de-compra', component: OrdenAltaComponent}, 
-  {path:'Listado-Orden-de-compra', component: ListadoOrdenComponent}, 
- 
+  { path: '', component: MainComponent },
+  /* { path: 'Alta-Proveedores', component: AltaProveedoresComponent }, */
+  /*   {path:'Listado-Proveedores', component: ListadoProveedoresComponent}, */
+
+  {
+    path: 'Listado-Proveedores',
+    children: [
+      { path: '', component: ListadoProveedoresComponent },
+      { path: 'new', component: AltaProveedoresComponent },
+      { path: ':id', component: AltaProveedoresComponent },
+    ],
+  },
+  { path: 'Alta-Productos', component: AltaProductosComponent },
+  { path: 'Listado-Productos', component: ListadoProductosComponent },
+  { path: 'Alta-Orden-de-compra', component: OrdenAltaComponent },
+  { path: 'Listado-Orden-de-compra', component: ListadoOrdenComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
