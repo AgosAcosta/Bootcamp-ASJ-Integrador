@@ -1,0 +1,135 @@
+<div class="container-fluid">
+  <h5>Orden de Compra:</h5>
+  <div class="row">
+    <form #myForm="ngForm" (ngSubmit)="createNewPuchseOrder(myForm)">
+      <div class="col-6">
+        <!-- Sección Información Orden -->
+        <fieldset>
+          <legend>Detalle Orden:</legend>
+          <div class="form-group">
+            <label for="idPurchaseOrder">N° Orden:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="idPurchaseOrder"
+              id="idPurchaseOrder"
+              required
+              [(ngModel)]="newPurchaseOrder.idPurchaseOrder"
+            />
+          </div>
+          <div class="form-group">
+            <label for="dateIssue">Fecha Emisión:</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              name="dateIssue"
+              id="dateIssue"
+              required
+              [(ngModel)]="newPurchaseOrder.dateIssue"
+            />
+          </div>
+          <div class="form-group">
+            <label for="dateDelivery">Fecha de Entrega:</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              name="dateDelivery"
+              id="dateDelivery"
+              required
+              [(ngModel)]="newPurchaseOrder.dateDelivery"
+            />
+          </div>
+          <div class="form-group">
+            <label for="recepcion">Información de Recepción</label>
+            <textarea
+              required
+              [(ngModel)]="newPurchaseOrder.recepcion"
+            ></textarea>
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-6">
+        <!-- Sección Detalle Orden -->
+        <fieldset
+          *ngFor="let detail of newPurchaseOrder.orderDetails; let i = index"
+        >
+          <legend>Detalle Orden: {{ i + 1 }}</legend>
+          <div class="form-group">
+            <label for="supplierName{{ i }}">Proveedor:</label>
+            <select
+              class="form-control"
+              name="supplierName{{ i }}"
+              [(ngModel)]="detail.supplier"
+              (change)="onSupplierChange(detail)"
+            >
+              <option *ngFor="let name of supplierName" [value]="name">
+                {{ name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="product{{ i }}">Producto:</label>
+            <select
+              class="form-control"
+              name="product{{ i }}"
+              [(ngModel)]="detail.product"
+              (ngModelChange)="calculateTotal()"
+            >
+              <option *ngFor="let name of productName" [value]="name">
+                {{ name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="unitProduct{{ i }}">Cantidad:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="unitProduct{{ i }}"
+              required
+              [(ngModel)]="detail.unitProduct"
+              (ngModelChange)="calculateTotal()"
+            />
+          </div>
+        </fieldset>
+
+        <div
+          *ngIf="newPurchaseOrder.orderDetails.length > 0"
+          class="form-group"
+        >
+          <label for="total">Total:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="total"
+            required
+            disabled
+            [(ngModel)]="newPurchaseOrder.total"
+          />
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addOrderDetail()"
+        >
+          Agregar Detalle
+        </button>
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!myForm.valid"
+        >
+          Guardar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          routerLink="/list-purchase-order"
+        >
+          Volver
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,154 @@
+<div class="container-fluid">
+  <h5>Datos del producto:</h5>
+
+  <div class="row">
+    <form #myForm="ngForm" (ngSubmit)="createNewProduct(myForm)">
+      <div class="col-6">
+        <!-- Sección Proveedor -->
+        <fieldset>
+          <legend>Información Proveedor:</legend>
+          <div class="form-group">
+            <label for="idSupplier">Imagen del Producto:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="urlLogo"
+              id="urlLogo"
+              [(ngModel)]="newProduct.urlLogo"
+              #urlLogo="ngModel"
+              [ngClass]="urlLogo.errors ? 'is-invalid' : 'is-valid'"
+            />
+          </div>
+          <div class="form-group">
+            <label for="codigo">Código:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="idProduct"
+              id="idProduct"
+              minlength="4"
+              maxlength="10"
+              required
+              [(ngModel)]="newProduct.idProduct"
+              #idProduct="ngModel"
+              [ngClass]="idProduct.errors ? 'is-invalid' : 'is-valid'"
+            />
+            <div *ngIf="idProduct.errors?.['minlength']" class="col-auto">
+              <span class="form-text"
+                >Debe tener al menos 4 caracteres y un maximo de 10</span
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="supplierProduct">Proveedor:</label>
+            <select
+              class="form-control"
+              name="supplierName"
+              id="supplierName"
+              [(ngModel)]="newProduct.supplierName"
+            >
+              <option *ngFor="let name of supplierName" value="{{ name }}">
+                {{ name }}
+              </option>
+            </select>
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-6">
+        <!-- Sección Producto/Servicio -->
+        <fieldset>
+          <legend>Producto</legend>
+          <div class="form-group">
+            <label for="categoryProduct">Categoria:</label>
+            <select
+              class="form-control"
+              name="categoryProduct"
+              id="categoryProduct"
+              [(ngModel)]="newProduct.categoryProduct"
+            >
+              <option value="Tecnologico">Tecnologico</option>
+              <option value="Alimentos">Alimentos</option>
+              <option value="Limpieza">Limpieza</option>
+              <option value="Ferreteria">Ferreteria</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nameProduct">Nombre:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nameProduct"
+              id="nameProduct"
+              minlength="4"
+              maxlength="40"
+              required
+              [(ngModel)]="newProduct.nameProduct"
+              #nameProduct="ngModel"
+              [ngClass]="nameProduct.errors ? 'is-invalid' : 'is-valid'"
+            />
+            <div *ngIf="nameProduct.errors?.['minlength']" class="col-auto">
+              <span class="form-text"
+                >Debe tener al menos 4 caracteres y un maximo de 40</span
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="descripcionProducto">Descripción:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="descripcionProducto"
+              id="descripcionProducto"
+              minlength="4"
+              maxlength="40"
+              required
+              [(ngModel)]="newProduct.descriptionProduct"
+              #descriptionProduct="ngModel"
+              [ngClass]="descriptionProduct.errors ? 'is-invalid' : 'is-valid'"
+            />
+            <div
+              *ngIf="descriptionProduct.errors?.['minlength']"
+              class="col-auto"
+            >
+              <span class="form-text"
+                >Debe tener al menos 4 caracteres y un maximo de 40</span
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="precioProducto">Precio:</label>
+            <input
+              type="number"
+              class="form-control"
+              name="precioProducto"
+              id="precioProducto"
+              required
+              [(ngModel)]="newProduct.priceProduct"
+              minlength="1"
+              maxlength="10"
+              [(ngModel)]="newProduct.priceProduct"
+              #priceProduct="ngModel"
+              [ngClass]="priceProduct.errors ? 'is-invalid' : 'is-valid'"
+            />
+          </div>
+        </fieldset>
+
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!myForm.valid"
+        >
+          Guardar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          routerLink="/list-product"
+        >
+          Volver
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

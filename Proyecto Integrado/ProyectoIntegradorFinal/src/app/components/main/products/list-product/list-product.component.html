@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h4>Listado Productos:</h4>
+    </div>
+    <div class="col-6">
+      <a routerLink="new" class="btn btn-success" id="newProduct">Agregar</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table>
+        <thead>
+          <th>Logo</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Proveedor</th>
+          <th>Precio</th>
+
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of productList">
+            <td>
+              <img src="{{ item.urlLogo }}" alt="{{ item.nameProduct }}" />
+            </td>
+            <td>{{ item.nameProduct }}</td>
+            <td>{{ item.categoryProduct }}</td>
+            <td>{{ item.supplierName }}</td>
+            <td>{{ item.priceProduct }}</td>
+            <td>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/list-product', item.idProduct, 'detail']"
+                ngbTooltip="Ver"
+                ><i class="bi bi-eye"></i
+              ></a>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/list-product', item.idProduct]"
+                ngbTooltip="Editar"
+                ><i class="bi bi-pencil-square"></i
+              ></a>
+              <a
+                class="btn btn-danger btn-sm ml-2"
+                (click)="deleteProduct(item.idProduct)"
+                ngbTooltip="Eliminar"
+                ><i class="bi bi-trash"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

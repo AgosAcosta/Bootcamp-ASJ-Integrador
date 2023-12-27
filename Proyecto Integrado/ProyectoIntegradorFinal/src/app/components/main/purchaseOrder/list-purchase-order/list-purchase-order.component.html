@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h4>Listado Orden de Compra:</h4>
+    </div>
+    <div class="col-6">
+      <a routerLink="new" class="btn btn-success" id="newProduct">Agregar</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table>
+        <thead>
+          <th>N° Orden</th>
+          <th>Fecha de Emisión</th>
+          <th>Fecha de Entrega</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <!--Ver como está el estado -->
+
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of purchaseOrderList">
+            <td>{{ item.idPurchaseOrder }}</td>
+            <td>{{ item.dateIssue }}</td>
+            <td>{{ item.dateDelivery }}</td>
+            <td>{{ item.total }}</td>
+            <td>{{ item.status }}</td>
+            <td>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="[
+                  '/list-purchase-order',
+                  item.idPurchaseOrder,
+                  'detail'
+                ]"
+                ngbTooltip="Ver"
+                ><i class="bi bi-eye"></i
+              ></a>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/list-purchase-order', item.idPurchaseOrder]"
+                ngbTooltip="Editar"
+                ><i class="bi bi-pencil-square"></i
+              ></a>
+              <a
+                class="btn btn-danger btn-sm ml-2"
+                ngbTooltip="Cancelar"
+                (click)="statusPucharseOrder(item.idPurchaseOrder, item.status)"
+                ><i class="bi bi-ban"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

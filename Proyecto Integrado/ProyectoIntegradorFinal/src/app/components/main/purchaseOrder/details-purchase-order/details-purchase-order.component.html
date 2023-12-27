@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-6">
+    <h3>Información de la orden de compra:</h3>
+    <p>N° Orden:{{ purchaseOrder?.idPurchaseOrder }}</p>
+    <p>Fecha de emisión:{{ purchaseOrder?.dateIssue }}</p>
+    <p>Fecha de entrega:{{ purchaseOrder?.dateDelivery }}</p>
+    <p>Productos: {{ purchaseOrder?.orderDetails }}</p>
+   <!--<p>Cantidad: {{ purchaseOrder?.unitProduct }}</p>--> 
+    <p>Total: {{ purchaseOrder?.total }}</p>
+    <button
+      type="button"
+      class="btn btn-primary"
+      routerLink="/list-purchase-order"
+    >
+      Volver
+    </button>
+  </div>
+</div>

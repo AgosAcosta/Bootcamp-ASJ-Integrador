@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h4>Listado Proveedores:</h4>
+    </div>
+    <div class="col-6">
+      <a routerLink="new" class="btn btn-success" id="altaProveedores"
+        >Agregar</a
+      >
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table>
+        <thead>
+          <th>Logo</th>
+          <th>Código</th>
+          <th>Razón Social</th>
+          <th>Información Contacto</th>
+          <th>Nombre de contacto</th>
+          <th>Apellido de contacto</th>
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of supplierList">
+            <td>
+              <img src="{{ item.urlLogo }}" alt="{{ item.nameSupplier }}" />
+            </td>
+            <td>{{ item.idSupplier }}</td>
+            <td>{{ item.nameSupplier }}</td>
+            <td>
+              {{ item.webSupplier }}||{{ item.emailSupplier }}||{{
+                item.telSupplier
+              }}
+            </td>
+            <td>{{ item.namecontactSupplier }}</td>
+            <td>{{ item.lastNamecontactSupplier }}</td>
+            <td>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/list-supplier', item.idSupplier, 'detail']"
+                ngbTooltip="Ver"
+                ><i class="bi bi-eye"></i
+              ></a>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/list-supplier', item.idSupplier]"
+                ngbTooltip="Editar"
+                ><i class="bi bi-pencil-square"></i
+              ></a>
+              <a
+                class="btn btn-danger btn-sm ml-2"
+                (click)="deleteSupplier(item.idSupplier)"
+                ngbTooltip="Eliminar"
+                ><i class="bi bi-trash"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

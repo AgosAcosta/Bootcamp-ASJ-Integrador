@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-6">
+      <img
+        #img1
+        src="{{ product?.urlLogo }}"
+        class="rounded mx-auto d-block"
+        alt="..."
+        (error)="handleImageError($event)"
+      />
+    </div>
+  
+    <div class="col-6">
+      <h3>Información del Producto:</h3>
+      <p>Código:{{ product?.idProduct }}</p>
+      <p>Nombre:{{ product?.nameProduct }}</p>
+      <p>Proveedor:{{ product?.supplierName }}</p>
+      <p>Descripcion: {{ product?.descriptionProduct }}</p>
+      <p>Precio: {{ product?.priceProduct }}</p>  
+      <button type="button" class="btn btn-primary" routerLink="/list-product">
+        Volver
+      </button>
+    </div>
+  </div>
