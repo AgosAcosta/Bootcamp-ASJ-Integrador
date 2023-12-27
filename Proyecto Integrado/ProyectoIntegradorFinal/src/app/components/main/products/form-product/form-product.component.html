@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <h5>Datos del producto:</h5>
 
-  <div class="row">
-    <form #myForm="ngForm" (ngSubmit)="createNewProduct(myForm)">
+  <form #myForm="ngForm" (ngSubmit)="createNewProduct(myForm)">
+    <div class="row">
       <div class="col-6">
         <!-- Sección Proveedor -->
         <fieldset>
@@ -32,11 +32,15 @@
               [(ngModel)]="newProduct.idProduct"
               #idProduct="ngModel"
               [ngClass]="idProduct.errors ? 'is-invalid' : 'is-valid'"
+              [disabled]="isUpdate"
             />
             <div *ngIf="idProduct.errors?.['minlength']" class="col-auto">
               <span class="form-text"
                 >Debe tener al menos 4 caracteres y un maximo de 10</span
               >
+            </div>
+            <div *ngIf="idProduct.errors?.['required']" class="col-auto">
+              <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
           <div class="form-group">
@@ -46,7 +50,11 @@
               name="supplierName"
               id="supplierName"
               [(ngModel)]="newProduct.supplierName"
+              required
             >
+              <option value="" disabled selected>
+                Selecciona el proveedor
+              </option>
               <option *ngFor="let name of supplierName" value="{{ name }}">
                 {{ name }}
               </option>
@@ -65,13 +73,22 @@
               name="categoryProduct"
               id="categoryProduct"
               [(ngModel)]="newProduct.categoryProduct"
+              required
+              #categoryProduct="ngModel"
+              [ngClass]="categoryProduct.errors ? 'is-invalid' : 'is-valid'"
             >
+              <option value="" disabled selected>
+                Selecciona la categoría
+              </option>
               <option value="Tecnologico">Tecnologico</option>
               <option value="Alimentos">Alimentos</option>
               <option value="Limpieza">Limpieza</option>
               <option value="Ferreteria">Ferreteria</option>
               <option value="Otro">Otro</option>
             </select>
+            <div *ngIf="categoryProduct.errors?.['required']" class="col-auto">
+              <span class="form-text">Se debe completar este campo</span>
+            </div>
           </div>
           <div class="form-group">
             <label for="nameProduct">Nombre:</label>
@@ -91,6 +108,9 @@
               <span class="form-text"
                 >Debe tener al menos 4 caracteres y un maximo de 40</span
               >
+            </div>
+            <div *ngIf="nameProduct.errors?.['required']" class="col-auto">
+              <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
           <div class="form-group">
@@ -115,6 +135,12 @@
                 >Debe tener al menos 4 caracteres y un maximo de 40</span
               >
             </div>
+            <div
+              *ngIf="descriptionProduct.errors?.['required']"
+              class="col-auto"
+            >
+              <span class="form-text">Se debe completar este campo</span>
+            </div>
           </div>
           <div class="form-group">
             <label for="precioProducto">Precio:</label>
@@ -131,8 +157,14 @@
               #priceProduct="ngModel"
               [ngClass]="priceProduct.errors ? 'is-invalid' : 'is-valid'"
             />
+            <div *ngIf="priceProduct.errors?.['required']" class="col-auto">
+              <span class="form-text">Se debe completar este campo</span>
+            </div>
           </div>
         </fieldset>
+        <div *ngIf="msj" class="alert alert-success" role="alert">
+          Acción realizada con exito!
+        </div>
 
         <button
           type="submit"
@@ -140,6 +172,9 @@
           [disabled]="!myForm.valid"
         >
           Guardar
+        </button>
+        <button type="submit" class="btn btn-danger" (click)="ClearForm()">
+          Limpiar
         </button>
         <button
           type="button"
@@ -149,6 +184,6 @@
           Volver
         </button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>

@@ -10,46 +10,42 @@
 
   <div class="row">
     <div class="col-12">
-      <table>
-        <thead>
-          <th>N° Orden</th>
-          <th>Fecha de Emisión</th>
-          <th>Fecha de Entrega</th>
-          <th>Total</th>
-          <th>Estado</th>
-          <!--Ver como está el estado -->
+      <div
+        *ngIf="!purchaseOrderList || purchaseOrderList.length === 0"
+        class="alert alert-info"
+        role="alert"
+      >
+        No hay órdenes de compra cargadas.
+      </div>
 
-          <th>Acciones</th>
+      <table *ngIf="purchaseOrderList && purchaseOrderList.length > 0">
+        <thead>
+          <tr>
+            <th>N° Orden</th>
+            <th>Fecha de Emisión</th>
+            <th>Fecha de Entrega</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of purchaseOrderList">
+          <tr *ngFor="let item of purchaseOrderList" [ngClass]="{'canceled-order': item.status === 'Cancelado'}">
             <td>{{ item.idPurchaseOrder }}</td>
-            <td>{{ item.dateIssue }}</td>
-            <td>{{ item.dateDelivery }}</td>
-            <td>{{ item.total }}</td>
+            <td>{{ item.dateIssue | date : "dd-MM-yyyy" }}</td>
+            <td>{{ item.dateDelivery | date : "dd-MM-yyyy" }}</td>
+            <td>{{ item.total | currency }}</td>
             <td>{{ item.status }}</td>
             <td>
-              <a
-                class="btn btn-primary btn-sm"
-                [routerLink]="[
-                  '/list-purchase-order',
-                  item.idPurchaseOrder,
-                  'detail'
-                ]"
-                ngbTooltip="Ver"
-                ><i class="bi bi-eye"></i
-              ></a>
-              <a
-                class="btn btn-primary btn-sm"
-                [routerLink]="['/list-purchase-order', item.idPurchaseOrder]"
-                ngbTooltip="Editar"
-                ><i class="bi bi-pencil-square"></i
-              ></a>
-              <a
-                class="btn btn-danger btn-sm ml-2"
-                ngbTooltip="Cancelar"
-                (click)="statusPucharseOrder(item.idPurchaseOrder, item.status)"
-                ><i class="bi bi-ban"></i></a>
+              <a class="btn btn-primary btn-sm" [routerLink]="['/list-purchase-order', item.idPurchaseOrder, 'detail']" ngbTooltip="Ver">
+                <i class="bi bi-eye"></i>
+              </a>
+              <a class="btn btn-success btn-sm" [routerLink]="['/list-purchase-order', item.idPurchaseOrder]" ngbTooltip="Editar">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <a class="btn btn-danger btn-sm ml-2" ngbTooltip="Cancelar" (click)="statusPucharseOrder(item.idPurchaseOrder)">
+                <i class="bi bi-ban"></i>
+              </a>
             </td>
           </tr>
         </tbody>

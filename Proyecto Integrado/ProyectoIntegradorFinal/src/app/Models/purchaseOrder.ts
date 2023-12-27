@@ -8,7 +8,7 @@ export interface PurchaseOrder {
  // supplier: string;
   orderDetails: OrderDetail[]; // Array de detalles de la orden
   total: number;
-  status: boolean;
+  status: string;
 }
 
 /* export interface PurchaseOrder {

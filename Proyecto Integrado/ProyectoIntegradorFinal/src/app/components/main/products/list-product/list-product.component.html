@@ -10,15 +10,24 @@
 
   <div class="row">
     <div class="col-12">
-      <table>
-        <thead>
-          <th>Logo</th>
-          <th>Nombre</th>
-          <th>Categoría</th>
-          <th>Proveedor</th>
-          <th>Precio</th>
+      <div
+        *ngIf="!productList || productList.length === 0"
+        class="alert alert-info"
+        role="alert"
+      >
+        No hay productos cargados.
+      </div>
 
-          <th>Acciones</th>
+      <table *ngIf="productList && productList.length > 0">
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Proveedor</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of productList">
@@ -28,7 +37,7 @@
             <td>{{ item.nameProduct }}</td>
             <td>{{ item.categoryProduct }}</td>
             <td>{{ item.supplierName }}</td>
-            <td>{{ item.priceProduct }}</td>
+            <td>{{ item.priceProduct | currency }}</td>
             <td>
               <a
                 class="btn btn-primary btn-sm"
@@ -37,7 +46,7 @@
                 ><i class="bi bi-eye"></i
               ></a>
               <a
-                class="btn btn-primary btn-sm"
+                class="btn btn-success btn-sm"
                 [routerLink]="['/list-product', item.idProduct]"
                 ngbTooltip="Editar"
                 ><i class="bi bi-pencil-square"></i

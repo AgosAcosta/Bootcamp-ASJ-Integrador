@@ -4,8 +4,7 @@ import { PurchaseOrder } from '../../../../Models/purchaseOrder';
 import { ServicePurchaseOrderService } from '../../../../Service/service-purchase-order.service';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
 import { ServiceProductService } from '../../../../Service/service-product.service';
-import { ActivatedRoute } from '@angular/router';
-import { Supplier } from '../../../../Models/supplier';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetail } from '../../../../Models/purchaseOrderDetail';
 
 @Component({
@@ -19,22 +18,24 @@ export class FormPurchaseOrderComponent implements OnInit {
     dateIssue: new Date(),
     dateDelivery: new Date(),
     recepcion: '',
-    //  supplier: '',
     orderDetails: [],
     total: 0,
-    status: false,
+    status: 'Activa',
   };
 
   idPurchaseOrden: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
-  productName: string[] = [];
+  msj: boolean = false;
+
+  /*   productName: string[] = []; */
 
   constructor(
     public servicePurchaseOrder: ServicePurchaseOrderService,
     private serviceSupplier: ServiceSupplierService,
     public serviceProduct: ServiceProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,23 +53,23 @@ export class FormPurchaseOrderComponent implements OnInit {
       .map((supplierName) => supplierName.nameSupplier);
   }
 
-  onSupplierChange(detail: OrderDetail) {
-    if (detail.supplier) {
-      this.loadProductsForSupplier(detail.supplier);
-    } else {
+  onSupplierChange(supplier: any) {
+    if (supplier) {
+      this.loadProductsForSupplier(supplier);
+    } /* else {
       console.error('Error en proveedor');
       this.productName = [];
-    }
+    } */
   }
 
-  loadProductsForSupplier(supplier: string) {
+  loadProductsForSupplier(supplier: any) {
     console.log('Proveedor seleccionado:', supplier);
 
     if (supplier) {
-      this.productName = this.serviceProduct
-        .getProductsBySupplier(supplier)
+      supplier.products = this.serviceProduct
+        .getProductsBySupplier(supplier.name)
         .map((product) => product.nameProduct);
-      console.log('Productos del proveedor:', this.productName);
+      console.log('Productos del proveedor:', supplier.products);
     }
   }
 
@@ -80,9 +81,17 @@ export class FormPurchaseOrderComponent implements OnInit {
     if (this.isUpdate) {
       this.servicePurchaseOrder.updatePurchaseOrder(this.newPurchaseOrder);
       console.log('Actualizando orden:', form.value);
+      this.msj = true;
+      setTimeout(() => {
+        this.router.navigate(['/list-purchase-order']);
+      }, 1500);
     } else {
       this.servicePurchaseOrder.addPurchaseOrder(this.newPurchaseOrder);
       console.log('Creando Nueva orden:', form.value);
+      this.msj = true;
+      setTimeout(() => {
+        this.router.navigate(['/list-purchase-order']);
+      }, 1500);
     }
   }
 
@@ -107,8 +116,25 @@ export class FormPurchaseOrderComponent implements OnInit {
       product: '',
       unitProduct: 0,
       total: 0,
-      supplier: '',
+      supplier: {
+        name: '',
+        products: [],
+      },
     };
     this.newPurchaseOrder.orderDetails.push(newDetail);
+  }
+
+  ClearForm() {
+    this.newPurchaseOrder = {
+      idPurchaseOrder: '',
+      dateIssue: new Date(),
+      dateDelivery: new Date(),
+      recepcion: '',
+      orderDetails: [],
+      total: 0,
+      status: 'Activa',
+    };
+
+    this.msj = false;
   }
 }

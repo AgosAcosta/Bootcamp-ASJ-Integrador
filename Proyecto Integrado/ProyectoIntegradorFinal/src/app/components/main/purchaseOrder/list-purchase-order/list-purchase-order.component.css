@@ -6,8 +6,9 @@ h4 {
   margin-bottom: 20px;
 }
 
-#altaProveedores {
+#newProduct {
   float: right;
+  margin-bottom: 10px;
 }
 
 table {
@@ -26,12 +27,23 @@ th {
   background-color: #f2f2f2;
 }
 
-.btn-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+table img {
+  max-width: 100px;
+  max-height: 100px;
 }
 
-.btn-options a {
+a {
   margin-right: 5px;
+}
+
+table tbody tr:hover {
+  background-color: #dae6ed;
+}
+
+table strong {
+  font-weight: inherit;
+  text-decoration: underline;
+}
+.canceled-order {
+  text-decoration: line-through;
 }

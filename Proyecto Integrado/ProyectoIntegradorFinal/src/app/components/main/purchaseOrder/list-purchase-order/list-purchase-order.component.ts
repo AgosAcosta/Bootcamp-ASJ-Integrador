@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PurchaseOrder } from '../../../../Models/purchaseOrder';
 import { ServicePurchaseOrderService } from '../../../../Service/service-purchase-order.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-purchase-order',
@@ -21,11 +22,12 @@ export class ListPurchaseOrderComponent implements OnInit {
     console.log('Para ver estado:', this.purchaseOrderList);
   }
 
-  statusPucharseOrder(id: any, status: boolean) {
+  statusPucharseOrder(id: any) {
     let msj = confirm('Desea cancelar la orden de compra?');
     if (msj) {
-      const updatedOrder = this.servicePurchaseOrder.changeStatus(id, status);
-
+      const newStatus = 'Cancelado';
+      const updatedOrder = this.servicePurchaseOrder.changeStatus(id, newStatus);
+  
       if (updatedOrder) {
         this.listPurchaseOrder();
       }

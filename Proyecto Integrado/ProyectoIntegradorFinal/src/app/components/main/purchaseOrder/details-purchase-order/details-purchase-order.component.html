@@ -1,12 +1,24 @@
 <div class="row">
-  <div class="col-6">
-    <h3>Información de la orden de compra:</h3>
-    <p>N° Orden:{{ purchaseOrder?.idPurchaseOrder }}</p>
-    <p>Fecha de emisión:{{ purchaseOrder?.dateIssue }}</p>
-    <p>Fecha de entrega:{{ purchaseOrder?.dateDelivery }}</p>
-    <p>Productos: {{ purchaseOrder?.orderDetails }}</p>
-   <!--<p>Cantidad: {{ purchaseOrder?.unitProduct }}</p>--> 
-    <p>Total: {{ purchaseOrder?.total }}</p>
+  <div class="col-8">
+    <h4>Información de la orden de compra:</h4>
+    <p>N° Orden: {{ purchaseOrder?.idPurchaseOrder }}</p>
+    <p>
+      Fecha de emisión: {{ purchaseOrder?.dateIssue | date : "dd-MM-yyyy" }}
+    </p>
+    <p>
+      Fecha de entrega: {{ purchaseOrder?.dateDelivery | date : "dd-MM-yyyy" }}
+    </p>
+
+    <ng-container *ngIf="purchaseOrder?.orderDetails">
+      <div *ngFor="let detail of purchaseOrder!.orderDetails; let i = index">
+        <p>Producto {{ i + 1 }}: {{ detail.product }}</p>
+        <p>Cantidad: {{ detail.unitProduct }}</p>
+      </div>
+    </ng-container>
+
+    <p>Total: {{ purchaseOrder?.total | currency }}</p>
+
+    <p>Estado: {{ purchaseOrder?.status }}</p>
     <button
       type="button"
       class="btn btn-primary"

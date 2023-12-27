@@ -2,5 +2,8 @@ export interface OrderDetail {
   product: string;
   unitProduct: number;
   total: number;
-  supplier: string;
+  supplier: {
+    name: string;
+    products: string[];
+  };
 }

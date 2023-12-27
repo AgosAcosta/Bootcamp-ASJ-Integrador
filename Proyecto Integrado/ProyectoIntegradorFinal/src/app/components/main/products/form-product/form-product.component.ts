@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../../Models/product';
 import { ServiceProductService } from '../../../../Service/service-product.service';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
 
 @Component({
@@ -24,11 +24,13 @@ export class FormProductComponent implements OnInit {
   idProduct: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
+  msj: boolean = false;
 
   constructor(
     private serviceSupplier: ServiceSupplierService,
     public serviceProduct: ServiceProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,10 +54,31 @@ export class FormProductComponent implements OnInit {
       if (this.isUpdate) {
         this.serviceProduct.updateProduct(this.newProduct);
         console.log('Actualizando Producto:', form.value);
+        this.msj = true;
+        setTimeout(() => {
+          this.router.navigate(['/list-product']);
+        }, 1500);
       } else {
         this.serviceProduct.addProduct(this.newProduct);
         console.log('Creando Nuevo Producto:', form.value);
+        this.msj = true;
+        setTimeout(() => {
+          this.router.navigate(['/list-product']);
+        }, 1500);
       }
     }
+  }
+  ClearForm() {
+    this.newProduct = {
+      urlLogo: '',
+      idProduct: '',
+      categoryProduct: '',
+      nameProduct: '',
+      descriptionProduct: '',
+      priceProduct: 0,
+      supplierName: '',
+    };
+
+    this.msj = false;
   }
 }

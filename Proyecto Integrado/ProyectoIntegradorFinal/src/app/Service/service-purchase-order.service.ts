@@ -50,12 +50,15 @@ export class ServicePurchaseOrderService {
     }
   }
 
-  public changeStatus(id: string, status: boolean): PurchaseOrder | undefined {
+  public changeStatus(
+    id: string,
+    newStatus: string
+  ): PurchaseOrder | undefined {
     const orderToUpdate = this.purchaseOrderList.find(
       (item) => item.idPurchaseOrder === id
     );
     if (orderToUpdate) {
-      orderToUpdate.status = status;
+      orderToUpdate.status = newStatus;
     }
     return orderToUpdate;
   }
