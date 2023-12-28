@@ -23,9 +23,7 @@
     <p>N° Tel: {{ supplier?.telSupplier }}</p>
     <p>Email: {{ supplier?.emailSupplier }}</p>
     <p>Sitio Web: {{ supplier?.webSupplier }}</p>
-
-    <p>PROVINCIA {{ supplier?.provinceSupplier }}</p>
-
+    
     <button
       class="btn btn-success btn-sm"
       [routerLink]="['/list-supplier', supplier?.idSupplier]"
