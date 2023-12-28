@@ -1,3 +1,5 @@
+import { Product } from "./product";
+
 export interface Supplier {
   urlLogo?: string;
   idSupplier: string;
@@ -19,4 +21,6 @@ export interface Supplier {
   telcontactSupplier: string;
   emailcontactSupplier: string;
   rolcontactSupplier: string;
+
+
 }

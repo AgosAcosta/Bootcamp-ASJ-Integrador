@@ -2,7 +2,6 @@ import { Injectable, IterableDiffers } from '@angular/core';
 import { PurchaseOrder } from '../Models/purchaseOrder';
 import { Supplier } from '../Models/supplier';
 import { Product } from '../Models/product';
-import { OrderDetail } from '../Models/purchaseOrderDetail';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +14,6 @@ export class ServicePurchaseOrderService {
   productList: Product[] = [];
 
   //Varios productos Orden de compra:
-
-  detailsPurchaseOrder: OrderDetail[] = [];
 
   constructor() {}
 
@@ -61,5 +58,9 @@ export class ServicePurchaseOrderService {
       orderToUpdate.status = newStatus;
     }
     return orderToUpdate;
+  }
+
+  public doesPurchaseOrderExist(id: string): boolean {
+    return this.purchaseOrderList.some((order) => order.idPurchaseOrder === id);
   }
 }

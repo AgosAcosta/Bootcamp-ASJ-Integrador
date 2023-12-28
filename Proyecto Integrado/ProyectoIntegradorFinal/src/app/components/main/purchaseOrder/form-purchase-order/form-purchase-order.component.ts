@@ -5,7 +5,9 @@ import { ServicePurchaseOrderService } from '../../../../Service/service-purchas
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
 import { ServiceProductService } from '../../../../Service/service-product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderDetail } from '../../../../Models/purchaseOrderDetail';
+import { DetailProducts } from '../../../../Models/purchaseOrder';
+import { Supplier } from '../../../../Models/supplier';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-form-purchase-order',
@@ -18,24 +20,37 @@ export class FormPurchaseOrderComponent implements OnInit {
     dateIssue: new Date(),
     dateDelivery: new Date(),
     recepcion: '',
-    orderDetails: [],
+    supplier: '',
+    products: [],
     total: 0,
     status: 'Activa',
+  };
+
+  detailProducts: DetailProducts = {
+    idProduct: '',
+    nameProduct: '',
+    priceProduct: 0,
+    unitProduct: 0,
   };
 
   idPurchaseOrden: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
   msj: boolean = false;
+  allProducts: any[] = [];
 
-  /*   productName: string[] = []; */
+  supplierPoin = true;
+
+  date = new Date();
+  msjId: boolean = false;
 
   constructor(
     public servicePurchaseOrder: ServicePurchaseOrderService,
     private serviceSupplier: ServiceSupplierService,
     public serviceProduct: ServiceProductService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -48,29 +63,33 @@ export class FormPurchaseOrderComponent implements OnInit {
       }
     });
 
+    /*     this.allProducts = this.newPurchaseOrder.products.map((product) => ({
+      nameProduct: product.nameProduct,
+      priceProduct: product.priceProduct,
+      idProduct: product.idProduct,
+      unitProduct: product.unitProduct,
+    })); */
+
     this.supplierName = this.serviceSupplier
       .getListSupplier()
-      .map((supplierName) => supplierName.nameSupplier);
+      .map((supplier) => supplier.nameSupplier);
   }
 
-  onSupplierChange(supplier: any) {
+  changeSupplier(supplier: any) {
     if (supplier) {
-      this.loadProductsForSupplier(supplier);
-    } /* else {
-      console.error('Error en proveedor');
-      this.productName = [];
-    } */
-  }
+      console.log('Proveedor seleccionado:', supplier);
 
-  loadProductsForSupplier(supplier: any) {
-    console.log('Proveedor seleccionado:', supplier);
+      const productsBySupplier =
+        this.serviceProduct.getProductsBySupplier(supplier);
+      this.allProducts = productsBySupplier.map((product) => ({
+        nameProduct: product.nameProduct,
+        priceProduct: product.priceProduct,
+        idProduct: product.idProduct,
+        unitProduct: 1,
+      }));
 
-    if (supplier) {
-      supplier.products = this.serviceProduct
-        .getProductsBySupplier(supplier.name)
-        .map((product) => product.nameProduct);
-      console.log('Productos del proveedor:', supplier.products);
-    }
+      console.log('Probando produ', this.allProducts);
+    } else console.log('Ningún proveedor seleccionado');
   }
 
   createNewPuchseOrder(form: NgForm) {
@@ -86,6 +105,20 @@ export class FormPurchaseOrderComponent implements OnInit {
         this.router.navigate(['/list-purchase-order']);
       }, 1500);
     } else {
+      if (
+        this.servicePurchaseOrder.doesPurchaseOrderExist(
+          this.newPurchaseOrder.idPurchaseOrder
+        )
+      ) {
+        console.log('ya existe el proveedor');
+        this.msjId = true;
+        setTimeout(() => {
+          this.newPurchaseOrder.idPurchaseOrder = '';
+          this.msjId = false;
+        }, 1500);
+        return;
+      }
+
       this.servicePurchaseOrder.addPurchaseOrder(this.newPurchaseOrder);
       console.log('Creando Nueva orden:', form.value);
       this.msj = true;
@@ -96,32 +129,41 @@ export class FormPurchaseOrderComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.newPurchaseOrder.orderDetails.forEach((detail) => {
-      const selectedProduct = this.serviceProduct
-        .getListProduct()
-        .find((product) => product.nameProduct === detail.product);
-
-      if (selectedProduct) {
-        detail.total = selectedProduct.priceProduct * detail.unitProduct;
-      }
-    });
-    this.newPurchaseOrder.total = this.newPurchaseOrder.orderDetails.reduce(
-      (total, detail) => total + detail.total,
-      0
-    );
+    this.newPurchaseOrder.total = 0;
+    for (const product of this.newPurchaseOrder.products) {
+      this.newPurchaseOrder.total += product.priceProduct * product.unitProduct;
+    }
   }
 
   addOrderDetail() {
-    const newDetail: OrderDetail = {
-      product: '',
-      unitProduct: 0,
-      total: 0,
-      supplier: {
-        name: '',
-        products: [],
-      },
-    };
-    this.newPurchaseOrder.orderDetails.push(newDetail);
+    const productSelected = this.allProducts.find(
+      (products) => products.nameProduct == this.detailProducts.nameProduct
+    );
+
+    if (productSelected) {
+      this.detailProducts.priceProduct = productSelected.priceProduct;
+      this.detailProducts.idProduct = productSelected.idProduct;
+      if (this.detailProducts.unitProduct > 0) {
+        const existingProduct = this.newPurchaseOrder.products.find(
+          (product) => product.idProduct === this.detailProducts.idProduct
+        );
+        if (existingProduct) {
+          existingProduct.unitProduct += this.detailProducts.unitProduct;
+        } else {
+          const newProductDetail: DetailProducts = {
+            idProduct: this.detailProducts.idProduct,
+            nameProduct: this.detailProducts.nameProduct,
+            priceProduct: this.detailProducts.priceProduct,
+            unitProduct: this.detailProducts.unitProduct,
+          };
+
+          this.newPurchaseOrder.products.push(newProductDetail);
+        }
+
+        this.calculateTotal();
+        this.supplierPoin = false;
+      }
+    }
   }
 
   ClearForm() {
@@ -130,11 +172,41 @@ export class FormPurchaseOrderComponent implements OnInit {
       dateIssue: new Date(),
       dateDelivery: new Date(),
       recepcion: '',
-      orderDetails: [],
+      supplier: '',
+      products: [],
       total: 0,
       status: 'Activa',
     };
 
+    this.detailProducts = {
+      idProduct: '',
+      nameProduct: '',
+      priceProduct: 0,
+      unitProduct: 0,
+    };
     this.msj = false;
+    this.supplierPoin = true;
+  }
+
+  getMinDateShippingTemplate(): string {
+    let dateShipping = this.getMinDateShipping();
+    return this.datePipe.transform(dateShipping, 'yyyy-MM-dd') || '2024-01-01';
+  }
+
+  getMinDateShipping(): Date {
+    const day = 1000 * 60 * 60 * 24;
+    let daysDelay = 2;
+    let dateCreated = this.getDateObject(this.newPurchaseOrder.dateIssue);
+    return new Date(day * daysDelay + dateCreated.getTime());
+  }
+
+  getDateObject(date: string | Date): Date {
+    let dateCreatedArray =
+      this.datePipe.transform(date, 'yyyy&MM&dd')?.split('&') || '';
+    return new Date(
+      +dateCreatedArray[0],
+      +dateCreatedArray[1] - 1,
+      +dateCreatedArray[2]
+    );
   }
 }

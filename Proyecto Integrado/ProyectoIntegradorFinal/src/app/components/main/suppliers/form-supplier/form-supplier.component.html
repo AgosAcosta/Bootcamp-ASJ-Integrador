@@ -1,17 +1,11 @@
 <div class="container-fluid">
-  <h5>Datos del Proveedor:</h5>
-
-  <form
-    *ngIf="newsupplier"
-    #myForm="ngForm"
-    (ngSubmit)="createNewSupplier(myForm)"
-  >
-    <div class="row">
+  <form #myForm="ngForm" (ngSubmit)="createNewSupplier(myForm)">
+    <div class="row mx-auto">
       <div class="col-6">
         <!-- Sección Información Empresa -->
 
         <fieldset>
-          <legend>Información Empresa</legend>
+          <legend>Datos Fiscales</legend>
           <div class="form-group">
             <label for="idSupplier">Imagen del logo:</label>
             <input
@@ -76,13 +70,12 @@
           <div class="form-group">
             <label for="cuit">CUIT:</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               name="cuitSupplier"
               id="cuitSupplier"
               [(ngModel)]="newsupplier.cuitSupplier"
-              minlength="11"
-              maxlength="15"
+              pattern="[0-9]{11}"
               required
               #cuitSupplier="ngModel"
               [ngClass]="cuitSupplier.errors ? 'is-invalid' : 'is-valid'"
@@ -90,7 +83,12 @@
             />
             <div *ngIf="cuitSupplier.errors?.['required']" class="col-auto">
               <span class="form-text"
-                >Se debe completar este campo, Ingrese el Cuit sin guiones</span
+                >Se debe completar este campo, ingrese el CUIT sin guiones</span
+              >
+            </div>
+            <div *ngIf="cuitSupplier.errors?.['pattern']" class="col-auto">
+              <span class="form-text"
+                >El CUIT debe contener 11 dígitos numéricos</span
               >
             </div>
           </div>
@@ -152,9 +150,75 @@
           </div>
         </fieldset>
 
+        <!-- Sección Contacto Empresa (Información de Contacto) -->
+        <fieldset>
+          <legend>Datos de Contacto</legend>
+          <div class="form-group">
+            <label for="sitio_web">Sitio Web:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="webSupplier"
+              id="webSupplier"
+              [(ngModel)]="newsupplier.webSupplier"
+              #webSupplier="ngModel"
+              [ngClass]="webSupplier.errors ? 'is-invalid' : 'is-valid'"
+              pattern="https?://.+"
+              title="Ingrese una URL válida con http:// o https://"
+            />
+            <div *ngIf="webSupplier.errors?.['pattern']" class="col-auto">
+              <span class="form-text"
+                >Debe tener un formato de URL Valido: http://
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="emailSupplier">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              name="emailSupplier"
+              id="emailSupplier"
+              [(ngModel)]="newsupplier.emailSupplier"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}"
+              required
+              #emailSupplier="ngModel"
+              [ngClass]="emailSupplier.errors ? 'is-invalid' : 'is-valid'"
+            />
+            <div *ngIf="emailSupplier.errors?.['required']" class="col-auto">
+              <span class="form-text">Se debe completar este campo</span>
+            </div>
+            <div *ngIf="emailSupplier.errors?.['pattern']" class="col-auto">
+              <span class="form-text"
+                >Este campo debe tener el formato Email</span
+              >
+            </div>
+          </div>
+          <label for="telefono">Teléfono:</label>
+          <input
+            type="number"
+            class="form-control"
+            name="telSupplier"
+            id="telSupplier"
+            [(ngModel)]="newsupplier.telSupplier"
+            pattern="[0-9]{10}"
+            required
+            #telSupplier="ngModel"
+            [ngClass]="telSupplier.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <div *ngIf="telSupplier.errors?.['pattern']" class="col-auto">
+            <span class="form-text">Ingrese solo números</span>
+          </div>
+          <div *ngIf="telSupplier.errors?.['required']" class="col-auto">
+            <span class="form-text">Se debe completar este campo</span>
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-6">
         <!-- Sección Contacto Empresa (Dirección) -->
         <fieldset>
-          <legend>Contacto Empresa (Dirección)</legend>
+          <legend>Dirección de la empresa</legend>
           <div class="form-group">
             <label for="calle">Calle:</label>
             <input
@@ -187,15 +251,18 @@
               name="numSupplier"
               id="numSupplier"
               [(ngModel)]="newsupplier.numSupplier"
-              minlength="4"
-              maxlength="5"
+              min="100"
+              max="9999"
               required
               #numSupplier="ngModel"
               [ngClass]="numSupplier.errors ? 'is-invalid' : 'is-valid'"
             />
-            <div *ngIf="numSupplier.errors?.['minlength']" class="col-auto">
+            <div
+              *ngIf="numSupplier.errors?.['min'] || numSupplier.errors?.['max']"
+              class="col-auto"
+            >
               <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 5</span
+                >Debe tener al menos 3 caracteres y un maximo de 5</span
               >
             </div>
             <div *ngIf="numSupplier.errors?.['required']" class="col-auto">
@@ -211,21 +278,22 @@
               name="cpSupplier"
               id="cpSupplier"
               [(ngModel)]="newsupplier.cpSupplier"
-              minlength="4"
-              maxlength="5"
+              min="100"
+              max="9999"
               required
               #cpSupplier="ngModel"
               [ngClass]="cpSupplier.errors ? 'is-invalid' : 'is-valid'"
             />
-            <div *ngIf="cpSupplier.errors?.['minlength']" class="col-auto">
+            <div *ngIf="cpSupplier.errors?.['min']" class="col-auto">
               <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 5</span
+                >Debe tener al menos 3 caracteres y un máximo de 5</span
               >
             </div>
             <div *ngIf="cpSupplier.errors?.['required']" class="col-auto">
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
+
           <div class="form-group">
             <label for="pais">País:</label>
             <select
@@ -236,7 +304,7 @@
               required
               #countrySupplier="ngModel"
               [ngClass]="countrySupplier.errors ? 'is-invalid' : 'is-valid'"
-              (change)="onCountryChange()"
+              (change)="countrySelected()"
             >
               <option value="" disabled selected>Selecciona un país</option>
               <option
@@ -282,6 +350,8 @@
               name="locationSupplier"
               id="locationSupplier"
               [(ngModel)]="newsupplier.locationSupplier"
+              minlength="4"
+              maxlength="40"
               required
               #locationSupplier="ngModel"
               [ngClass]="locationSupplier.errors ? 'is-invalid' : 'is-valid'"
@@ -294,79 +364,9 @@
             <span class="form-text">Se debe completar este campo</span>
           </div>
         </fieldset>
-      </div>
-
-      <div class="col-6">
-        <!-- Sección Contacto Empresa (Información de Contacto) -->
-        <fieldset>
-          <legend>Contacto Empresa (Información de Contacto)</legend>
-          <div class="form-group">
-            <label for="sitio_web">Sitio Web:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="webSupplier"
-              id="webSupplier"
-              [(ngModel)]="newsupplier.webSupplier"
-              minlength="4"
-              #webSupplier="ngModel"
-              [ngClass]="webSupplier.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="webSupplier.errors?.['minlength']" class="col-auto">
-              <span class="form-text">Debe tener al menos 4 caracteres </span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="emailSupplier">Email:</label>
-            <input
-              type="email"
-              class="form-control"
-              name="emailSupplier"
-              id="emailSupplier"
-              [(ngModel)]="newsupplier.emailSupplier"
-              minlength="4"
-              maxlength="30"
-              required
-              #emailSupplier="ngModel"
-              [ngClass]="emailSupplier.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="emailSupplier.errors?.['minlength']" class="col-auto">
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 30</span
-              >
-            </div>
-            <div *ngIf="emailSupplier.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="telefono">Teléfono:</label>
-            <input
-              type="number"
-              class="form-control"
-              name="telSupplier"
-              id="telSupplier"
-              [(ngModel)]="newsupplier.telSupplier"
-              minlength="10"
-              maxlength="12"
-              required
-              #telSupplier="ngModel"
-              [ngClass]="telSupplier.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="telSupplier.errors?.['minlength']" class="col-auto">
-              <span class="form-text">Solo ingrese números</span>
-            </div>
-            <div *ngIf="telSupplier.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-        </fieldset>
-
         <!-- Sección Contacto Encargado (Información de Contacto) -->
         <fieldset>
-          <legend>Contacto Encargado (Información de Contacto)</legend>
+          <legend>Información de Contacto</legend>
           <div class="form-group">
             <label for="namecontactSupplier">Nombre:</label>
             <input
@@ -437,17 +437,16 @@
               name="telcontactSupplier"
               id="telcontactSupplier"
               [(ngModel)]="newsupplier.telcontactSupplier"
-              minlength="4"
-              maxlength="15"
+              pattern="[0-9]{10}"
               required
               #telcontactSupplier="ngModel"
               [ngClass]="telcontactSupplier.errors ? 'is-invalid' : 'is-valid'"
             />
             <div
-              *ngIf="telcontactSupplier.errors?.['minlength']"
+              *ngIf="telcontactSupplier.errors?.['pattern']"
               class="col-auto"
             >
-              <span class="form-text">Solo ingrese números</span>
+              <span class="form-text">Ingrese solo números</span>
             </div>
             <div
               *ngIf="telcontactSupplier.errors?.['required']"
@@ -465,8 +464,7 @@
               name="emailcontactSupplier"
               id="emailcontactSupplier"
               [(ngModel)]="newsupplier.emailcontactSupplier"
-              minlength="4"
-              maxlength="40"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}"
               required
               #emailcontactSupplier="ngModel"
               [ngClass]="
@@ -474,21 +472,20 @@
               "
             />
             <div
-              *ngIf="emailcontactSupplier.errors?.['minlength']"
-              class="col-auto"
-            >
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 40</span
-              >
-            </div>
-            <div
               *ngIf="emailcontactSupplier.errors?.['required']"
               class="col-auto"
             >
               <span class="form-text">Se debe completar este campo</span>
             </div>
+            <div
+              *ngIf="emailcontactSupplier.errors?.['pattern']"
+              class="col-auto"
+            >
+              <span class="form-text"
+                >Este campo debe tener el formato Email</span
+              >
+            </div>
           </div>
-
           <div class="form-group">
             <label for="rolcontactSupplier">Rol:</label>
             <input
@@ -523,6 +520,9 @@
     </div>
     <div *ngIf="msj" class="alert alert-success" role="alert">
       Acción realizada con exito!
+    </div>
+    <div *ngIf="msjId" class="alert alert-danger" role="alert">
+      Ya existe un proveedor con ese codigo
     </div>
 
     <button type="submit" class="btn btn-success" [disabled]="!myForm.valid">

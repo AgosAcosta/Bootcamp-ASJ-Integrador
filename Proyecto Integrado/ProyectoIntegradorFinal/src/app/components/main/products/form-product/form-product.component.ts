@@ -25,6 +25,7 @@ export class FormProductComponent implements OnInit {
   isUpdate: boolean = false;
   supplierName: string[] = [];
   msj: boolean = false;
+  msjId: boolean = false;
 
   constructor(
     private serviceSupplier: ServiceSupplierService,
@@ -59,6 +60,16 @@ export class FormProductComponent implements OnInit {
           this.router.navigate(['/list-product']);
         }, 1500);
       } else {
+        if (this.serviceProduct.doesProductExist(this.newProduct.idProduct)) {
+          console.log('ya existe el proveedor');
+          this.msjId = true;
+          setTimeout(() => {
+            this.newProduct.idProduct = '';
+            this.msjId = false;
+          }, 1500);
+          return;
+        }
+
         this.serviceProduct.addProduct(this.newProduct);
         console.log('Creando Nuevo Producto:', form.value);
         this.msj = true;

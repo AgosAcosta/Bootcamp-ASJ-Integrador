@@ -1,16 +1,12 @@
 <div class="row">
   <div class="col-4 text-center">
     <img
-      *ngIf="product?.urlLogo; else noLogoMessage"
       #img1
       src="{{ product?.urlLogo }}"
       class="rounded mx-auto d-block"
       alt="..."
       (error)="handleImageError($event)"
     />
-    <ng-template #noLogoMessage>
-      <p id="logo">Sin Imagen</p>
-    </ng-template>
   </div>
 
   <div class="col-8">
@@ -18,10 +14,25 @@
     <p>Código:{{ product?.idProduct }}</p>
     <p>Nombre:{{ product?.nameProduct }}</p>
     <p>Proveedor:{{ product?.supplierName }}</p>
-    <p>Descripcion: {{ product?.descriptionProduct }}</p>
+    <p>Descripción: {{ product?.descriptionProduct }}</p>
     <p>Precio: {{ product?.priceProduct | currency }}</p>
-    <button type="button" class="btn btn-primary" routerLink="/list-product">
-      Volver
-    </button>
+
+    <button
+    type="button"
+    class="btn btn-success btn-sm"
+    [routerLink]="['/list-product', product?.idProduct]"
+    style="margin-right: 5px"
+  >
+    Editar
+  </button>
+  
+  <button
+    type="button"
+    class="btn btn-primary btn-sm"
+    routerLink="/list-product"
+    style="margin-right: 5px"
+  >
+    Volver
+  </button>
   </div>
 </div>

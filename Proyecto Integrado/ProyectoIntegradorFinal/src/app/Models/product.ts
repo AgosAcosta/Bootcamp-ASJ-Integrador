@@ -1,6 +1,6 @@
 export interface Product {
   urlLogo?: string;
-  idProduct?: string;
+  idProduct: string;
   categoryProduct: string;
   nameProduct: string;
   descriptionProduct: string;

@@ -39,6 +39,7 @@ export class FormSupplierComponent {
   ubication = Ubication;
   provinces: string[] = [];
   msj: boolean = false;
+  msjId: boolean = false;
 
   constructor(
     private supplierService: ServiceSupplierService,
@@ -51,9 +52,13 @@ export class FormSupplierComponent {
       let id = response.get('id');
       if (id != undefined) {
         this.newsupplier = this.supplierService.getIdSupplier(id)!;
+        console.log(this.supplierService.getIdSupplier(id)!)
+
+        console.log(this.newsupplier)
         this.isUpdate = true;
       }
     });
+    this.countrySelected();
   }
 
   createNewSupplier(form: NgForm) {
@@ -70,6 +75,18 @@ export class FormSupplierComponent {
           this.router.navigate(['/list-supplier']);
         }, 1500);
       } else {
+        if (
+          this.supplierService.doesSupplierExist(this.newsupplier.idSupplier)
+        ) {
+          console.log('ya existe el proveedor');
+          this.msjId = true;
+          setTimeout(() => {
+            this.newsupplier.idSupplier = '';
+            this.msjId = false;
+          }, 1500);
+          return;
+        }
+
         this.supplierService.addSupplier(this.newsupplier);
         console.log('Creando Nuevo Proveedor:', form.value);
         this.msj = true;
@@ -80,7 +97,7 @@ export class FormSupplierComponent {
     }
   }
 
-  onCountryChange() {
+  countrySelected() {
     const selectedCountry = this.ubication.find(
       (item) => item.countrySupplier === this.newsupplier.countrySupplier
     );

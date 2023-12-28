@@ -56,4 +56,8 @@ export class ServiceProductService {
   getProductsBySupplier(supplier: string): Product[] {
     return this.productList.filter((product) => product.supplierName === supplier);
   }
+
+  public doesProductExist(id: string): boolean {
+    return this.productList.some((product) => product.idProduct === id);
+  }
 }

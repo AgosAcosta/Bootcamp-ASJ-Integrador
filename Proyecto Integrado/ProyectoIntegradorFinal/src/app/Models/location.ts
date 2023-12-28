@@ -2,7 +2,7 @@ export const Ubication = [
   {
     countrySupplier: 'Argentina',
     locationSupplier: [
-      'Córdoba',
+      'Cordoba',
       'Buenos Aires',
       'La Pampa',
       'Santiago del Estero',

@@ -1,17 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Supplier } from "../Models/supplier";
-import { Observable, of } from "rxjs";
-import { supplierData } from "../data/supplierData";
+import { Injectable } from '@angular/core';
+import { Supplier } from '../Models/supplier';
+import { Observable, of } from 'rxjs';
+import { supplierData } from '../data/supplierData';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ServiceSupplierService {
-  constructor() {
-    this.supplierList = [...supplierData];
-  }
+  constructor() {}
 
- supplierList: Supplier[] = [];
+  supplierList: Supplier[] = supplierData;
 
   getListSupplier() {
     return this.supplierList;
@@ -20,7 +18,7 @@ export class ServiceSupplierService {
   addSupplier(newsupplier: Supplier) {
     this.supplierList.push(newsupplier);
 
-    console.log("Agregando proveedor:", newsupplier);
+    console.log('Agregando proveedor:', newsupplier);
   }
 
   deleteSupplier(id: string) {
@@ -30,8 +28,10 @@ export class ServiceSupplierService {
     }
   }
 
-  public getIdSupplier(id: any): Supplier | undefined {
-    return this.supplierList.find((item) => item.idSupplier == id);
+  public getIdSupplier(id: any): Supplier {
+    const prove = this.supplierList.filter((item) => item.idSupplier == id)[0];
+    console.log('prove', prove);
+    return prove;
   }
 
   public updateSupplier(newsupplier: Supplier) {
@@ -39,5 +39,9 @@ export class ServiceSupplierService {
       (item) => item.idSupplier == newsupplier.idSupplier
     );
     update = newsupplier;
+  }
+
+  public doesSupplierExist(id: string): boolean {
+    return this.supplierList.some((supplier) => supplier.idSupplier === id);
   }
 }

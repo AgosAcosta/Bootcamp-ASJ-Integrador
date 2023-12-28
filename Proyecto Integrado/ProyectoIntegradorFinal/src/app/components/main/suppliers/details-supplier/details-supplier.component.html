@@ -1,16 +1,12 @@
 <div class="row">
   <div class="col-4 text-center">
     <img
-      *ngIf="supplier?.urlLogo; else noLogoMessage"
       #img1
       src="{{ supplier?.urlLogo }}"
       class="rounded mx-auto d-block"
       alt="..."
       (error)="handleImageError($event)"
     />
-    <ng-template #noLogoMessage>
-      <p id="logo">Sin logo</p>
-    </ng-template>
   </div>
   <div class="col-8">
     <h4>Información del Proveedor:</h4>
@@ -28,9 +24,23 @@
     <p>Email: {{ supplier?.emailSupplier }}</p>
     <p>Sitio Web: {{ supplier?.webSupplier }}</p>
 
-    <button type="button" class="btn btn-primary" routerLink="/list-supplier">
+    <p>PROVINCIA {{ supplier?.provinceSupplier }}</p>
+
+    <button
+      class="btn btn-success btn-sm"
+      [routerLink]="['/list-supplier', supplier?.idSupplier]"
+      style="margin-right: 5px"
+    >
+      Editar
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
+      routerLink="/list-supplier"
+      style="margin-left: 5px"
+    >
       Volver
     </button>
   </div>
 </div>
-

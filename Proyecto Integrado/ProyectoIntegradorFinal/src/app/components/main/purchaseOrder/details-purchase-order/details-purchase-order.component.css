@@ -23,3 +23,7 @@ p {
   background-color: #0056b3;
   border-color: #0056b3;
 }
+strong {
+  font-weight: inherit;
+  text-decoration: underline;
+}

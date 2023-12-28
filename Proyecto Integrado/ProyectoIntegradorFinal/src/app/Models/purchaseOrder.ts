@@ -1,25 +1,17 @@
-import { OrderDetail } from './purchaseOrderDetail';
-
 export interface PurchaseOrder {
   idPurchaseOrder: string;
   dateIssue: Date;
   dateDelivery: Date;
   recepcion: string;
- // supplier: string;
-  orderDetails: OrderDetail[]; // Array de detalles de la orden
+  supplier: string;
+  products: DetailProducts[];
   total: number;
   status: string;
 }
 
-/* export interface PurchaseOrder {
-  idPurchaseOrder: string;
-  dateIssue: Date;
-  dateDelivery: Date;
-  recepcion: string;
-  supplier: string;
-  product: string;
+export interface DetailProducts {
+  idProduct?: string;
+  nameProduct: string;
+  priceProduct: number;
   unitProduct: number;
-  total: number; //revisar como voy a tomar el precio
-  status: boolean
 }
- */

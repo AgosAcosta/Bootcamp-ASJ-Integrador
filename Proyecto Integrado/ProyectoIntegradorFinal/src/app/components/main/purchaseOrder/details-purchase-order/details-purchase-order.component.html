@@ -8,20 +8,28 @@
     <p>
       Fecha de entrega: {{ purchaseOrder?.dateDelivery | date : "dd-MM-yyyy" }}
     </p>
+    <p>Información de entrega: {{ purchaseOrder?.recepcion }}</p>
 
-    <ng-container *ngIf="purchaseOrder?.orderDetails">
-      <div *ngFor="let detail of purchaseOrder!.orderDetails; let i = index">
-        <p>Producto {{ i + 1 }}: {{ detail.product }}</p>
-        <p>Cantidad: {{ detail.unitProduct }}</p>
-      </div>
-    </ng-container>
+    <div *ngFor="let detail of purchaseOrder?.products; let i = index">
+      <p>
+        <strong>Producto:</strong> {{ i + 1 }}: {{ detail.nameProduct }}
+        <strong>Cantidad:</strong> {{ detail.unitProduct }}
+      </p>
+    </div>
 
     <p>Total: {{ purchaseOrder?.total | currency }}</p>
 
     <p>Estado: {{ purchaseOrder?.status }}</p>
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-success btn-sm"
+      [routerLink]="['/list-purchase-order', purchaseOrder?.idPurchaseOrder]"
+    >
+      Editar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
       routerLink="/list-purchase-order"
     >
       Volver

@@ -16,6 +16,7 @@ import { ListPurchaseOrderComponent } from './components/main/purchaseOrder/list
 import { DetailsSupplierComponent } from './components/main/suppliers/details-supplier/details-supplier.component';
 import { DetailsProductComponent } from './components/main/products/details-product/details-product.component';
 import { DetailsPurchaseOrderComponent } from './components/main/purchaseOrder/details-purchase-order/details-purchase-order.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { DetailsPurchaseOrderComponent } from './components/main/purchaseOrder/d
     DetailsPurchaseOrderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

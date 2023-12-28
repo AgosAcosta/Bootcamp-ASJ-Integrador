@@ -30,20 +30,41 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of purchaseOrderList" [ngClass]="{'canceled-order': item.status === 'Cancelado'}">
+          <tr
+            *ngFor="let item of purchaseOrderList"
+            [ngClass]="{ 'canceled-order': item.status === 'Cancelado' }"
+          >
             <td>{{ item.idPurchaseOrder }}</td>
             <td>{{ item.dateIssue | date : "dd-MM-yyyy" }}</td>
             <td>{{ item.dateDelivery | date : "dd-MM-yyyy" }}</td>
             <td>{{ item.total | currency }}</td>
             <td>{{ item.status }}</td>
             <td>
-              <a class="btn btn-primary btn-sm" [routerLink]="['/list-purchase-order', item.idPurchaseOrder, 'detail']" ngbTooltip="Ver">
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="[
+                  '/list-purchase-order',
+                  item.idPurchaseOrder,
+                  'detail'
+                ]"
+                ngbTooltip="Ver"
+              >
                 <i class="bi bi-eye"></i>
               </a>
-              <a class="btn btn-success btn-sm" [routerLink]="['/list-purchase-order', item.idPurchaseOrder]" ngbTooltip="Editar">
+              <a
+                *ngIf="item.status != 'Cancelado'"
+                class="btn btn-success btn-sm"
+                [routerLink]="['/list-purchase-order', item.idPurchaseOrder]"
+                ngbTooltip="Editar"
+              >
                 <i class="bi bi-pencil-square"></i>
               </a>
-              <a class="btn btn-danger btn-sm ml-2" ngbTooltip="Cancelar" (click)="statusPucharseOrder(item.idPurchaseOrder)">
+              <a
+                *ngIf="item.status != 'Cancelado'"
+                class="btn btn-danger btn-sm ml-2"
+                ngbTooltip="Cancelar"
+                (click)="statusPucharseOrder(item.idPurchaseOrder)"
+              >
                 <i class="bi bi-ban"></i>
               </a>
             </td>
