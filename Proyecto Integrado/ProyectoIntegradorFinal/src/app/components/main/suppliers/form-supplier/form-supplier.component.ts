@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
 import { Supplier } from '../../../../Models/supplier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Ubication } from '../../../../Models/location';
+import { categorySupplier } from '../../../../Models/CategorySupplier';
 @Component({
   selector: 'app-form-supplier',
   templateUrl: './form-supplier.component.html',
@@ -33,13 +34,25 @@ export class FormSupplierComponent {
     rolcontactSupplier: '',
   };
 
+
+
   idSupplier: string = '';
   isUpdate: boolean = false;
+
+ // category: string[] = categorySupplier;
+  category: string[] = [];
+  newCategory: string = '';
+  isModalOpen: boolean = false;
+  successMessage : string |null = null;
+
 
   ubication = Ubication;
   provinces: string[] = [];
   msj: boolean = false;
   msjId: boolean = false;
+
+ 
+
 
   constructor(
     private supplierService: ServiceSupplierService,
@@ -52,15 +65,35 @@ export class FormSupplierComponent {
       let id = response.get('id');
       if (id != undefined) {
         this.newsupplier = this.supplierService.getIdSupplier(id)!;
-        console.log(this.supplierService.getIdSupplier(id)!)
+        console.log(this.supplierService.getIdSupplier(id)!);
 
-        console.log(this.newsupplier)
+        console.log(this.newsupplier);
         this.isUpdate = true;
       }
     });
     this.countrySelected();
   }
 
+  openModal() {
+    this.newCategory = ''; 
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.successMessage = null;
+  }
+  
+  addCategory() {
+    if (this.newCategory.trim() !== '') {
+      this.category.push(this.newCategory );
+      this.newCategory = '';
+      this.successMessage = 'Categoría agregada con éxito'; 
+      setTimeout(() => this.closeModal(), 1000);
+    }
+  }
+
+  
   createNewSupplier(form: NgForm) {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
@@ -132,4 +165,7 @@ export class FormSupplierComponent {
 
     this.msj = false;
   }
+
+
+
 }

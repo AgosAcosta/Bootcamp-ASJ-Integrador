@@ -114,18 +114,19 @@
           </div>
           <div class="form-group">
             <label for="descripcionProducto">Descripción:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="descripcionProducto"
-              id="descripcionProducto"
-              minlength="4"
-              maxlength="40"
-              required
-              [(ngModel)]="newProduct.descriptionProduct"
-              #descriptionProduct="ngModel"
-              [ngClass]="descriptionProduct.errors ? 'is-invalid' : 'is-valid'"
-            />
+            <textarea
+            type="text"
+            class="form-control"
+            name="descripcionProducto"
+            id="descripcionProducto"
+            minlength="4"
+            maxlength="40"
+            required
+            [(ngModel)]="newProduct.descriptionProduct"
+            #descriptionProduct="ngModel"
+            [ngClass]="descriptionProduct.errors ? 'is-invalid' : 'is-valid'"
+            >
+            </textarea>
             <div
               *ngIf="descriptionProduct.errors?.['minlength']"
               class="col-auto"

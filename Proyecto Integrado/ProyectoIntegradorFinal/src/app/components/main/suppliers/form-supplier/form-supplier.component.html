@@ -92,7 +92,6 @@
               >
             </div>
           </div>
-
           <div class="form-group">
             <label for="condicionAfip">Condición AFIP:</label>
             <select
@@ -122,33 +121,60 @@
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
-          <div class="form-group">
-            <label for="rubro">Rubro:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="categorySupplier"
-              id="categorySupplier"
-              [(ngModel)]="newsupplier.categorySupplier"
-              minlength="4"
-              maxlength="40"
-              required
-              #categorySupplier="ngModel"
-              [ngClass]="categorySupplier.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div
-              *ngIf="categorySupplier.errors?.['minlength']"
-              class="col-auto"
-            >
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 40</span
-              >
+
+          <div class="row">
+            <div class="col-md-10">
+              <div class="form-group">
+                <label for="categorySupplier">Rubro:</label>
+                <select
+                  class="form-select"
+                  name="categorySupplier"
+                  id="categorySupplier"
+                  [(ngModel)]="newsupplier.categorySupplier"
+                  required
+                  #categorySupplier="ngModel"
+                  [ngClass]="categorySupplier.errors ? 'is-invalid' : 'is-valid'"
+                >
+                  <option value="" disabled selected>Selecciona un rubro</option>
+                  <option *ngFor="let c of category" [value]="c">{{ c}}</option>
+                </select>
+                <div *ngIf="categorySupplier.errors?.['required']" class="col-auto">
+                  <span class="form-text">Se debe completar este campo</span>
+                </div>
+              </div>
             </div>
-            <div *ngIf="categorySupplier.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
+            <div class="col-md-2">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                +
+              </button>
             </div>
           </div>
-        </fieldset>
+  <!-- Modal -->
+<div class="modal fade" [ngClass]="{'show': isModalOpen}" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Rubro:</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" [(ngModel)]="newCategory" name="categorySupplier" placeholder="Rubro">
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success mt-2" role="alert">
+        {{ successMessage }}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="addCategory()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</fieldset>
 
         <!-- Sección Contacto Empresa (Información de Contacto) -->
         <fieldset>
@@ -251,7 +277,7 @@
               name="numSupplier"
               id="numSupplier"
               [(ngModel)]="newsupplier.numSupplier"
-              min="100"
+              min="1"
               max="9999"
               required
               #numSupplier="ngModel"
@@ -262,7 +288,7 @@
               class="col-auto"
             >
               <span class="form-text"
-                >Debe tener al menos 3 caracteres y un maximo de 5</span
+                >Debe tener al menos 1 caracteres y un maximo de 5</span
               >
             </div>
             <div *ngIf="numSupplier.errors?.['required']" class="col-auto">
