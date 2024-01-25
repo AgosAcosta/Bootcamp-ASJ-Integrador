@@ -115,25 +115,22 @@
           <div class="form-group">
             <label for="descripcionProducto">Descripción:</label>
             <textarea
-            type="text"
-            class="form-control"
-            name="descripcionProducto"
-            id="descripcionProducto"
-            minlength="4"
-            maxlength="40"
-            required
-            [(ngModel)]="newProduct.descriptionProduct"
-            #descriptionProduct="ngModel"
-            [ngClass]="descriptionProduct.errors ? 'is-invalid' : 'is-valid'"
+              type="text"
+              class="form-control"
+              name="descripcionProducto"
+              id="descripcionProducto"
+              minlength="4"
+              required
+              [(ngModel)]="newProduct.descriptionProduct"
+              #descriptionProduct="ngModel"
+              [ngClass]="descriptionProduct.errors ? 'is-invalid' : 'is-valid'"
             >
             </textarea>
             <div
               *ngIf="descriptionProduct.errors?.['minlength']"
               class="col-auto"
             >
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 40</span
-              >
+              <span class="form-text">Debe tener al menos 4 caracteres</span>
             </div>
             <div
               *ngIf="descriptionProduct.errors?.['required']"
@@ -157,10 +154,7 @@
               #priceProduct="ngModel"
               [ngClass]="priceProduct.errors ? 'is-invalid' : 'is-valid'"
             />
-            <div
-              *ngIf="priceProduct.errors?.['min']"
-              class="col-auto"
-            >
+            <div *ngIf="priceProduct.errors?.['min']" class="col-auto">
               <span class="form-text"
                 >Ingrese un valor del producto, solo números</span
               >

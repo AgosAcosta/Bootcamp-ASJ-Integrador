@@ -39,8 +39,6 @@ SELECT p.url_product         AS 'URL',
        p.description_product AS 'Descripcion',
        p.price_product       AS 'Precio'
 FROM   products p
-       JOIN suppliers s
-         ON S.id_supplier = p.id_supplier
        JOIN categories_products cp
          ON cp.id_category_product = p.id_category_product
 WHERE  id_product = 2; 

@@ -123,7 +123,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-11">
               <div class="form-group">
                 <label for="categorySupplier">Rubro:</label>
                 <select
@@ -133,48 +133,96 @@
                   [(ngModel)]="newsupplier.categorySupplier"
                   required
                   #categorySupplier="ngModel"
-                  [ngClass]="categorySupplier.errors ? 'is-invalid' : 'is-valid'"
+                  [ngClass]="
+                    categorySupplier.errors ? 'is-invalid' : 'is-valid'
+                  "
                 >
-                  <option value="" disabled selected>Selecciona un rubro</option>
-                  <option *ngFor="let c of category" [value]="c">{{ c}}</option>
+                  <option value="" disabled selected>
+                    Selecciona un rubro
+                  </option>
+                  <option *ngFor="let c of category" [value]="c">
+                    {{ c }}
+                  </option>
                 </select>
-                <div *ngIf="categorySupplier.errors?.['required']" class="col-auto">
+                <div
+                  *ngIf="categorySupplier.errors?.['required']"
+                  class="col-auto"
+                >
                   <span class="form-text">Se debe completar este campo</span>
                 </div>
               </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 +
               </button>
             </div>
           </div>
-  <!-- Modal -->
-<div class="modal fade" [ngClass]="{'show': isModalOpen}" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Rubro:</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="text" [(ngModel)]="newCategory" name="categorySupplier" placeholder="Rubro">
-      </div>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            [ngClass]="{ show: isModalOpen }"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Agregar Rubro:
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <input
+                    type="text"
+                    [(ngModel)]="newCategory"
+                    name="categorySupplier"
+                    placeholder="Rubro"
+                  />
+                </div>
 
-      <div *ngIf="successMessage" class="alert alert-success mt-2" role="alert">
-        {{ successMessage }}
-      </div>
+                <div
+                  *ngIf="successMessage"
+                  class="alert alert-success mt-2"
+                  role="alert"
+                >
+                  {{ successMessage }}
+                </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="addCategory()">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-</fieldset>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="addCategory()"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
 
         <!-- Sección Contacto Empresa (Información de Contacto) -->
         <fieldset>
@@ -520,7 +568,7 @@
               name="rolcontactSupplier"
               id="rolcontactSupplier"
               [(ngModel)]="newsupplier.rolcontactSupplier"
-              minlength="4"
+              minlength="3"
               maxlength="40"
               required
               #rolcontactSupplier="ngModel"
@@ -531,7 +579,7 @@
               class="col-auto"
             >
               <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 40</span
+                >Debe tener al menos 3 caracteres y un maximo de 40</span
               >
             </div>
             <div

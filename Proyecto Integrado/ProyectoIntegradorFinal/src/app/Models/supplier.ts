@@ -2,7 +2,7 @@ export interface Supplier {
   urlLogo?: string;
   idSupplier: string;
   nameSupplier: string;
-  cuitSupplier: number;
+  cuitSupplier: string;
   condicionAfipSupplier: string;
   categorySupplier: string;
   streetSupplier: string;
@@ -20,3 +20,4 @@ export interface Supplier {
   emailcontactSupplier: string;
   rolcontactSupplier: string;
 }
+

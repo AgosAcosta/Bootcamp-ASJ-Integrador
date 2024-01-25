@@ -4,7 +4,7 @@ import { Supplier } from '../../../../Models/supplier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Ubication } from '../../../../Models/location';
-import { categorySupplier } from '../../../../Models/CategorySupplier';
+
 @Component({
   selector: 'app-form-supplier',
   templateUrl: './form-supplier.component.html',
@@ -15,7 +15,7 @@ export class FormSupplierComponent {
     urlLogo: '',
     idSupplier: '',
     nameSupplier: '',
-    cuitSupplier: 0,
+    cuitSupplier: '',
     condicionAfipSupplier: '',
     categorySupplier: '',
     streetSupplier: '',
@@ -34,25 +34,19 @@ export class FormSupplierComponent {
     rolcontactSupplier: '',
   };
 
-
-
   idSupplier: string = '';
   isUpdate: boolean = false;
 
- // category: string[] = categorySupplier;
+  // category: string[] = categorySupplier;
   category: string[] = [];
   newCategory: string = '';
   isModalOpen: boolean = false;
-  successMessage : string |null = null;
-
+  successMessage: string | null = null;
 
   ubication = Ubication;
   provinces: string[] = [];
   msj: boolean = false;
   msjId: boolean = false;
-
- 
-
 
   constructor(
     private supplierService: ServiceSupplierService,
@@ -75,7 +69,7 @@ export class FormSupplierComponent {
   }
 
   openModal() {
-    this.newCategory = ''; 
+    this.newCategory = '';
     this.isModalOpen = true;
   }
 
@@ -83,17 +77,16 @@ export class FormSupplierComponent {
     this.isModalOpen = false;
     this.successMessage = null;
   }
-  
+
   addCategory() {
     if (this.newCategory.trim() !== '') {
-      this.category.push(this.newCategory );
+      this.category.push(this.newCategory);
       this.newCategory = '';
-      this.successMessage = 'Categoría agregada con éxito'; 
+      this.successMessage = 'Categoría agregada con éxito';
       setTimeout(() => this.closeModal(), 1000);
     }
   }
 
-  
   createNewSupplier(form: NgForm) {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
@@ -144,7 +137,7 @@ export class FormSupplierComponent {
       urlLogo: '',
       idSupplier: '',
       nameSupplier: '',
-      cuitSupplier: 0,
+      cuitSupplier: '',
       condicionAfipSupplier: '',
       categorySupplier: '',
       streetSupplier: '',
@@ -165,7 +158,4 @@ export class FormSupplierComponent {
 
     this.msj = false;
   }
-
-
-
 }
