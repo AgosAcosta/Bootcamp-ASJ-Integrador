@@ -9,15 +9,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.ProductResponseDTO;
 import com.example.demo.dto.SupplierResponseDTO;
-import com.example.demo.mapper.ProductMapper;
 import com.example.demo.mapper.SupplierMapper;
 import com.example.demo.models.Categories_Supplier_Model;
 import com.example.demo.models.Conditions_Afip_Model;
 import com.example.demo.models.Contacts_Model;
 import com.example.demo.models.Directions_Model;
-import com.example.demo.models.Product_Model;
 import com.example.demo.models.Provinces_Model;
 import com.example.demo.models.Suppliers_Model;
 import com.example.demo.repositories.CategoriesSupplierRespository;
@@ -95,7 +92,7 @@ public class SupplierService {
 
         supplier.setUrl_supplier(supplierRequestDTO.getUrlLogo());
         supplier.setCode_supplier(supplierRequestDTO.getCodeSupplier());
-        supplier.setName_supplier(supplierRequestDTO.getNameSupplier());
+        supplier.setNameSupplier(supplierRequestDTO.getNameSupplier());
         supplier.setCuit_supplier(supplierRequestDTO.getCuitSupplier());
         supplier.setWeb_supplier(supplierRequestDTO.getWebSupplier());
         supplier.setEmail_supplier(supplierRequestDTO.getEmailSupplier());
@@ -166,7 +163,7 @@ public class SupplierService {
     	
         suppliers_Model.setUrl_supplier(supplierRequestDTO.getUrlLogo());
         suppliers_Model.setCode_supplier(supplierRequestDTO.getCodeSupplier());
-        suppliers_Model.setName_supplier(supplierRequestDTO.getNameSupplier());
+        suppliers_Model.setNameSupplier(supplierRequestDTO.getNameSupplier());
         suppliers_Model.setCuit_supplier(supplierRequestDTO.getCuitSupplier());
         suppliers_Model.setWeb_supplier(supplierRequestDTO.getWebSupplier());
         suppliers_Model.setEmail_supplier(supplierRequestDTO.getEmailSupplier());

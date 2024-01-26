@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 
 import org.hibernate.validator.constraints.URL;
 
-import com.fasterxml.jackson.databind.JsonMappingException.Reference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -60,7 +58,8 @@ public class Suppliers_Model {
 
 	@NotNull(message = "La razon social no puede estar vacio")
 	@Size(min = 4, max = 40, message = "La razon social debe tener entre 4 y 40 caracteres")
-	private String name_supplier;
+	@Column(name="name_supplier",nullable = false)
+	private String nameSupplier;
 
 	@NotNull(message = "El cuit no puede estar vacio")
 	@Size(min = 13, max = 13, message = "El CUIT debe tener 13 caracteres")
@@ -98,7 +97,6 @@ public class Suppliers_Model {
 			String url_supplier, String code_supplier, String name_supplier, String cuit_supplier, String web_supplier,
 			String email_supplier, String tel_supplier, boolean deleteSupplier, Timestamp created_at,
 			Timestamp update_at) {
-		
 		this.id_supplier = id_supplier;
 		this.condition_afip = condition_afip;
 		this.category_supplier = category_supplier;
@@ -106,7 +104,7 @@ public class Suppliers_Model {
 		this.direction = direction;
 		this.url_supplier = url_supplier;
 		this.code_supplier = code_supplier;
-		this.name_supplier = name_supplier;
+		this.nameSupplier = name_supplier;
 		this.cuit_supplier = cuit_supplier;
 		this.web_supplier = web_supplier;
 		this.email_supplier = email_supplier;
@@ -172,12 +170,12 @@ public class Suppliers_Model {
 		this.code_supplier = code_supplier;
 	}
 
-	public String getName_supplier() {
-		return name_supplier;
+	public String getNameSupplier() {
+		return nameSupplier;
 	}
 
-	public void setName_supplier(String name_supplier) {
-		this.name_supplier = name_supplier;
+	public void setNameSupplier(String nameSupplier) {
+		this.nameSupplier = nameSupplier;
 	}
 
 	public String getCuit_supplier() {

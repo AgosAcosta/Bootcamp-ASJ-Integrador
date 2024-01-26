@@ -60,7 +60,6 @@ public class Directions_Model {
 			@NotNull(message = "El código postal no puede estar vacio") @Min(value = 100, message = "El código postal debe ser como mínimo 3 caracter") @Max(value = 9999, message = "El número de la calle debe ser como máximo 4 caracter ") Integer cp_supplier,
 			@NotNull(message = "La localidad no puede estar vacia") @Size(min = 4, max = 40, message = "La localidad debe tener entre 4 y 40 caracteres") String location
 ) {
-		super();
 		this.id_direction = id_direction;
 		this.province = province;
 		this.street_supplier = street_supplier;

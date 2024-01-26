@@ -22,16 +22,17 @@ public class Categories_Product_Model {
 	
 	@NotNull(message = "La categoría del producto no puede estar vacio" )
 	@Size(min = 4, max = 40, message = "La categoría del producto debe tener entre 4 y 40 caracteres")
-	private String category_product;
+	@Column(name="category_product",nullable = false)
+	private String categoryProduct;
 		
 	@NotNull(message = "Debe selecionar si esta eliminado")
 	@Column(nullable = true)
 	private boolean deleteCategoryProduct;
 	
-	@NotNull(message = "La fecha de creacion no puede estar vacio")
+	//@NotNull(message = "La fecha de creacion no puede estar vacio")
 	private Timestamp created_at;
 	
-	@NotNull(message = "La fecha de actualizacion no puede estar vacio")
+	//@NotNull(message = "La fecha de actualizacion no puede estar vacio")
 	private Timestamp update_at;
 	
 
@@ -47,7 +48,7 @@ public class Categories_Product_Model {
 			@NotNull(message = "La fecha de creacion no puede estar vacio") Timestamp created_at,
 			@NotNull(message = "La fecha de actualizacion no puede estar vacio") Timestamp update_at) {
 		this.id_category_product = id_category_product;
-		this.category_product = category_product;
+		this.categoryProduct = category_product;
 		this.deleteCategoryProduct = deleteCategoryProduct;
 		this.created_at = created_at;
 		this.update_at = update_at;
@@ -69,11 +70,11 @@ public class Categories_Product_Model {
 	public void setId_category_product(Integer id_category_product) {
 		this.id_category_product = id_category_product;
 	}
-	public String getCategory_product() {
-		return category_product;
+	public String getCategoryProduct() {
+		return categoryProduct;
 	}
-	public void setCategory_product(String category_product) {
-		this.category_product = category_product;
+	public void setCategoryProduct(String categoryProduct) {
+		this.categoryProduct = categoryProduct;
 	}
 
 	

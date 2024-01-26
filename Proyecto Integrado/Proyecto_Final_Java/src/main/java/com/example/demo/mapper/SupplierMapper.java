@@ -2,7 +2,6 @@ package com.example.demo.mapper;
 
 import java.util.Optional;
 
-import com.example.demo.dto.ProductResponseDTO;
 import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.models.Suppliers_Model;
 
@@ -15,7 +14,7 @@ public class SupplierMapper {
 		supplierResponse.setIdSupplier(supplier.getId_supplier());
 		supplierResponse.setUrlLogo(supplier.getUrl_supplier());
 		supplierResponse.setCodeSupplier(supplier.getCode_supplier());
-		supplierResponse.setNameSupplier(supplier.getName_supplier());
+		supplierResponse.setNameSupplier(supplier.getNameSupplier());
 		supplierResponse.setCuitSupplier(supplier.getCuit_supplier());
 		
 		supplierResponse.setCondicionAfipSupplier(supplier.getCondition_afip().getCondition());

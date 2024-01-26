@@ -56,24 +56,25 @@ public class SupplierController {
 		}
 		return ResponseEntity.ok(supplierService.postSupplier(supplier));
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> putSupplier(@PathVariable int id, @RequestBody SupplierResponseDTO supplier,BindingResult bindingResult) {
+	public ResponseEntity<Object> putSupplier(@PathVariable int id, @RequestBody SupplierResponseDTO supplier,
+			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
 			return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
 		}
-		return ResponseEntity.ok(supplierService.updateSupplier(id,supplier));
+		return ResponseEntity.ok(supplierService.updateSupplier(id, supplier));
 	}
-	
-	   @PatchMapping("/delete/{id}")
-	    public ResponseEntity<SupplierResponseDTO> deleteById(@PathVariable Integer id) {
-	        Optional<SupplierResponseDTO> response = supplierService.findByDeleteSupplierFalse(id);
-	        
-	        if (response.isEmpty()) {
-	            return ResponseEntity.notFound().build();
-	        }
-	        return ResponseEntity.ok().body(response.get());
-	    }
+
+	@PatchMapping("/delete/{id}")
+	public ResponseEntity<SupplierResponseDTO> deleteById(@PathVariable Integer id) {
+		Optional<SupplierResponseDTO> response = supplierService.findByDeleteSupplierFalse(id);
+
+		if (response.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(response.get());
+	}
 
 }

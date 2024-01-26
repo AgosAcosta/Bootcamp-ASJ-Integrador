@@ -43,7 +43,6 @@ public class Categories_Supplier_Model {
 			@NotNull(message = "La fecha de creacion no puede estar vacio") Timestamp created_at,
 			@NotNull(message = "La fecha de actualizacion no puede estar vacio") Timestamp update_at,
 			@NotNull(message = "Debe selecionar si esta eliminado") boolean deleteCategorySupplier) {
-		super();
 		this.id_category_supplier = id_category_supplier;
 		this.categorySupplier = category_supplier;
 		this.created_at = created_at;

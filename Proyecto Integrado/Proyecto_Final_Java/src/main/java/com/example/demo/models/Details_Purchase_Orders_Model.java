@@ -64,7 +64,7 @@ public class Details_Purchase_Orders_Model {
 			@NotNull(message = "La fecha de creacion no puede estar vacio") Timestamp created_at,
 			@NotNull(message = "La fecha de actualizacion no puede estar vacio") Timestamp update_at,
 			@NotNull(message = "Debe selecionar si esta eliminado") boolean deleteDetail) {
-		super();
+
 		this.id_detail_purchase = id_detail_purchase;
 		this.purchase_order = purchase_order;
 		this.product = product;

@@ -56,10 +56,10 @@ public class Product_Model {
     @DecimalMax(value = "1000000.00", message = "El precio debe ser menor o igual a 1000000.00")
 	private double price_product;
 	
-	@NotNull(message = "La fecha de creacion no puede estar vacio")
+	//@NotNull(message = "La fecha de creacion no puede estar vacio")
 	private Timestamp created_at;
 	
-	@NotNull(message = "La fecha de actualizacion no puede estar vacio")
+	//@NotNull(message = "La fecha de actualizacion no puede estar vacio")
 	private Timestamp update_at;
 		
 	@NotNull(message = "Debe selecionar si esta eliminado")
@@ -82,7 +82,6 @@ public class Product_Model {
 			@NotNull(message = "La fecha de creacion no puede estar vacio") Timestamp created_at,
 			@NotNull(message = "La fecha de actualizacion no puede estar vacio") Timestamp update_at,
 			@NotNull(message = "Debe selecionar si esta eliminado") boolean deleteProduct) {
-		super();
 		this.id_product = id_product;
 		this.category_product = category_product;
 		this.supplier = supplier;
@@ -183,7 +182,5 @@ public class Product_Model {
 	public void setDeleteProduct(boolean deleteProduct) {
 		this.deleteProduct = deleteProduct;
 	}
-	
-	
-	
+
 }

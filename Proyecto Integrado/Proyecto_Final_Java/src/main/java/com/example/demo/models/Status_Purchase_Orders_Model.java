@@ -23,19 +23,12 @@ public class Status_Purchase_Orders_Model {
 	@NotNull(message = "El estado no puede estar vacio")
 	@Size(min = 4, max = 40, message = "El estado debe tener entre 4 y 40 caracteres")
 	private String status;
-
-	
-	
-	
 	public Status_Purchase_Orders_Model(Integer id_status_order,
 			@NotNull(message = "El estado no puede estar vacio") @Size(min = 4, max = 40, message = "El estado debe tener entre 4 y 40 caracteres") String status
 			) {
 		this.id_status_order = id_status_order;
 		this.status = status;
-
 	}
-	
-	
 	public Integer getId_status_order() {
 		return id_status_order;
 	}

@@ -7,3 +7,4 @@ export interface Product {
   priceProduct: number;
   supplierName: string;
 }
+

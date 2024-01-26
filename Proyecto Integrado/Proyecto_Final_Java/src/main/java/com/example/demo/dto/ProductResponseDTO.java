@@ -19,11 +19,8 @@ public class ProductResponseDTO {
 	public ProductResponseDTO() {
 
 	}
-
-
 	public ProductResponseDTO(int id, String urlLogo, String codeProduct, String categoryProduct, String nameProduct,
 			String descriptionProduct, double priceProduct, String supplierName) {
-		super();
 		this.id = id;
 		this.urlLogo = urlLogo;
 		this.codeProduct = codeProduct;
@@ -33,7 +30,6 @@ public class ProductResponseDTO {
 		this.priceProduct = priceProduct;
 		this.supplierName = supplierName;
 	}
-
 
 	public int getId() {
 		return id;
@@ -113,8 +109,5 @@ public class ProductResponseDTO {
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
-	
-	
 
-	
 }
