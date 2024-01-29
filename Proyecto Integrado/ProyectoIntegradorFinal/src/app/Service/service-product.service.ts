@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Product } from '../Models/product';
 import { Supplier } from '../Models/supplier';
 import { productData } from '../data/productData';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,25 +13,33 @@ export class ServiceProductService {
   //Para buscar el nombre del proveedor
   supplierList: Supplier[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.productList = [...productData];
   }
 
-  getListupplier(): Supplier[] {
-    return this.supplierList;
+  private URL = 'http://localhost:8080/product';
+
+  public getListProducts(): Observable<any> {
+    return this.http.get(this.URL);
   }
 
-  getListProduct() {
-    return this.productList;
+  public getProductById(id: number): Observable<any> {
+    return this.http.get(`${this.URL}/${id}`);
   }
 
-  addProduct(newProduct: Product) {
-    this.productList.push(newProduct);
-
-    console.log('Agregando producto:', newProduct);
+  public postProduct(product: Product): Observable<any> {
+    return this.http.post<any>(this.URL, product);
   }
 
-  deleteProduct(id: string) {
+  public updateProduct(id: number, product: Product): Observable<any> {
+    return this.http.put<any>(`${this.URL}/${id}`, product);
+  }
+
+
+  
+  // ------------------------ ANTES DE BACK
+
+  deleteProduct(id: number) {
     const index = this.productList.findIndex((item) => item.idProduct === id);
     if (index !== -1) {
       this.productList.splice(index, 1);
@@ -40,12 +50,12 @@ export class ServiceProductService {
     return this.productList.find((item) => item.idProduct == id);
   }
 
-  public updateProduct(newProduct: Product) {
+  /*   public updateProduct(newProduct: Product) {
     let update = this.productList.find(
       (item) => item.idProduct == newProduct.idProduct
     );
     update = newProduct;
-  }
+  } */
 
   public getProductByName(productName: string): Product | undefined {
     return this.productList.find(
@@ -54,10 +64,12 @@ export class ServiceProductService {
   }
 
   getProductsBySupplier(supplier: string): Product[] {
-    return this.productList.filter((product) => product.supplierName === supplier);
+    return this.productList.filter(
+      (product) => product.supplierName === supplier
+    );
   }
 
-  public doesProductExist(id: string): boolean {
+  public doesProductExist(id: Number): boolean {
     return this.productList.some((product) => product.idProduct === id);
   }
 }

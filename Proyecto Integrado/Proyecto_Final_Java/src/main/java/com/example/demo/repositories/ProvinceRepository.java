@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.models.Provinces_Model;
+import com.example.demo.models.ProvincesModel;
 
-public interface ProvinceRepository extends JpaRepository<Provinces_Model, Integer>{
+public interface ProvinceRepository extends JpaRepository<ProvincesModel, Integer>{
 
-	Optional<Provinces_Model> findByProvince(String province);
+	Optional<ProvincesModel> findByProvince(String province);
 
 }

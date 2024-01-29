@@ -1,9 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
-import { Supplier } from '../../../../Models/supplier';
+import { ConditionAfip, Supplier } from '../../../../Models/supplier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Ubication } from '../../../../Models/location';
+import { CategorySupplierService } from '../../../../Service/category-supplier.service';
+import { CategorySupplier } from '../../../../Models/supplier';
+import { ConditionAfipService } from '../../../../Service/condition-afip.service';
 
 @Component({
   selector: 'app-form-supplier',
@@ -13,7 +16,8 @@ import { Ubication } from '../../../../Models/location';
 export class FormSupplierComponent {
   newsupplier: Supplier = {
     urlLogo: '',
-    idSupplier: '',
+    idSupplier: 0,
+    codeSupplier: '',
     nameSupplier: '',
     cuitSupplier: '',
     condicionAfipSupplier: '',
@@ -34,11 +38,12 @@ export class FormSupplierComponent {
     rolcontactSupplier: '',
   };
 
+  conditionsAfip: string[] = [];
+  categoriesSupplier: string[] = [];
+
   idSupplier: string = '';
   isUpdate: boolean = false;
 
-  // category: string[] = categorySupplier;
-  category: string[] = [];
   newCategory: string = '';
   isModalOpen: boolean = false;
   successMessage: string | null = null;
@@ -50,6 +55,8 @@ export class FormSupplierComponent {
 
   constructor(
     private supplierService: ServiceSupplierService,
+    private categorySupplierService: CategorySupplierService,
+    private conditionAfipService: ConditionAfipService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -58,14 +65,50 @@ export class FormSupplierComponent {
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
       if (id != undefined) {
-        this.newsupplier = this.supplierService.getIdSupplier(id)!;
-        console.log(this.supplierService.getIdSupplier(id)!);
-
-        console.log(this.newsupplier);
-        this.isUpdate = true;
+        this.supplierService.getSuppliertById(Number(id)).subscribe(
+          (supplier) => {
+            this.newsupplier = supplier;
+            this.isUpdate = true;
+          },
+          (error) => {
+            console.error('Error al obtener el producto por ID:', error);
+          }
+        );
       }
     });
+
     this.countrySelected();
+    this.getListCategorySupplier();
+    this.getListConditionAfip();
+  }
+  getListCategorySupplier() {
+    this.categorySupplierService.getCategoriesSupplier().subscribe(
+      (data: CategorySupplier[]) => {
+        console.log('Rubro proveedores:', data);
+        this.categoriesSupplier = data.map(
+          (categorySupplier: CategorySupplier) =>
+            categorySupplier.categorySupplier
+        );
+      },
+      (error) => {
+        console.error('Error al obtener categorías:', error);
+      }
+    );
+  }
+
+  getListConditionAfip() {
+    this.conditionAfipService.getConditionAfip().subscribe(
+      (data: ConditionAfip[]) => {
+        console.log('Condicion Afip:', data);
+        this.conditionsAfip = data.map(
+          (condicionAfipSupplier: ConditionAfip) =>
+            condicionAfipSupplier.conditionAfip
+        );
+      },
+      (error) => {
+        console.error('Error al obtener condicion afip:', error);
+      }
+    );
   }
 
   openModal() {
@@ -80,7 +123,7 @@ export class FormSupplierComponent {
 
   addCategory() {
     if (this.newCategory.trim() !== '') {
-      this.category.push(this.newCategory);
+      //    this.category.push(this.newCategory);
       this.newCategory = '';
       this.successMessage = 'Categoría agregada con éxito';
       setTimeout(() => this.closeModal(), 1000);
@@ -93,32 +136,26 @@ export class FormSupplierComponent {
       return;
     } else {
       if (this.isUpdate) {
-        this.supplierService.updateSupplier(this.newsupplier);
-        console.log('Actualizando Proveedor:', form.value);
+        this.supplierService
+          .updateSupplier(this.newsupplier.idSupplier, this.newsupplier)
+          .subscribe((data) => {
+            console.log('Actualizando Proveedor:', form.value);
+          });
 
         this.msj = true;
         setTimeout(() => {
           this.router.navigate(['/list-supplier']);
         }, 1500);
       } else {
-        if (
-          this.supplierService.doesSupplierExist(this.newsupplier.idSupplier)
-        ) {
-          console.log('ya existe el proveedor');
-          this.msjId = true;
-          setTimeout(() => {
-            this.newsupplier.idSupplier = '';
-            this.msjId = false;
-          }, 1500);
-          return;
-        }
-
-        this.supplierService.addSupplier(this.newsupplier);
-        console.log('Creando Nuevo Proveedor:', form.value);
-        this.msj = true;
-        setTimeout(() => {
-          this.router.navigate(['/list-supplier']);
-        }, 1500);
+        this.supplierService
+          .postSupplier(this.newsupplier)
+          .subscribe((data) => {
+            console.log('Creando un proveedor', data);
+            this.msj = true;
+            setTimeout(() => {
+              this.router.navigate(['/list-supplier']);
+            }, 1500);
+          });
       }
     }
   }
@@ -135,7 +172,8 @@ export class FormSupplierComponent {
   ClearForm() {
     this.newsupplier = {
       urlLogo: '',
-      idSupplier: '',
+      idSupplier: 0,
+      codeSupplier: '',
       nameSupplier: '',
       cuitSupplier: '',
       condicionAfipSupplier: '',

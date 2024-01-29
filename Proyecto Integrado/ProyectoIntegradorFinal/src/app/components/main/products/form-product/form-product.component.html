@@ -22,22 +22,22 @@
             <input
               type="text"
               class="form-control"
-              name="idProduct"
-              id="idProduct"
+              name="codeProduct"
+              id="codeProduct"
               minlength="4"
               maxlength="10"
               required
-              [(ngModel)]="newProduct.idProduct"
-              #idProduct="ngModel"
-              [ngClass]="idProduct.errors ? 'is-invalid' : 'is-valid'"
+              [(ngModel)]="newProduct.codeProduct"
+              #codeProduct="ngModel"
+              [ngClass]="codeProduct.errors ? 'is-invalid' : 'is-valid'"
               [disabled]="isUpdate"
             />
-            <div *ngIf="idProduct.errors?.['minlength']" class="col-auto">
+            <div *ngIf="codeProduct.errors?.['minlength']" class="col-auto">
               <span class="form-text"
                 >Debe tener al menos 4 caracteres y un maximo de 10</span
               >
             </div>
-            <div *ngIf="idProduct.errors?.['required']" class="col-auto">
+            <div *ngIf="codeProduct.errors?.['required']" class="col-auto">
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
@@ -56,7 +56,7 @@
               <option value="" disabled selected>
                 Selecciona el proveedor
               </option>
-              <option *ngFor="let name of supplierName" value="{{ name }}">
+              <option *ngFor="let name of suppliers" value="{{ name }}">
                 {{ name }}
               </option>
             </select>
@@ -77,13 +77,14 @@
               [ngClass]="categoryProduct.errors ? 'is-invalid' : 'is-valid'"
             >
               <option value="" disabled selected>
-                Selecciona la categoría
+                Selecciona una categoría
               </option>
-              <option value="Tecnologico">Tecnologico</option>
-              <option value="Alimentos">Alimentos</option>
-              <option value="Limpieza">Limpieza</option>
-              <option value="Ferreteria">Ferreteria</option>
-              <option value="Otro">Otro</option>
+              <option
+                *ngFor="let category of categories"
+                value="{{ category }}"
+              >
+                {{ category }}
+              </option>
             </select>
             <div *ngIf="categoryProduct.errors?.['required']" class="col-auto">
               <span class="form-text">Se debe completar este campo</span>

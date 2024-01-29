@@ -70,9 +70,9 @@ export class FormPurchaseOrderComponent implements OnInit {
       unitProduct: product.unitProduct,
     })); */
 
-    this.supplierName = this.serviceSupplier
+    /*    this.supplierName = this.serviceSupplier
       .getListSupplier()
-      .map((supplier) => supplier.nameSupplier);
+      .map((supplier) => supplier.nameSupplier); */
   }
 
   changeSupplier(supplier: any) {

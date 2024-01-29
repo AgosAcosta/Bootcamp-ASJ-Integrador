@@ -1,10 +1,11 @@
 export interface Supplier {
   urlLogo?: string;
-  idSupplier: string;
+  idSupplier: number;
+  codeSupplier: string;
   nameSupplier: string;
   cuitSupplier: string;
-  condicionAfipSupplier: string;
-  categorySupplier: string;
+  condicionAfipSupplier: String;
+  categorySupplier: String;
   streetSupplier: string;
   numSupplier: number;
   cpSupplier: number;
@@ -21,3 +22,12 @@ export interface Supplier {
   rolcontactSupplier: string;
 }
 
+export interface CategorySupplier {
+  idCategorySupplier: number;
+  categorySupplier: string;
+}
+
+export interface ConditionAfip {
+  idConditionAfip: number;
+  conditionAfip: string;
+}

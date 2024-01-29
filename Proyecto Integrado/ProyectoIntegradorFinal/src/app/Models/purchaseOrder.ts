@@ -15,3 +15,4 @@ export interface DetailProducts {
   priceProduct: number;
   unitProduct: number;
 }
+

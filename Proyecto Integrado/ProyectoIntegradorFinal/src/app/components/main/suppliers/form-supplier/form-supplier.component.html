@@ -23,22 +23,22 @@
             <input
               type="text"
               class="form-control"
-              name="idSupplier"
-              id="idSupplier"
-              [(ngModel)]="newsupplier.idSupplier"
+              name="codeSupplier"
+              id="codeSupplier"
+              [(ngModel)]="newsupplier.codeSupplier"
               minlength="4"
               maxlength="10"
               required
-              #idSupplier="ngModel"
-              [ngClass]="idSupplier.errors ? 'is-invalid' : 'is-valid'"
+              #codeSupplier="ngModel"
+              [ngClass]="codeSupplier.errors ? 'is-invalid' : 'is-valid'"
               [disabled]="isUpdate"
             />
-            <div *ngIf="idSupplier.errors?.['minlength']" class="col-auto">
+            <div *ngIf="codeSupplier.errors?.['minlength']" class="col-auto">
               <span class="form-text"
                 >Debe tener al menos 4 caracteres y un maximo de 10</span
               >
             </div>
-            <div *ngIf="idSupplier.errors?.['required']" class="col-auto">
+            <div *ngIf="codeSupplier.errors?.['required']" class="col-auto">
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
@@ -105,14 +105,12 @@
                 condicionAfipSupplier.errors ? 'is-invalid' : 'is-valid'
               "
             >
-              <option value="" disabled selected>
-                Selecciona la condición ante AFIP
+              <option
+                *ngFor="let condition of conditionsAfip"
+                [value]="condition"
+              >
+                {{ condition }}
               </option>
-              <option value="Responsable Inscripto">
-                Responsable Inscripto
-              </option>
-              <option value="Monotributista">Monotributista</option>
-              <option value="Consumidor Final">Consumidor Final</option>
             </select>
             <div
               *ngIf="condicionAfipSupplier.errors?.['required']"
@@ -140,8 +138,11 @@
                   <option value="" disabled selected>
                     Selecciona un rubro
                   </option>
-                  <option *ngFor="let c of category" [value]="c">
-                    {{ c }}
+                  <option
+                    *ngFor="let category of categoriesSupplier"
+                    [value]="category"
+                  >
+                    {{ category }}
                   </option>
                 </select>
                 <div

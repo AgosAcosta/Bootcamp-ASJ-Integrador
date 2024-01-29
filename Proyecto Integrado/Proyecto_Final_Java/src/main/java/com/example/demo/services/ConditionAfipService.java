@@ -1,18 +1,32 @@
 package com.example.demo.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.dto.ConditionAfipDTO;
+import com.example.demo.mapper.ConditionAfipMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.models.Conditions_Afip_Model;
+import com.example.demo.models.ConditionsAfipModel;
 import com.example.demo.repositories.ConditionsAfipRepository;
 
 @Service
 public class ConditionAfipService {
 
+	@Autowired
 	ConditionsAfipRepository conditionsAfipRepository;
-	
-	public Optional<Conditions_Afip_Model> getConditionById(int id) {
+
+	public List<ConditionAfipDTO> getAllConditionAfip(){
+		List<ConditionsAfipModel> conditionsAfipModels = conditionsAfipRepository.findAll();
+		List<ConditionAfipDTO> conditionAfipDTOS = new ArrayList<ConditionAfipDTO>();
+		for(ConditionsAfipModel condition : conditionsAfipModels){
+			conditionAfipDTOS.add(ConditionAfipMapper.getConditionAfip(condition).get());
+		}
+		return conditionAfipDTOS;
+	}
+	public Optional<ConditionsAfipModel> getConditionById(int id) {
 		if (id <= 0) {
 			throw new IllegalArgumentException("El ID de la condicion debe ser mayor que 0");
 		}

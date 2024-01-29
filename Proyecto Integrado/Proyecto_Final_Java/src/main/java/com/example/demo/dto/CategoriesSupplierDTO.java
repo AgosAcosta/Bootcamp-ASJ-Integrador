@@ -4,20 +4,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoriesSupplierDTO {
-    private String category_Supplier;
+    private int idCategorySupplier;
+    private String categorySupplier;
 
     public CategoriesSupplierDTO() {
     }
 
-    public CategoriesSupplierDTO(String category_Supplier) {
-        this.category_Supplier = category_Supplier;
+    public CategoriesSupplierDTO(int idCategorySupplier, String categorySupplier) {
+        this.idCategorySupplier = idCategorySupplier;
+        this.categorySupplier = categorySupplier;
     }
 
-    public String getCategory_Supplier() {
-        return category_Supplier;
+    public int getIdCategorySupplier() {
+        return idCategorySupplier;
     }
 
-    public void setCategory_Supplier(String category_Supplier) {
-        this.category_Supplier = category_Supplier;
+    public void setIdCategorySupplier(int idCategorySupplier) {
+        this.idCategorySupplier = idCategorySupplier;
+    }
+
+    public String getCategorySupplier() {
+        return categorySupplier;
+    }
+
+    public void setCategorySupplier(String categorySupplier) {
+        this.categorySupplier = categorySupplier;
     }
 }

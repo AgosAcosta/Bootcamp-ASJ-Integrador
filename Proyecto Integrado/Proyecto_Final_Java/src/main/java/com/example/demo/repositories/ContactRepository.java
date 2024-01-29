@@ -2,8 +2,8 @@ package com.example.demo.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.models.Contacts_Model;
+import com.example.demo.models.ContactsModel;
 
-public interface ContactRepository extends JpaRepository<Contacts_Model, Integer> {
+public interface ContactRepository extends JpaRepository<ContactsModel, Integer> {
 
 }

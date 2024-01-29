@@ -1,6 +1,7 @@
 export interface Product {
+  idProduct: number;
   urlLogo?: string;
-  idProduct: string;
+  codeProduct: string;
   categoryProduct: string;
   nameProduct: string;
   descriptionProduct: string;
@@ -8,3 +9,7 @@ export interface Product {
   supplierName: string;
 }
 
+export interface CategoryProduct {
+  idCategoryProduct: number;
+  categoryProduct: string;
+}

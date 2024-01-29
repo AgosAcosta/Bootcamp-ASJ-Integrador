@@ -12,13 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.models.ErrorHandler;
-import com.example.demo.models.Product_Model;
-import com.example.demo.models.Suppliers_Model;
 import com.example.demo.services.ProductService;
-import com.example.demo.services.SupplierService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/product")
 public class ProductsController {

@@ -11,28 +11,28 @@
 
   <div class="col-8">
     <h4>Información del Producto:</h4>
-    <p>Código:{{ product?.idProduct }}</p>
+    <p>Código:{{ product?.codeProduct }}</p>
     <p>Nombre:{{ product?.nameProduct }}</p>
     <p>Proveedor:{{ product?.supplierName }}</p>
     <p>Descripción: {{ product?.descriptionProduct }}</p>
     <p>Precio: {{ product?.priceProduct | currency }}</p>
 
     <button
-    type="button"
-    class="btn btn-success btn-sm"
-    [routerLink]="['/list-product', product?.idProduct]"
-    style="margin-right: 5px"
-  >
-    Editar
-  </button>
-  
-  <button
-    type="button"
-    class="btn btn-primary btn-sm"
-    routerLink="/list-product"
-    style="margin-right: 5px"
-  >
-    Volver
-  </button>
+      type="button"
+      class="btn btn-success btn-sm"
+      [routerLink]="['/list-product', product?.idProduct]"
+      style="margin-right: 5px"
+    >
+      Editar
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
+      routerLink="/list-product"
+      style="margin-right: 5px"
+    >
+      Volver
+    </button>
   </div>
 </div>

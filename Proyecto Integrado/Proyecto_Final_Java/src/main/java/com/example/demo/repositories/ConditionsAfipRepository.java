@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.models.Conditions_Afip_Model;
+import com.example.demo.models.ConditionsAfipModel;
 
-public interface ConditionsAfipRepository extends JpaRepository<Conditions_Afip_Model, Integer>{
-	  Optional<Conditions_Afip_Model> findByCondition(String condition);
+public interface ConditionsAfipRepository extends JpaRepository<ConditionsAfipModel, Integer>{
+	  Optional<ConditionsAfipModel> findByCondition(String condition);
 
 }

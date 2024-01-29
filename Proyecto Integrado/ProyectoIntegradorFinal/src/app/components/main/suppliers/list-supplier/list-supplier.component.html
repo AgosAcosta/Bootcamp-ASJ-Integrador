@@ -35,12 +35,14 @@
         <tbody>
           <tr *ngFor="let item of supplierList">
             <td>
-              <img src="{{ item?.urlLogo }}"
-              class="rounded mx-auto d-block"
-              alt="..."
-              (error)="handleImageError($event)" />
+              <img
+                src="{{ item?.urlLogo }}"
+                class="rounded mx-auto d-block"
+                alt="..."
+                (error)="handleImageError($event)"
+              />
             </td>
-            <td>{{ item.idSupplier }}</td>
+            <td>{{ item.codeSupplier }}</td>
             <td>{{ item.nameSupplier }}</td>
             <td>
               <strong>Sitio web:</strong> {{ item.webSupplier }} <br />

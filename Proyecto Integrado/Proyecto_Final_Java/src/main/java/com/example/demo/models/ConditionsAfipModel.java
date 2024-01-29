@@ -14,15 +14,16 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "conditions_afip")
-public class Conditions_Afip_Model {
+public class ConditionsAfipModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Integer id_condition_afip;
+	@Column(name="id_condition_afip", unique = true, nullable = false)
+	private Integer idConditionAfip;
 	
 	@NotNull(message = "La condicion ante AFIP no puede estar vacia" )
 	@Size(min = 4, max = 40, message = "La condicion ante AFIP debe tener entre 4 y 40 caracteres")
+	@Column(name="condition",nullable = false)
 	private String condition;
 	
 	@NotNull(message = "La fecha de creacion no puede estar vacio")
@@ -32,42 +33,48 @@ public class Conditions_Afip_Model {
 	private Timestamp update_at;
 	
 	
-	public Conditions_Afip_Model() {
+	public ConditionsAfipModel() {
 
 	}
 
-	public Conditions_Afip_Model(Integer id,
-			@NotNull(message = "La condicion ante AFIP no puede estar vacia") String condition, Timestamp created_at,
-			Timestamp update_at) {
-		this.id_condition_afip  = id;
+	public ConditionsAfipModel(Integer id,
+							   @NotNull(message = "La condicion ante AFIP no puede estar vacia") String condition, Timestamp created_at,
+							   Timestamp update_at) {
+		this.idConditionAfip = id;
 		this.condition = condition;
 		this.created_at = created_at;
 		this.update_at = update_at;
 	}
-	
-	public Integer getId() {
-		return id_condition_afip ;
+
+	public Integer getIdConditionAfip() {
+		return idConditionAfip;
 	}
-	public void setId(Integer id) {
-		this.id_condition_afip  = id;
+
+	public void setIdConditionAfip(Integer idConditionAfip) {
+		this.idConditionAfip = idConditionAfip;
 	}
+
 	public String getCondition() {
 		return condition;
 	}
+
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
+
 	public Timestamp getCreated_at() {
 		return created_at;
 	}
+
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
+
 	public Timestamp getUpdate_at() {
 		return update_at;
 	}
+
 	public void setUpdate_at(Timestamp update_at) {
 		this.update_at = update_at;
 	}
-	
 }

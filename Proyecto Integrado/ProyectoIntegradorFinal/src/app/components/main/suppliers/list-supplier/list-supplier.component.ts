@@ -21,7 +21,12 @@ export class ListSupplierComponent {
   }
 
   listSupplier() {
-    this.supplierList = this.supplierService.getListSupplier();
+    // this.supplierList = this.supplierService.getListSupplier();
+    this.supplierService.getListSupplier().subscribe((data) => {
+      this.supplierList = data;
+
+      console.log('Cargando Lista', data);
+    });
   }
 
   deleteSupplier(id: any) {

@@ -1,7 +1,5 @@
 package com.example.demo.models;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,27 +11,32 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "status_purchase_orders")
-public class Status_Purchase_Orders_Model {
+public class StatusPurchaseOrdersModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Integer id_status_order;
+	@Column(name="id_status_order", unique = true, nullable = false)
+	private Integer idStatusOrder;
 	
-	@NotNull(message = "El estado no puede estar vacio")
+	//@NotNull(message = "El estado no puede estar vacio")
 	@Size(min = 4, max = 40, message = "El estado debe tener entre 4 y 40 caracteres")
+	@Column(name="status",nullable = false)
 	private String status;
-	public Status_Purchase_Orders_Model(Integer id_status_order,
-			@NotNull(message = "El estado no puede estar vacio") @Size(min = 4, max = 40, message = "El estado debe tener entre 4 y 40 caracteres") String status
+
+	public StatusPurchaseOrdersModel() {
+	}
+
+	public StatusPurchaseOrdersModel(Integer idStatusOrder,
+									 @NotNull(message = "El estado no puede estar vacio") @Size(min = 4, max = 40, message = "El estado debe tener entre 4 y 40 caracteres") String status
 			) {
-		this.id_status_order = id_status_order;
+		this.idStatusOrder = idStatusOrder;
 		this.status = status;
 	}
-	public Integer getId_status_order() {
-		return id_status_order;
+	public Integer getIdStatusOrder() {
+		return idStatusOrder;
 	}
-	public void setId_status_order(Integer id_status_order) {
-		this.id_status_order = id_status_order;
+	public void setIdStatusOrder(Integer idStatusOrder) {
+		this.idStatusOrder = idStatusOrder;
 	}
 	public String getStatus() {
 		return status;

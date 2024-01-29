@@ -1,7 +1,5 @@
 package com.example.demo.models;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,49 +14,50 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "provinces")
-public class Provinces_Model {
+public class ProvincesModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Integer id_province;
+	@Column(name="id_province", unique = true, nullable = false)
+	private Integer idProvince;
 	
 	@NotNull(message = "El ID Pais no puede estar vacio" )
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id_country", name = "id_country")
-	private Countries_Model country;
+	private CountriesModel country;
 	
 	@NotNull(message = "La provincia no puede estar vacia" )
 	@Size(min = 4, max = 40, message = "La provincia debe tener entre 4 y 40 caracteres")
+	@Column(name="province",nullable = false)
 	private String  province;
 
 
-	public Provinces_Model() {
+	public ProvincesModel() {
 
 	}
 
-	public Provinces_Model(Integer id_province,
-			@NotNull(message = "El ID Pais no puede estar vacio") Countries_Model country,
-			@NotNull(message = "La provincia no puede estar vacia") @Size(min = 4, max = 40, message = "La provincia debe tener entre 4 y 40 caracteres") String province) {
-		this.id_province = id_province;
+	public ProvincesModel(Integer idProvince,
+						  @NotNull(message = "El ID Pais no puede estar vacio") CountriesModel country,
+						  @NotNull(message = "La provincia no puede estar vacia") @Size(min = 4, max = 40, message = "La provincia debe tener entre 4 y 40 caracteres") String province) {
+		this.idProvince = idProvince;
 		this.country = country;
 		this.province = province;
 
 	}
 
-	public Integer getId_province() {
-		return id_province;
+	public Integer getIdProvince() {
+		return idProvince;
 	}
 
-	public void setId_province(Integer id_province) {
-		this.id_province = id_province;
+	public void setIdProvince(Integer idProvince) {
+		this.idProvince = idProvince;
 	}
 
-	public Countries_Model getCountry() {
+	public CountriesModel getCountry() {
 		return country;
 	}
 
-	public void setCountry(Countries_Model country) {
+	public void setCountry(CountriesModel country) {
 		this.country = country;
 	}
 

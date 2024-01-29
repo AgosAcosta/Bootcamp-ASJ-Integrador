@@ -13,12 +13,12 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "categories_products")
-public class Categories_Product_Model {
+public class CategoriesProductModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Integer id_category_product;
+	@Column(name="id_category_product", unique = true, nullable = false)
+	private Integer idCategoryProduct;
 	
 	@NotNull(message = "La categoría del producto no puede estar vacio" )
 	@Size(min = 4, max = 40, message = "La categoría del producto debe tener entre 4 y 40 caracteres")
@@ -36,18 +36,18 @@ public class Categories_Product_Model {
 	private Timestamp update_at;
 	
 
-	public Categories_Product_Model() {
+	public CategoriesProductModel() {
 	
 	}
 	
 
 
-	public Categories_Product_Model(Integer id_category_product,
-			@NotNull(message = "La categoría del producto no puede estar vacio") @Size(min = 4, max = 40, message = "La categoría del producto debe tener entre 4 y 40 caracteres") String category_product,
-			@NotNull(message = "Debe selecionar si esta eliminado") boolean deleteCategoryProduct,
-			@NotNull(message = "La fecha de creacion no puede estar vacio") Timestamp created_at,
-			@NotNull(message = "La fecha de actualizacion no puede estar vacio") Timestamp update_at) {
-		this.id_category_product = id_category_product;
+	public CategoriesProductModel(Integer idCategoryProduct,
+								  @NotNull(message = "La categoría del producto no puede estar vacio") @Size(min = 4, max = 40, message = "La categoría del producto debe tener entre 4 y 40 caracteres") String category_product,
+								  @NotNull(message = "Debe selecionar si esta eliminado") boolean deleteCategoryProduct,
+								  @NotNull(message = "La fecha de creacion no puede estar vacio") Timestamp created_at,
+								  @NotNull(message = "La fecha de actualizacion no puede estar vacio") Timestamp update_at) {
+		this.idCategoryProduct = idCategoryProduct;
 		this.categoryProduct = category_product;
 		this.deleteCategoryProduct = deleteCategoryProduct;
 		this.created_at = created_at;
@@ -64,11 +64,11 @@ public class Categories_Product_Model {
 		this.deleteCategoryProduct = deleteCategoryProduct;
 	}
 	
-	public Integer getId_category_product() {
-		return id_category_product;
+	public Integer getIdCategoryProduct() {
+		return idCategoryProduct;
 	}
-	public void setId_category_product(Integer id_category_product) {
-		this.id_category_product = id_category_product;
+	public void setIdCategoryProduct(Integer idCategoryProduct) {
+		this.idCategoryProduct = idCategoryProduct;
 	}
 	public String getCategoryProduct() {
 		return categoryProduct;
@@ -77,5 +77,19 @@ public class Categories_Product_Model {
 		this.categoryProduct = categoryProduct;
 	}
 
-	
+	public Timestamp getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Timestamp created_at) {
+		this.created_at = created_at;
+	}
+
+	public Timestamp getUpdate_at() {
+		return update_at;
+	}
+
+	public void setUpdate_at(Timestamp update_at) {
+		this.update_at = update_at;
+	}
 }

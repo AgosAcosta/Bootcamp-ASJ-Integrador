@@ -22,7 +22,13 @@ export class ListProductComponent implements OnInit {
   }
 
   listProduct() {
-    this.productList = this.serviceProduct.getListProduct();
+    // this.productList = this.serviceProduct.getListProduct();
+
+    this.serviceProduct.getListProducts().subscribe((data) => {
+      this.productList = data;
+
+      console.log('Cargando Lista', data);
+    });
   }
 
   deleteProduct(id: any) {
@@ -33,7 +39,7 @@ export class ListProductComponent implements OnInit {
     }
   }
   sortProductsByName() {
-    this.productList.sort((a, b) => a.nameProduct.localeCompare(b.nameProduct));
+    // this.productList.sort((a, b) => a.nameProduct.localeCompare(b.nameProduct));
     //Función que ordena y compara elementos
   }
 
