@@ -9,8 +9,9 @@ import com.example.demo.models.SuppliersModel;
 
 public interface SupplierRepository extends JpaRepository<SuppliersModel, Integer>{
 
-	//boolean existsByCode(String code_supplier);
-
+	boolean existsByCodeSupplier(String code);
+	boolean existsByCuitSupplier(String cuit);
 	Optional<SuppliersModel> findByNameSupplier(String name_supplier);
 	List<SuppliersModel> findByDeleteSupplierFalse();
+	List<SuppliersModel> findByDeleteSupplierTrue();
 }

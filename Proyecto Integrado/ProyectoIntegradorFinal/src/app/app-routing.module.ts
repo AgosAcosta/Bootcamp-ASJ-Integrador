@@ -19,7 +19,7 @@ const routes: Routes = [
       { path: '', component: ListSupplierComponent },
       { path: 'new', component: FormSupplierComponent },
       { path: ':id', component: FormSupplierComponent },
-      { path: ':id/detail', component: DetailsSupplierComponent },
+      { path: 'detail/:id', component: DetailsSupplierComponent },
     ],
   },
   {
@@ -28,7 +28,7 @@ const routes: Routes = [
       { path: '', component: ListProductComponent },
       { path: 'new', component: FormProductComponent },
       { path: ':id', component: FormProductComponent },
-      { path: ':id/detail', component: DetailsProductComponent },
+      { path: 'detail/:id', component: DetailsProductComponent },
     ],
   },
   {
@@ -37,7 +37,7 @@ const routes: Routes = [
       { path: '', component: ListPurchaseOrderComponent },
       { path: 'new', component: FormPurchaseOrderComponent },
       { path: ':id', component: FormPurchaseOrderComponent },
-      { path: ':id/detail', component: DetailsPurchaseOrderComponent },
+      { path: 'detail/:id', component: DetailsPurchaseOrderComponent },
     ],
   },
 ];

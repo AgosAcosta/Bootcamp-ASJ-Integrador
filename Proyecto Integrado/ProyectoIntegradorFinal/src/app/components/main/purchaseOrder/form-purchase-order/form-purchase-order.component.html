@@ -12,23 +12,11 @@
               class="form-control"
               name="idPurchaseOrder"
               id="idPurchaseOrder"
-              minlength="4"
-              maxlength="10"
               required
               [(ngModel)]="newPurchaseOrder.idPurchaseOrder"
               [ngModelOptions]="{ standalone: true }"
-              [disabled]="isUpdate"
-              #idPurchaseOrder="ngModel"
-              [ngClass]="idPurchaseOrder.errors ? 'is-invalid' : 'is-valid'"
+              disabled
             />
-            <div *ngIf="idPurchaseOrder.errors?.['minlength']" class="col-auto">
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 10</span
-              >
-            </div>
-            <div *ngIf="idPurchaseOrder.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
           </div>
           <div class="form-group">
             <label for="dateIssue">Fecha Emisión:</label>
@@ -39,6 +27,7 @@
               id="dateIssue"
               min="{{ date | date : 'yyyy-MM-dd' }}"
               required
+              [disabled]="isUpdate"
               [(ngModel)]="newPurchaseOrder.dateIssue"
               [ngModelOptions]="{ standalone: true }"
               #dateIssue="ngModel"
@@ -83,7 +72,7 @@
         </fieldset>
 
         <!-- Sección Detalle Orden -->
-        <fieldset>
+        <fieldset *ngIf="!isUpdate">
           <div class="form-group">
             <label for="supplierName">Proveedor:</label>
             <select
@@ -92,7 +81,7 @@
               [(ngModel)]="newPurchaseOrder.supplier"
               [ngModelOptions]="{ standalone: true }"
               required
-              (change)="changeSupplier(newPurchaseOrder.supplier)"
+              (change)="onSupplierSelected(newPurchaseOrder.supplier)"
               [disabled]="!supplierPoin || isUpdate"
               #supplier="ngModel"
               [ngClass]="supplier.errors ? 'is-invalid' : 'is-valid'"
@@ -100,7 +89,7 @@
               <option value="" disabled selected>
                 Selecciona el proveedor
               </option>
-              <option *ngFor="let name of supplierName" [value]="name">
+              <option *ngFor="let name of suppliers" value="{{ name }}">
                 {{ name }}
               </option>
             </select>
@@ -114,13 +103,13 @@
               class="form-control"
               name="product"
               [(ngModel)]="detailProducts.nameProduct"
-              (ngModelChange)="calculateTotal()"
+              (ngModelChange)="onProductSelected()"
               required
               [disabled]="isUpdate"
             >
               <option value="" disabled selected>Selecciona el producto</option>
               <option
-                *ngFor="let product of allProducts"
+                *ngFor="let product of products"
                 [value]="product.nameProduct"
               >
                 {{ product.nameProduct }}
@@ -130,6 +119,13 @@
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
+          <div class="form-group text-left">
+            <label for="priceProduct">Precio:</label>
+            <span *ngIf="selectedProduct" class="form-control" disabled>{{
+              selectedProduct.priceProduct | currency
+            }}</span>
+          </div>
+
           <div class="form-group">
             <label for="unitProduct">Cantidad:</label>
             <input
@@ -149,10 +145,10 @@
           </div>
         </fieldset>
         <button
+          *ngIf="!isUpdate"
           type="button"
           class="btn btn-primary"
-          (click)="addOrderDetail()"
-          [disabled]="isUpdate"
+          (click)="addOrderDetails()"
         >
           Agregar Detalle
         </button>
@@ -164,12 +160,14 @@
             <tr>
               <th>Producto</th>
               <th>Cantidad</th>
+              <th>Subtotal</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of newPurchaseOrder.products; let i = index">
               <td>{{ item.nameProduct }}</td>
               <td>{{ item.unitProduct }}</td>
+              <td>{{ item.unitProduct * item.priceProduct | currency }}</td>
             </tr>
           </tbody>
         </table>
@@ -179,7 +177,7 @@
           class="form-group d-flex align-items-center"
         >
           <span class="total-value" id="idTotal"
-            >Total:{{ newPurchaseOrder.total | currency }}</span
+            >Total: {{ newPurchaseOrder.total | currency }}</span
           >
         </div>
       </div>
@@ -194,7 +192,6 @@
       type="submit"
       class="btn btn-success"
       [disabled]="isUpdate ? false : !myForm.valid"
-      *ngIf="newPurchaseOrder.total > 0"
     >
       Guardar
     </button>

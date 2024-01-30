@@ -21,7 +21,8 @@
       <table *ngIf="productList && productList.length > 0">
         <thead>
           <tr>
-            <th>Logo</th>
+            <th>Producto</th>
+            <th>SKU</th>
             <th>Nombre</th>
             <th>Categoría</th>
             <th>Proveedor</th>
@@ -33,12 +34,16 @@
           <tr *ngFor="let item of productList">
             <td>
               <img
-                src="{{ item?.urlLogo }}"
+                *ngIf="item.urlLogo"
+                [src]="item.urlLogo"
                 class="rounded mx-auto d-block"
-                alt="..."
+                alt="Producto"
                 (error)="handleImageError($event)"
+                width="70"
+                height="70"
               />
             </td>
+            <td>{{ item.codeProduct }}</td>
             <td>{{ item.nameProduct }}</td>
             <td>{{ item.categoryProduct }}</td>
             <td>{{ item.supplierName }}</td>
@@ -46,7 +51,7 @@
             <td>
               <a
                 class="btn btn-primary btn-sm"
-                [routerLink]="['/list-product', item.idProduct, 'detail']"
+                [routerLink]="['/list-product/detail', item.idProduct]"
                 ngbTooltip="Ver"
                 ><i class="bi bi-eye"></i
               ></a>

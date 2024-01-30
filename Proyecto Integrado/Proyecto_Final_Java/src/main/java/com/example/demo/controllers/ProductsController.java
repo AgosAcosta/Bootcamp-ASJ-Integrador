@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.example.demo.dto.ProductResponseDTO;
+import com.example.demo.dto.ProvincesDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,6 +69,16 @@ public class ProductsController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(response.get());
+    }
+
+    @GetMapping("/{supplierId}/supplier")
+    public ResponseEntity<List<ProductResponseDTO>> getProductBySupplierId(@PathVariable int supplierId) {
+        try {
+            List<ProductResponseDTO> productResponseDTOS = productService.getProductBySupplierId(supplierId);
+            return new ResponseEntity<>(productResponseDTOS, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

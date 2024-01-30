@@ -29,6 +29,11 @@ public class SupplierController {
 		return ResponseEntity.ok(supplierService.getAllSupplier());
 	}
 
+	@GetMapping("/deleteTrue")
+	public ResponseEntity<List<SupplierResponseDTO>> getAllSuplliersDeleteTrue() {
+		return ResponseEntity.ok(supplierService.getAllSupplierDelete());
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<SupplierResponseDTO>> getSupllierById(@PathVariable int id) {
 		Optional<SupplierResponseDTO> supplier = supplierService.getSupplierById(id);
@@ -62,11 +67,31 @@ public class SupplierController {
 	@PatchMapping("/delete/{id}")
 	public ResponseEntity<SupplierResponseDTO> deleteById(@PathVariable Integer id) {
 		Optional<SupplierResponseDTO> response = supplierService.findByDeleteSupplierFalse(id);
-
 		if (response.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok().body(response.get());
 	}
+
+	@PatchMapping("/active/{id}")
+	public ResponseEntity<SupplierResponseDTO> activeById(@PathVariable Integer id) {
+		Optional<SupplierResponseDTO> response = supplierService.findByDeleteSupplierTrue(id);
+		if (response.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(response.get());
+	}
+
+	@PatchMapping("/exists/cuit/{cuit}")
+	public ResponseEntity<Boolean> existsCuit(@PathVariable String cuit) {
+		boolean response = supplierService.validateSupplierCuit(cuit);
+		return ResponseEntity.ok().body(response);
+	}
+	@PatchMapping("/exists/code/{code}")
+	public ResponseEntity<Boolean> existsCode(@PathVariable String code) {
+		boolean response = supplierService.validateSupplierCode( code);
+		return ResponseEntity.ok().body(response);
+	}
+
 
 }

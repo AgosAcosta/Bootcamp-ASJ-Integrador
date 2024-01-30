@@ -41,8 +41,9 @@ public class StatusPurchaseOrdersModel {
 	public String getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public StatusPurchaseOrdersModel setStatus(String status) {
 		this.status = status;
-	}
+        return null;
+    }
 	
 }

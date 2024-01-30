@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.Valid;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,12 +9,11 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PurchaseOrderDTO {
     private int idPurchaseOrder;
-
-    private String codePurchaseOrder;
     private Timestamp dateIssue;
     private Timestamp dateDelivery;
     private String recepcion;
     private String supplier;
+//    @Valid
     private List<DetailsPurchaseOrderDTO> products;
     private double total;
     private String status;
@@ -21,9 +21,9 @@ public class PurchaseOrderDTO {
     public PurchaseOrderDTO() {
     }
 
-    public PurchaseOrderDTO(int idPurchaseOrder, String codePurchaseOrder, Timestamp dateIssue, Timestamp dateDelivery, String recepcion, String supplier, List<DetailsPurchaseOrderDTO> products, double total, String status) {
+    public PurchaseOrderDTO(int idPurchaseOrder,  Timestamp dateIssue, Timestamp dateDelivery, String recepcion, String supplier, List<DetailsPurchaseOrderDTO> products, double total, String status) {
         this.idPurchaseOrder = idPurchaseOrder;
-        this.codePurchaseOrder = codePurchaseOrder;
+
         this.dateIssue = dateIssue;
         this.dateDelivery = dateDelivery;
         this.recepcion = recepcion;
@@ -97,11 +97,4 @@ public class PurchaseOrderDTO {
         this.status = status;
     }
 
-    public String getCodePurchaseOrder() {
-        return codePurchaseOrder;
-    }
-
-    public void setCodePurchaseOrder(String codePurchaseOrder) {
-        this.codePurchaseOrder = codePurchaseOrder;
-    }
 }

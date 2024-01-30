@@ -1,11 +1,13 @@
 package com.example.demo.controllers;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import com.example.demo.dto.PurchaseOrderDTO;
 import com.example.demo.dto.SupplierResponseDTO;
+import com.example.demo.mapper.PurchaseOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +43,36 @@ public class PurchaseOrderController {
 		}
 	}
 	@PostMapping()
-	public ResponseEntity<Object> postProduct(@Valid @RequestBody PurchaseOrderDTO order,
+	public ResponseEntity<Object> postPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO order,
 			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
 			return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
 		}
 		return ResponseEntity.ok(purchaseOrderService.postPurchaseOrder(order));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Object> putPurchaseOrder(@PathVariable int id, @RequestBody PurchaseOrderDTO purchaseOrderDTO,
+											  BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
+			return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
+		}
+		Timestamp newDateDelivery = purchaseOrderDTO.getDateDelivery();
+		String newReception = purchaseOrderDTO.getRecepcion();
+
+		PurchaseOrdersModel updatedOrder = purchaseOrderService.updatePurchaseOrder(id, newDateDelivery, newReception);
+		return ResponseEntity.ok(updatedOrder);
+	}
+	@PatchMapping("/delete/{id}")
+	public ResponseEntity<PurchaseOrderDTO> deleteById(@PathVariable Integer id) {
+		Optional<PurchaseOrderDTO> response = purchaseOrderService.findByDeletePurchaseOrderFalse(id);
+
+		if (response.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(response.get());
 	}
 
 }

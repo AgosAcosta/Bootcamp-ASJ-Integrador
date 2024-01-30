@@ -2,6 +2,8 @@ import { Injectable, IterableDiffers } from '@angular/core';
 import { PurchaseOrder } from '../Models/purchaseOrder';
 import { Supplier } from '../Models/supplier';
 import { Product } from '../Models/product';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,53 +16,30 @@ export class ServicePurchaseOrderService {
   productList: Product[] = [];
 
   //Varios productos Orden de compra:
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
+  private URL = 'http://localhost:8080/purchaseOrder';
 
-  getListSupplier(): Supplier[] {
-    return this.supplierList;
-  }
-  getListProduct() {
-    return this.productList;
+  public getListPurchaseOrder(): Observable<any> {
+    return this.http.get(this.URL);
   }
 
-  getListPurchaseOrder() {
-    return this.purchaseOrderList;
+  public postPurchaseOrder(purchaseOrder: PurchaseOrder): Observable<any> {
+    return this.http.post(this.URL, purchaseOrder);
   }
 
-  addPurchaseOrder(newPurchaseOrder: PurchaseOrder) {
-    this.purchaseOrderList.push(newPurchaseOrder);
-    console.log('Agregando orden nueva:', newPurchaseOrder);
+  public getPurchaseOrderById(id: number): Observable<any> {
+    return this.http.get(`${this.URL}/${id}`);
   }
 
-  public getIdPurchaseOrder(id: any): PurchaseOrder | undefined {
-    return this.purchaseOrderList.find((item) => item.idPurchaseOrder == id);
+  public updatePurchaseOrder(
+    id: number,
+    order: PurchaseOrder
+  ): Observable<any> {
+    return this.http.put(`${this.URL}/${id}`, order);
   }
 
-  public updatePurchaseOrder(newPurchaseOrder: PurchaseOrder) {
-    const updateIndex = this.purchaseOrderList.findIndex(
-      (item) => item.idPurchaseOrder === newPurchaseOrder.idPurchaseOrder
-    );
-
-    if (updateIndex !== -1) {
-      this.purchaseOrderList[updateIndex] = newPurchaseOrder;
-    }
-  }
-
-  public changeStatus(
-    id: string,
-    newStatus: string
-  ): PurchaseOrder | undefined {
-    const orderToUpdate = this.purchaseOrderList.find(
-      (item) => item.idPurchaseOrder === id
-    );
-    if (orderToUpdate) {
-      orderToUpdate.status = newStatus;
-    }
-    return orderToUpdate;
-  }
-
-  public doesPurchaseOrderExist(id: string): boolean {
-    return this.purchaseOrderList.some((order) => order.idPurchaseOrder === id);
+  public cancelledPurchaseOrder(id: number): Observable<any> {
+    return this.http.patch<any>(`${this.URL}/delete/${id}`, {});
   }
 }

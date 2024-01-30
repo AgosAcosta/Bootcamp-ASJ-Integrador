@@ -10,12 +10,16 @@ import { HttpClient } from '@angular/common/http';
 export class ServiceSupplierService {
   constructor(private http: HttpClient) {}
 
-  supplierList: Supplier[] = supplierData;
+  //supplierList: Supplier[] = supplierData;
 
   private URL = 'http://localhost:8080/supplier';
 
   public getListSupplier(): Observable<any> {
     return this.http.get(this.URL);
+  }
+
+  public getListSupplierDelete(): Observable<any> {
+    return this.http.get(`${this.URL}/deleteTrue`);
   }
 
   public getSuppliertById(id: number): Observable<any> {
@@ -30,37 +34,19 @@ export class ServiceSupplierService {
     return this.http.put<any>(`${this.URL}/${id}`, supplier);
   }
 
-
-
-  
-
-  addSupplier(newsupplier: Supplier) {
-    this.supplierList.push(newsupplier);
-
-    console.log('Agregando proveedor:', newsupplier);
+  public deleteSupplier(id: number): Observable<any> {
+    return this.http.patch<any>(`${this.URL}/delete/${id}`, {});
   }
 
-  deleteSupplier(id: number) {
-    const index = this.supplierList.findIndex((item) => item.idSupplier === id);
-    if (index !== -1) {
-      this.supplierList.splice(index, 1);
-    }
+  public activeSupplier(id: number): Observable<any> {
+    return this.http.patch<any>(`${this.URL}/active/${id}`, {});
   }
 
-  public getIdSupplier(id: any): Supplier {
-    const prove = this.supplierList.filter((item) => item.idSupplier == id)[0];
-    console.log('prove', prove);
-    return prove;
+  public existsCuit(cuit: string): Observable<boolean> {
+    return this.http.patch<boolean>(`${this.URL}/exists/cuit/${cuit}`, null);
   }
 
-  /*   public updateSupplier(newsupplier: Supplier) {
-    let update = this.supplierList.find(
-      (item) => item.idSupplier == newsupplier.idSupplier
-    );
-    update = newsupplier;
-  } */
-
-  public doesSupplierExist(id: number): boolean {
-    return this.supplierList.some((supplier) => supplier.idSupplier === id);
+  public existsCode(code: string): Observable<boolean> {
+    return this.http.patch<boolean>(`${this.URL}/exists/code/${code}`, null);
   }
 }

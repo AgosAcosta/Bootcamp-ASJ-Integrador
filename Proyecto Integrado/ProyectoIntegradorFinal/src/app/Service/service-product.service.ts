@@ -35,8 +35,10 @@ export class ServiceProductService {
     return this.http.put<any>(`${this.URL}/${id}`, product);
   }
 
+  public getProductsBySupplierId(supplierId: number): Observable<any> {
+    return this.http.get<any>(`${this.URL}/${supplierId}/supplier`);
+  }
 
-  
   // ------------------------ ANTES DE BACK
 
   deleteProduct(id: number) {
@@ -49,13 +51,6 @@ export class ServiceProductService {
   public getIdProduct(id: any): Product | undefined {
     return this.productList.find((item) => item.idProduct == id);
   }
-
-  /*   public updateProduct(newProduct: Product) {
-    let update = this.productList.find(
-      (item) => item.idProduct == newProduct.idProduct
-    );
-    update = newProduct;
-  } */
 
   public getProductByName(productName: string): Product | undefined {
     return this.productList.find(

@@ -17,19 +17,26 @@ export class ListPurchaseOrderComponent implements OnInit {
   }
 
   listPurchaseOrder() {
-    this.purchaseOrderList = this.servicePurchaseOrder.getListPurchaseOrder();
-    console.log('Para ver estado:', this.purchaseOrderList);
+    this.servicePurchaseOrder.getListPurchaseOrder().subscribe(
+      (data: PurchaseOrder[]) => {
+        console.log('Obteniendo orden de compra', data);
+        this.purchaseOrderList = data;
+      },
+      (error) => {
+        console.error('Error al obtener orden de compra:', error);
+      }
+    );
   }
 
   statusPucharseOrder(id: any) {
     let msj = confirm('Desea cancelar la orden de compra?');
     if (msj) {
-      const newStatus = 'Cancelado';
-      const updatedOrder = this.servicePurchaseOrder.changeStatus(
-        id,
-        newStatus
-      );
-
+      const updatedOrder = this.servicePurchaseOrder
+        .cancelledPurchaseOrder(id)
+        .subscribe((data) => {
+          console.log('CAMBIANDO ESTADO', data);
+          this.listPurchaseOrder();
+        });
       if (updatedOrder) {
         this.listPurchaseOrder();
       }

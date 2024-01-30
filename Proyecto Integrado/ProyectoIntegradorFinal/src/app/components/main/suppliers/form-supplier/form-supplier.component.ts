@@ -1,12 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
-import { ConditionAfip, Supplier } from '../../../../Models/supplier';
+import {
+  ConditionAfip,
+  Country,
+  Provinces,
+  Supplier,
+} from '../../../../Models/supplier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Ubication } from '../../../../Models/location';
 import { CategorySupplierService } from '../../../../Service/category-supplier.service';
 import { CategorySupplier } from '../../../../Models/supplier';
 import { ConditionAfipService } from '../../../../Service/condition-afip.service';
+import { UbicationService } from '../../../../Service/ubication.service';
 
 @Component({
   selector: 'app-form-supplier',
@@ -40,6 +46,11 @@ export class FormSupplierComponent {
 
   conditionsAfip: string[] = [];
   categoriesSupplier: string[] = [];
+  provinces: string[] = [];
+  countries: string[] = [];
+
+  existsCode: boolean = false;
+  existsCuit: boolean = false;
 
   idSupplier: string = '';
   isUpdate: boolean = false;
@@ -49,7 +60,7 @@ export class FormSupplierComponent {
   successMessage: string | null = null;
 
   ubication = Ubication;
-  provinces: string[] = [];
+  //provinces: string[] = [];
   msj: boolean = false;
   msjId: boolean = false;
 
@@ -57,6 +68,7 @@ export class FormSupplierComponent {
     private supplierService: ServiceSupplierService,
     private categorySupplierService: CategorySupplierService,
     private conditionAfipService: ConditionAfipService,
+    private ubicationService: UbicationService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -76,11 +88,11 @@ export class FormSupplierComponent {
         );
       }
     });
-
-    this.countrySelected();
     this.getListCategorySupplier();
     this.getListConditionAfip();
+    this.getListCountry();
   }
+
   getListCategorySupplier() {
     this.categorySupplierService.getCategoriesSupplier().subscribe(
       (data: CategorySupplier[]) => {
@@ -111,6 +123,38 @@ export class FormSupplierComponent {
     );
   }
 
+  getListCountry() {
+    this.ubicationService.getListCountries().subscribe(
+      (data: Country[]) => {
+        console.log('Paises:', data);
+        this.countries = data.map((countries: Country) => countries.country);
+      },
+      (error) => {
+        console.error('Error al obtener condicion afip:', error);
+      }
+    );
+  }
+
+  onCountrySelected(country: string) {
+    const selectedCountryId =
+      this.countries.findIndex((c) => c === country) + 1;
+    console.log('ID del país seleccionado:', selectedCountryId);
+
+    this.ubicationService
+      .getListProvincesByCountry(selectedCountryId)
+      .subscribe(
+        (data: Provinces[]) => {
+          console.log('Provincias:', data);
+          this.provinces = data.map(
+            (provinces: Provinces) => provinces.province
+          );
+        },
+        (error) => {
+          console.error('Error al obtener provincias:', error);
+        }
+      );
+  }
+
   openModal() {
     this.newCategory = '';
     this.isModalOpen = true;
@@ -134,39 +178,63 @@ export class FormSupplierComponent {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
       return;
-    } else {
-      if (this.isUpdate) {
-        this.supplierService
-          .updateSupplier(this.newsupplier.idSupplier, this.newsupplier)
-          .subscribe((data) => {
-            console.log('Actualizando Proveedor:', form.value);
-          });
+    }
+    const cuit = form.value.cuitSupplier;
+    const code = form.value.codeSupplier;
 
-        this.msj = true;
-        setTimeout(() => {
-          this.router.navigate(['/list-supplier']);
-        }, 1500);
-      } else {
-        this.supplierService
-          .postSupplier(this.newsupplier)
-          .subscribe((data) => {
-            console.log('Creando un proveedor', data);
-            this.msj = true;
-            setTimeout(() => {
-              this.router.navigate(['/list-supplier']);
-            }, 1500);
-          });
-      }
+    this.supplierService.existsCode(code).subscribe((existsCode) => {
+      this.existsCode = existsCode;
+
+      this.supplierService.existsCuit(cuit).subscribe((existsCuit) => {
+        this.existsCuit = existsCuit;
+
+        if (this.isUpdate) {
+          this.updateSupplier();
+        } else {
+          this.createSupplier();
+        }
+      });
+    });
+  }
+
+  updateSupplier() {
+    if (this.existsCode) {
+      console.log('YA EXISTE ESTE CODIGO');
+      return;
+    } else if (this.existsCuit) {
+      console.log('YA EXISTE ESTE CUIT');
+      return;
+    } else {
+      this.supplierService
+        .updateSupplier(this.newsupplier.idSupplier, this.newsupplier)
+        .subscribe((data) => {
+          console.log('Actualizando Proveedor:', data);
+          this.msj = true;
+          this.navigateToListSupplier();
+        });
     }
   }
 
-  countrySelected() {
-    const selectedCountry = this.ubication.find(
-      (item) => item.countrySupplier === this.newsupplier.countrySupplier
-    );
+  createSupplier() {
+    if (this.existsCode) {
+      console.log('YA EXISTE ESTE CODIGO');
+      return;
+    } else if (this.existsCuit) {
+      console.log('YA EXISTE ESTE CUIT');
+      return;
+    } else {
+      this.supplierService.postSupplier(this.newsupplier).subscribe((data) => {
+        console.log('Creando un proveedor', data);
+        this.msj = true;
+        this.navigateToListSupplier();
+      });
+    }
+  }
 
-    this.provinces = selectedCountry ? selectedCountry.locationSupplier : [];
-    this.newsupplier.provinceSupplier = '';
+  navigateToListSupplier() {
+    setTimeout(() => {
+      this.router.navigate(['/list-supplier']);
+    }, 1500);
   }
 
   ClearForm() {
@@ -195,5 +263,10 @@ export class FormSupplierComponent {
     };
 
     this.msj = false;
+  }
+
+  //MANEJO DE VALIDACION CUIT CON -
+  countHyphens(cuit: string): number {
+    return (cuit.match(/-/g) || []).length;
   }
 }

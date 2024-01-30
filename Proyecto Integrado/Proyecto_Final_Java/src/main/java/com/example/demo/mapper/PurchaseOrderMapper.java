@@ -5,16 +5,15 @@ import com.example.demo.dto.PurchaseOrderDTO;
 import com.example.demo.models.DetailsPurchaseOrdersModel;
 import com.example.demo.models.PurchaseOrdersModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class PurchaseOrderMapper {
     public static Optional<PurchaseOrderDTO> getPurchaseOrder(PurchaseOrdersModel purchaseOrdersModel) {
 
         PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
-        purchaseOrderDTO.setIdPurchaseOrder(purchaseOrdersModel.getIdPurchaseOrder());
-        purchaseOrderDTO.setCodePurchaseOrder(purchaseOrdersModel.getCodePurchaseOrder());
+        purchaseOrderDTO.setIdPurchaseOrder(purchaseOrdersModel.getId());
         purchaseOrderDTO.setDateIssue(purchaseOrdersModel.getDateIssuePurchaseOrder());
         purchaseOrderDTO.setDateDelivery(purchaseOrdersModel.getDateDeliveryPurchaseOrder());
         purchaseOrderDTO.setRecepcion(purchaseOrdersModel.getReceptionPurchaseOrder());
@@ -27,10 +26,19 @@ public class PurchaseOrderMapper {
         return Optional.of(purchaseOrderDTO);
     }
     public static List<DetailsPurchaseOrderDTO> mapDetailsList(List<DetailsPurchaseOrdersModel> detailsPurchaseList) {
-        return detailsPurchaseList.stream()
-                .map(DetailsPurchaseOrderMapper::getDetailOrderResponse)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+
+        List<DetailsPurchaseOrderDTO> dtoList = new ArrayList<>();
+        for (DetailsPurchaseOrdersModel details : detailsPurchaseList){
+            DetailsPurchaseOrderDTO purchaseOrderDTO = new DetailsPurchaseOrderDTO();
+            purchaseOrderDTO.setIdDetailPurchase(details.getIdDetailPurchase());
+            purchaseOrderDTO.setIdProduct(details.getProduct().getIdProduct());
+            purchaseOrderDTO.setNameProduct(details.getProduct().getNameProduct());
+            purchaseOrderDTO.setUnitProduct(details.getQuantityDetail());
+           purchaseOrderDTO.setPriceProduct(details.getProduct().getPriceProduct());
+            System.out.println("purchaseOrderDTO: " + purchaseOrderDTO);
+
+            dtoList.add(purchaseOrderDTO);
+        }
+        return dtoList;
     }
 }

@@ -18,10 +18,18 @@ export class DetailsProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      let id = params['id'];
+    this.route.paramMap.subscribe((response) => {
+      let id = response.get('id');
       if (id != undefined) {
-        this.product = this.serviceProduct.getIdProduct(id)!;
+        this.serviceProduct.getProductById(Number(id)).subscribe(
+          (prod) => {
+            console.log('Proveedor obtenido por ID:', prod);
+            this.product = prod;
+          },
+          (error) => {
+            console.error('Error al obtener el producto por ID:', error);
+          }
+        );
       }
     });
   }

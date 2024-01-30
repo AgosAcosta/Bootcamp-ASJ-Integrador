@@ -14,8 +14,8 @@ public class PurchaseOrdersModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_purchase_order", unique = true, nullable = false)
-	private Integer idPurchaseOrder;
+	@Column( unique = true, nullable = false)
+	private Integer id;
 
 	//@NotNull(message = "El ID de proveedores no puede estar vacio")
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -26,11 +26,6 @@ public class PurchaseOrdersModel {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id_status_order", name = "id_status_order")
 	private StatusPurchaseOrdersModel statusOrder;
-
-	@NotNull(message = "El código no puede estar vacio")
-	@Size(min = 4, max = 10, message = "El codigo debe tener entre 4 y 10 caracteres")
-	@Column(name="code_purchase_order",nullable = false)
-	private String codePurchaseOrder;
 
 	@NotNull(message = "La fecha de emisión no puede estar vacia")
 	@Column(name="date_issue_purchase_order",nullable = false)
@@ -46,7 +41,7 @@ public class PurchaseOrdersModel {
 	private String receptionPurchaseOrder;
 
 	@NotNull(message = "El total no puede estar vacio")
-	@DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01")
+	@DecimalMin(value = "0.01", message = "El total debe ser mayor o igual a 0.01")
 	@Column(name="total_purchase_order",nullable = false)
 	private double totalPurchaseOrder;
 
@@ -60,19 +55,17 @@ public class PurchaseOrdersModel {
 	@Column(nullable = true)
 	private boolean deleteOrder;
 
-
-	@OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany()
 	private List<DetailsPurchaseOrdersModel> detailsPurchaseList;
 
 	public PurchaseOrdersModel() {
 
 	}
 
-	public PurchaseOrdersModel(Integer idPurchaseOrder, SuppliersModel supplier, StatusPurchaseOrdersModel statusOrder, String codePurchaseOrder, Timestamp dateIssuePurchaseOrder, Timestamp dateDeliveryPurchaseOrder, String receptionPurchaseOrder, double totalPurchaseOrder, Timestamp created_at, Timestamp update_at, boolean deleteOrder, List<DetailsPurchaseOrdersModel> detailsPurchaseList) {
-		this.idPurchaseOrder = idPurchaseOrder;
+	public PurchaseOrdersModel(Integer id, SuppliersModel supplier, StatusPurchaseOrdersModel statusOrder,  Timestamp dateIssuePurchaseOrder, Timestamp dateDeliveryPurchaseOrder, String receptionPurchaseOrder, double totalPurchaseOrder, Timestamp created_at, Timestamp update_at, boolean deleteOrder, List<DetailsPurchaseOrdersModel> detailsPurchaseList) {
+		this.id = id;
 		this.supplier = supplier;
 		this.statusOrder = statusOrder;
-		this.codePurchaseOrder = codePurchaseOrder;
 		this.dateIssuePurchaseOrder = dateIssuePurchaseOrder;
 		this.dateDeliveryPurchaseOrder = dateDeliveryPurchaseOrder;
 		this.receptionPurchaseOrder = receptionPurchaseOrder;
@@ -83,12 +76,12 @@ public class PurchaseOrdersModel {
 		this.detailsPurchaseList = detailsPurchaseList;
 	}
 
-	public Integer getIdPurchaseOrder() {
-		return idPurchaseOrder;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdPurchaseOrder(Integer idPurchaseOrder) {
-		this.idPurchaseOrder = idPurchaseOrder;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public SuppliersModel getSupplier() {
@@ -105,14 +98,6 @@ public class PurchaseOrdersModel {
 
 	public void setStatusOrder(StatusPurchaseOrdersModel statusOrder) {
 		this.statusOrder = statusOrder;
-	}
-
-	public String getCodePurchaseOrder() {
-		return codePurchaseOrder;
-	}
-
-	public void setCodePurchaseOrder(String codePurchaseOrder) {
-		this.codePurchaseOrder = codePurchaseOrder;
 	}
 
 	public Timestamp getDateIssuePurchaseOrder() {

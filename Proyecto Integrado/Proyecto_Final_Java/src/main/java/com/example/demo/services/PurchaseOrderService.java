@@ -10,9 +10,11 @@ import com.example.demo.dto.DetailsPurchaseOrderDTO;
 import com.example.demo.dto.PurchaseOrderDTO;
 import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.mapper.PurchaseOrderMapper;
+import com.example.demo.mapper.SupplierMapper;
 import com.example.demo.models.*;
 import com.example.demo.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +64,7 @@ public class PurchaseOrderService {
         purchaseOrdersModel.setDeleteOrder(false);
         purchaseOrdersModel.setCreated_at(new Timestamp(System.currentTimeMillis()));
         purchaseOrdersModel.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+        calculateTotal(purchaseOrdersModel);
         return purchaseOrderRepository.save(purchaseOrdersModel);
     }
 
@@ -69,7 +72,6 @@ public class PurchaseOrderService {
 
         PurchaseOrdersModel purchaseOrdersModel = new PurchaseOrdersModel();
 
-        purchaseOrdersModel.setCodePurchaseOrder(purchaseOrderDTO.getCodePurchaseOrder());
         purchaseOrdersModel.setDateIssuePurchaseOrder(purchaseOrderDTO.getDateIssue());
         purchaseOrdersModel.setDateDeliveryPurchaseOrder(purchaseOrderDTO.getDateDelivery());
         purchaseOrdersModel.setReceptionPurchaseOrder(purchaseOrderDTO.getRecepcion());
@@ -78,27 +80,38 @@ public class PurchaseOrderService {
         Optional<SuppliersModel> supplier = supplierRepository.findByNameSupplier(purchaseOrderDTO.getSupplier());
         if (supplier.isEmpty()) {
             throw new EntityNotFoundException("Proveedor no encontrada: " + purchaseOrderDTO.getSupplier());
+        } else {
+            purchaseOrdersModel.setSupplier(supplier.get());
         }
-        purchaseOrdersModel.setSupplier(supplier.get());
 
         Optional<StatusPurchaseOrdersModel> statusOrder = statusPurchaseOrderRepository.findByStatus(purchaseOrderDTO.getStatus());
         if (statusOrder.isEmpty()) {
             throw new EntityNotFoundException("ESTADO ORDEN DE COMPRA no encontrada: " + purchaseOrderDTO.getStatus());
+        } else {
+            purchaseOrdersModel.setStatusOrder(statusOrder.get());
         }
-        purchaseOrdersModel.setStatusOrder(statusOrder.get());
 
         List<DetailsPurchaseOrdersModel> detailsList = new ArrayList<>();
+        purchaseOrdersModel.setDetailsPurchaseList(detailsList);
+        PurchaseOrdersModel purchaseOrders = purchaseOrderRepository.save(purchaseOrdersModel);
+
+        purchaseOrdersModel.setId(purchaseOrders.getId());
+
+//      DetailsPurchaseOrdersModel detailsModel = convertToEntityDetail(purchaseOrderDTO.getProducts().get(0));
+//
+//      DetailsPurchaseOrdersModel  detailsPurchaseOrdersModel = detailPurchaseOrderRepository.save(detailsModel);
+//
+//        detailsList.add(detailsPurchaseOrdersModel);
+
         for (DetailsPurchaseOrderDTO detailsDTO : purchaseOrderDTO.getProducts()) {
             DetailsPurchaseOrdersModel detailsModel = convertToEntityDetail(detailsDTO);
+            detailPurchaseOrderRepository.save(detailsModel);
             detailsList.add(detailsModel);
         }
+
         purchaseOrdersModel.setDetailsPurchaseList(detailsList);
-
-        for (DetailsPurchaseOrdersModel detailsModel : detailsList) {
-            detailPurchaseOrderRepository.save(detailsModel);
-        }
-
         purchaseOrderRepository.save(purchaseOrdersModel);
+
         return purchaseOrdersModel;
     }
 
@@ -106,17 +119,71 @@ public class PurchaseOrderService {
         DetailsPurchaseOrdersModel detailsPurchaseOrdersModel = new DetailsPurchaseOrdersModel();
 
         detailsPurchaseOrdersModel.setQuantityDetail(detailsPurchaseOrderDTO.getUnitProduct());
-        detailsPurchaseOrdersModel.setPriceDetail(detailsPurchaseOrderDTO.getPriceProduct());
+       // detailsPurchaseOrdersModel.setPriceDetail(detailsPurchaseOrderDTO.getPriceProduct());
 
         Optional<ProductModel> product = productRepository.findByNameProduct(detailsPurchaseOrderDTO.getNameProduct());
         if (product.isEmpty()) {
             throw new EntityNotFoundException("PRODUCTO no encontrada: " + detailsPurchaseOrderDTO.getNameProduct());
         }
+//        detailsPurchaseOrdersModel.setProduct(product.get());
+        ProductModel productoModel = product.get();
+        double price = product.get().getPriceProduct();
+        detailsPurchaseOrdersModel.setPriceDetail(price);
+
+//        detailPurchaseOrderRepository.save(detailsPurchaseOrdersModel);
+
         detailsPurchaseOrdersModel.setProduct(product.get());
-
-        detailPurchaseOrderRepository.save(detailsPurchaseOrdersModel);
-
         return detailsPurchaseOrdersModel;
+    }
+
+    public PurchaseOrdersModel updatePurchaseOrder(int orderId, Timestamp newDateDelivery, String newReception) {
+        Optional<PurchaseOrdersModel> existingOrderOptional = purchaseOrderRepository.findById(orderId);
+        PurchaseOrdersModel existingOrder = existingOrderOptional.orElseThrow(() -> new EntityNotFoundException("Orden de compra no encontrada con ID: " + orderId));
+
+        if (newDateDelivery != null) {
+            existingOrder.setDateDeliveryPurchaseOrder(newDateDelivery);
+        }
+        if (newReception != null) {
+            existingOrder.setReceptionPurchaseOrder(newReception);
+        }
+        return purchaseOrderRepository.save(existingOrder);
+    }
+
+    public Optional<PurchaseOrderDTO> findByDeletePurchaseOrderFalse(int id) {
+
+        Optional<PurchaseOrdersModel> optional = purchaseOrderRepository.findById(id);
+
+        if (optional.isPresent()) {
+            PurchaseOrdersModel existingPurchaseOrder = optional.get();
+            if (!existingPurchaseOrder.isDeleteOrder()) {
+                Optional<StatusPurchaseOrdersModel> canceledStatus = statusPurchaseOrderRepository.findByStatus("Cancelado");
+                if (canceledStatus.isPresent()) {
+                    existingPurchaseOrder.setDeleteOrder(true);
+                    existingPurchaseOrder.setStatusOrder(canceledStatus.get());
+                    existingPurchaseOrder.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+                    purchaseOrderRepository.save(existingPurchaseOrder);
+                    return PurchaseOrderMapper.getPurchaseOrder(existingPurchaseOrder);
+                } else {
+                    throw new EntityNotFoundException("ERROR EN CANCELADO");
+                }
+            }
+        }
+        return Optional.empty();
+    }
+    private void calculateTotal(PurchaseOrdersModel purchaseOrder) {
+        double total = 0.0;
+
+        for (DetailsPurchaseOrdersModel details : purchaseOrder.getDetailsPurchaseList()) {
+            double price = details.getProduct().getPriceProduct();
+            double quantity = details.getQuantityDetail();
+            total += price * quantity;
+        }
+
+        purchaseOrder.setTotalPurchaseOrder(total);
+
+        if (total < 0.01) {
+            throw new ValidationException("El total debe ser mayor o igual a 0.01");
+        }
     }
 
 }

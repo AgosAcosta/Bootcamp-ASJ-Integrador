@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import com.example.demo.models.CategoriesProductModel;
-import com.example.demo.models.SuppliersModel;
+import com.example.demo.dto.ProvincesDTO;
+import com.example.demo.mapper.ProvinceMapper;
+import com.example.demo.models.*;
 import com.example.demo.repositories.CategoriesProductRepository;
 import com.example.demo.repositories.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ProductResponseDTO;
 import com.example.demo.mapper.ProductMapper;
-import com.example.demo.models.ProductModel;
 import com.example.demo.repositories.ProductRepository;
 
 @Service
@@ -137,5 +137,25 @@ public class ProductService {
         }
         return Optional.empty();
     }
+
+
+    public List<ProductResponseDTO> getProductBySupplierId(int supplierId) {
+        Optional<SuppliersModel> suppliersModel = supplierRepository.findById(supplierId);
+
+        if (suppliersModel.isPresent()) {
+            SuppliersModel supplier = suppliersModel.get();
+            List<ProductModel> productModels = productRepository.findBySupplierIdSupplier(supplier.getIdSupplier());
+            List<ProductResponseDTO> responseDTO = new ArrayList<>();
+
+            for (ProductModel product : productModels) {
+                responseDTO.add(ProductMapper.getProductResponse(product).get());
+            }
+            return responseDTO;
+        } else {
+            throw new EntityNotFoundException("PROVEEDOR no encontrado con ID: " + supplierId);
+        }
+    }
+
+
 
 }

@@ -1,14 +1,14 @@
 import { Supplier } from '../Models/supplier';
 
 export const supplierData: Supplier[] = [
-  {
+  /*   {
     urlLogo: '',
     idSupplier: 1,
     codeSupplier: '1234',
     nameSupplier: 'Gaseosa SRL',
     cuitSupplier: '30717055041',
-    condicionAfipSupplier: '',
-    categorySupplier: '',
+    condicionAfipSupplier: ''
+    categorySupplier: ''
     streetSupplier: 'Calle Inventada',
     numSupplier: 1234,
     cpSupplier: 5000,
@@ -30,8 +30,8 @@ export const supplierData: Supplier[] = [
     codeSupplier: '1234',
     nameSupplier: 'Pepito Juarez',
     cuitSupplier: '203535264831',
-    condicionAfipSupplier: '',
-    categorySupplier: '',
+    condicionAfipSupplier: ''
+    categorySupplier: ''
     streetSupplier: 'Calle Inventada',
     numSupplier: 2214,
     cpSupplier: 5020,
@@ -54,8 +54,8 @@ export const supplierData: Supplier[] = [
     codeSupplier: '1234',
     nameSupplier: 'Arcor SA',
     cuitSupplier: '30502793175',
-    condicionAfipSupplier: '',
-    categorySupplier: '',
+    condicionAfipSupplier: ''
+    categorySupplier: ''
     streetSupplier: 'Av. Fulvio S. Pagani',
     numSupplier: 487,
     cpSupplier: 5000,
@@ -94,5 +94,5 @@ export const supplierData: Supplier[] = [
     telcontactSupplier: '3513566887',
     emailcontactSupplier: 'jperez@cocacola.com',
     rolcontactSupplier: 'Gerente',
-  },
+  }, */
 ];

@@ -18,10 +18,18 @@ export class DetailsPurchaseOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      let id = params['id'];
+    this.route.paramMap.subscribe((response) => {
+      let id = response.get('id');
       if (id != undefined) {
-        this.purchaseOrder = this.servicePucharseOrder.getIdPurchaseOrder(id)!;
+        this.servicePucharseOrder.getPurchaseOrderById(Number(id)).subscribe(
+          (prod) => {
+            console.log('ORDEN DE COMPRA obtenido por ID:', prod);
+            this.purchaseOrder = prod;
+          },
+          (error) => {
+            console.error('Error al obtener ORDEN DE COMPRA por ID:', error);
+          }
+        );
       }
     });
   }

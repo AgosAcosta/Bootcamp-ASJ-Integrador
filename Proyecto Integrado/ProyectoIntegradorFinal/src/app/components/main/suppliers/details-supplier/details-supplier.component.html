@@ -1,44 +1,67 @@
-<div class="row">
-  <div class="col-4 text-center">
-    <img
-      #img1
-      src="{{ supplier?.urlLogo }}"
-      class="rounded mx-auto d-block"
-      alt="..."
-      (error)="handleImageError($event)"
-    />
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img
+        src="{{ supplier?.urlLogo }}"
+        class="rounded mx-auto d-block"
+        alt="..."
+        (error)="handleImageError($event)"
+      />
+    </div>
   </div>
-  <div class="col-8">
-    <h4>Información del Proveedor:</h4>
-    <p>Código:{{ supplier?.idSupplier }}</p>
-    <p>Razon Social:{{ supplier?.nameSupplier }}</p>
-    <p>Rubro:{{ supplier?.categorySupplier }}</p>
-    <h4>Datos Fiscales:</h4>
-    <p>CUIT: {{ supplier?.cuitSupplier }}</p>
-    <p>Condicion AFIP: {{ supplier?.condicionAfipSupplier }}</p>
-    <p>
-      Dirección: {{ supplier?.streetSupplier }} N° {{ supplier?.numSupplier }}
-    </p>
-    <h4>Datos de contacto:</h4>
-    <p>N° Tel: {{ supplier?.telSupplier }}</p>
-    <p>Email: {{ supplier?.emailSupplier }}</p>
-    <p>Sitio Web: {{ supplier?.webSupplier }}</p>
-    
-    <button
-      class="btn btn-success btn-sm"
-      [routerLink]="['/list-supplier', supplier?.idSupplier]"
-      style="margin-right: 5px"
-    >
-      Editar
-    </button>
 
-    <button
-      type="button"
-      class="btn btn-primary btn-sm"
-      routerLink="/list-supplier"
-      style="margin-left: 5px"
-    >
-      Volver
-    </button>
+  <div class="row">
+    <div class="col-6">
+      <h4>Datos Proveedores:</h4>
+      <p>Código: {{ supplier?.codeSupplier }}</p>
+      <p>Razón Social: {{ supplier?.nameSupplier }}</p>
+      <p>Rubro: {{ supplier?.categorySupplier }}</p>
+    </div>
+    <div class="col-6">
+      <h4>Datos Fiscales:</h4>
+      <p>CUIT: {{ supplier?.cuitSupplier }}</p>
+      <p>Condición AFIP: {{ supplier?.condicionAfipSupplier }}</p>
+      <p>
+        Dirección: {{ supplier?.streetSupplier }} N° {{ supplier?.numSupplier }}
+      </p>
+      <p>País: {{ supplier?.countrySupplier }}</p>
+      <p>Provincia: {{ supplier?.provinceSupplier }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <h4>Datos de contacto:</h4>
+      <p>N° Tel: {{ supplier?.telSupplier }}</p>
+      <p>Email: {{ supplier?.emailSupplier }}</p>
+      <p>Sitio Web: {{ supplier?.webSupplier }}</p>
+    </div>
+    <div class="col-6">
+      <h4>Datos de contacto persona encargada:</h4>
+      <p>Email: {{ supplier?.emailcontactSupplier }}</p>
+      <p>Teléfono: {{ supplier?.telcontactSupplier }}</p>
+      <p>Rol: {{ supplier?.rolcontactSupplier }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <button
+        class="btn btn-success btn-sm"
+        [routerLink]="['/list-supplier', supplier?.idSupplier]"
+        style="margin-right: 5px"
+      >
+        Editar
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        routerLink="/list-supplier"
+        style="margin-left: 5px"
+      >
+        Volver
+      </button>
+    </div>
   </div>
 </div>

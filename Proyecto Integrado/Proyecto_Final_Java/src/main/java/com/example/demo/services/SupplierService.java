@@ -1,10 +1,10 @@
 package com.example.demo.services;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,14 +48,31 @@ public class SupplierService {
     ProvinceRepository provinceRepository;
 
     public List<SupplierResponseDTO> getAllSupplier() {
-        List<SuppliersModel> suppliers_Model = supplierRepository.findAll();
-        List<SupplierResponseDTO> responseDTO = new ArrayList<SupplierResponseDTO>();
+//        List<SuppliersModel> suppliers_Model = supplierRepository.findAll();
+//        List<SupplierResponseDTO> responseDTO = new ArrayList<SupplierResponseDTO>();
+//
+//        for (SuppliersModel supplier : suppliers_Model) {
+//            responseDTO.add(SupplierMapper.getSupplierResponse(supplier).get());
+//        }
+//        return responseDTO;
 
-        for (SuppliersModel supplier : suppliers_Model) {
-            responseDTO.add(SupplierMapper.getSupplierResponse(supplier).get());
-        }
-        return responseDTO;
+        List<SuppliersModel> suppliersModelList = supplierRepository.findByDeleteSupplierFalse();
+        return suppliersModelList.stream()
+                .filter(supplier -> !supplier.isDeleteSupplier())
+                .map(SupplierMapper::getSupplierResponse)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
+
+    public List<SupplierResponseDTO> getAllSupplierDelete() {
+        return supplierRepository.findByDeleteSupplierTrue().stream()
+                .filter(SuppliersModel::isDeleteSupplier)
+                .map(SupplierMapper::getSupplierResponse)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toList());
+    }
+
 
     public Optional<SupplierResponseDTO> getSupplierById(int id) {
         if (id <= 0) {
@@ -70,6 +87,17 @@ public class SupplierService {
             throw new NoSuchElementException("No se encontró el proveedor con ID: " + id);
         }
     }
+
+    public boolean validateSupplierCuit(String cuit) {
+        boolean existsByCuit = supplierRepository.existsByCuitSupplier(cuit);
+        return existsByCuit;
+    }
+
+    public boolean validateSupplierCode(String code) {
+        boolean existsByCode = supplierRepository.existsByCodeSupplier(code);
+        return existsByCode;
+    }
+
 
     public SuppliersModel postSupplier(SupplierResponseDTO supplier) {
         SuppliersModel suppliers_Model = convertToEntity(supplier);
@@ -209,21 +237,30 @@ public class SupplierService {
     }
 
     public Optional<SupplierResponseDTO> findByDeleteSupplierFalse(int id) {
-
         Optional<SuppliersModel> optionalSupplier = supplierRepository.findById(id);
-
         if (optionalSupplier.isPresent()) {
             SuppliersModel existingSupplier = optionalSupplier.get();
-
             if (!existingSupplier.isDeleteSupplier()) {
                 existingSupplier.setDeleteSupplier(true);
                 existingSupplier.setUpdate_at(new Timestamp(System.currentTimeMillis()));
                 supplierRepository.save(existingSupplier);
-
                 return SupplierMapper.getSupplierResponse(existingSupplier);
             }
         }
+        return Optional.empty();
+    }
 
+    public Optional<SupplierResponseDTO> findByDeleteSupplierTrue(int id) {
+        Optional<SuppliersModel> optionalSupplier = supplierRepository.findById(id);
+        if (optionalSupplier.isPresent()) {
+            SuppliersModel existingSupplier = optionalSupplier.get();
+            if (existingSupplier.isDeleteSupplier()) {
+                existingSupplier.setDeleteSupplier(false);
+                existingSupplier.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+                supplierRepository.save(existingSupplier);
+                return SupplierMapper.getSupplierResponse(existingSupplier);
+            }
+        }
         return Optional.empty();
     }
 }

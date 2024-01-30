@@ -16,18 +16,22 @@ export class DetailsSupplierComponent implements OnInit {
     public serviceSuppliers: ServiceSupplierService,
     private route: ActivatedRoute
   ) {}
-
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      let id = params['id'];
+    this.route.paramMap.subscribe((response) => {
+      let id = response.get('id');
       if (id != undefined) {
-        this.supplier = this.serviceSuppliers.getIdSupplier(id)!;
-
-        console.log(this.supplier);
+        this.serviceSuppliers.getSuppliertById(Number(id)).subscribe(
+          (supplierResponse) => {
+            console.log('Proveedor obtenido por ID:', supplierResponse);
+            this.supplier = supplierResponse;
+          },
+          (error) => {
+            console.error('Error al obtener el proveedor por ID:', error);
+          }
+        );
       }
     });
   }
-
   handleImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
 

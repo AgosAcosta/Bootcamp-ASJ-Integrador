@@ -25,9 +25,9 @@ public class DetailsPurchaseOrdersModel {
 	private Integer idDetailPurchase;
 
 	//@NotNull(message = "El ID de orden de compra no puede estar vacio")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(referencedColumnName = "id_purchase_order", name = "id_purchase_order")
-	private PurchaseOrdersModel purchaseOrder;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(referencedColumnName = "id", name = "purchaseOrder", nullable = false)
+//	private PurchaseOrdersModel purchaseOrder;
 
 	@NotNull(message = "El ID de producto no puede estar vacio")
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -40,7 +40,7 @@ public class DetailsPurchaseOrdersModel {
 	private Integer quantityDetail;
 
 	@NotNull(message = "El precio no puede estar vacio")
-	@DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01")
+	//@DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01")
 	@Column(name="price_detail",nullable = false)
 	private double priceDetail;
 
@@ -59,7 +59,7 @@ public class DetailsPurchaseOrdersModel {
 	}
 
 	public DetailsPurchaseOrdersModel(Integer idDetailPurchase,
-									  @NotNull(message = "El ID de orden de compra no puede estar vacio") PurchaseOrdersModel purchaseOrder,
+
 									  @NotNull(message = "El ID de producto no puede estar vacio") ProductModel product,
 									  @NotNull(message = "La cantidad no puede estar vacio") @Min(value = 1, message = "La cantidad debe ser como mínimo una unidad") Integer quantityDetail,
 									  @NotNull(message = "El precio no puede estar vacio") @DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01") double priceDetail,
@@ -68,7 +68,7 @@ public class DetailsPurchaseOrdersModel {
 									  @NotNull(message = "Debe selecionar si esta eliminado") boolean deleteDetail) {
 
 		this.idDetailPurchase = idDetailPurchase;
-		this.purchaseOrder = purchaseOrder;
+
 		this.product = product;
 		this.quantityDetail = quantityDetail;
 		this.priceDetail = priceDetail;
@@ -85,13 +85,6 @@ public class DetailsPurchaseOrdersModel {
 		this.idDetailPurchase = idDetailPurchase;
 	}
 
-	public PurchaseOrdersModel getPurchaseOrder() {
-		return purchaseOrder;
-	}
-
-	public void setPurchaseOrder(PurchaseOrdersModel purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
-	}
 
 	public ProductModel getProduct() {
 		return product;
@@ -140,7 +133,5 @@ public class DetailsPurchaseOrdersModel {
 	public void setDeleteDetail(boolean deleteDetail) {
 		this.deleteDetail = deleteDetail;
 	}
-	
-	
-	
+
 }

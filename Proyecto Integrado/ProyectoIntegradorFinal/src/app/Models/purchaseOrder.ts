@@ -1,7 +1,7 @@
 export interface PurchaseOrder {
-  idPurchaseOrder: string;
-  dateIssue: Date;
-  dateDelivery: Date;
+  idPurchaseOrder: number;
+  dateIssue: Date | string;
+  dateDelivery: Date | string;
   recepcion: string;
   supplier: string;
   products: DetailProducts[];
@@ -15,4 +15,3 @@ export interface DetailProducts {
   priceProduct: number;
   unitProduct: number;
 }
-

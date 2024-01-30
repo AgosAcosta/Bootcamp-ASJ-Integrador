@@ -10,6 +10,11 @@ import { ServiceSupplierService } from '../../../../Service/service-supplier.ser
 })
 export class ListSupplierComponent {
   supplierList!: Supplier[];
+  supplierActive: boolean = true;
+
+  filteredList!: Supplier[];
+  searchText: string = '';
+  searchCode: string = '';
 
   constructor(
     private supplierService: ServiceSupplierService,
@@ -17,27 +22,67 @@ export class ListSupplierComponent {
   ) {}
 
   ngOnInit(): void {
-    this.listSupplier();
+    this.getListSupplierActive();
   }
 
-  listSupplier() {
-    // this.supplierList = this.supplierService.getListSupplier();
+  getListSupplierActive() {
+    this.supplierActive = true;
     this.supplierService.getListSupplier().subscribe((data) => {
       this.supplierList = data;
-
       console.log('Cargando Lista', data);
     });
   }
 
-  deleteSupplier(id: any) {
-    let msj = confirm('Desea eliminar el proveedor ' + id + '?');
+  getListSupplierDelete() {
+    this.supplierActive = false;
+    this.supplierService.getListSupplierDelete().subscribe((data) => {
+      this.supplierList = data;
+      console.log('Cargando Lista proveedores borrados', data);
+    });
+  }
 
-    if (msj) {
-      this.supplierService.deleteSupplier(id);
-      this.listSupplier();
+  deleteSupplier(id: number) {
+    alert('Eliminando el proveedor' + id);
+    this.supplierService.deleteSupplier(id).subscribe((data) => {
+      console.log('CAMBIANDO EL DELETE', data);
+      this.getListSupplierActive();
+    });
+  }
+
+  activeSupplier(id: number) {
+    alert('activando el proveedor' + id);
+    this.supplierService.activeSupplier(id).subscribe((data) => {
+      console.log('CAMBIANDO ACTIVE', data);
+      this.getListSupplierActive();
+    });
+  }
+
+  applyFilter() {
+    const searchTextLower = this.searchText.toLowerCase();
+    const searchCodeLower = this.searchCode.toLowerCase();
+
+    if (this.supplierActive) {
+      this.filteredList = this.supplierList.filter((supplier: Supplier) => {
+        return (
+          supplier.nameSupplier.toLowerCase().includes(searchTextLower) &&
+          supplier.codeSupplier.includes(searchCodeLower)
+        );
+      });
+    } else {
+      this.supplierService.getListSupplierDelete().subscribe((data) => {
+        this.filteredList = data.filter((supplier: Supplier) => {
+          return (
+            supplier.nameSupplier.toLowerCase().includes(searchTextLower) &&
+            supplier.codeSupplier.includes(searchCodeLower)
+          );
+        });
+      });
     }
   }
 
+
+
+  
   handleImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
 

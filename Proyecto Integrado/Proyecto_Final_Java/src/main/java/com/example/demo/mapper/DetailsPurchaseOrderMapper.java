@@ -14,7 +14,9 @@ public class DetailsPurchaseOrderMapper {
         detailsPurchaseOrderDTO.setIdDetailPurchase(detail.getIdDetailPurchase());
         detailsPurchaseOrderDTO.setIdProduct(detail.getProduct().getIdProduct());
         detailsPurchaseOrderDTO.setNameProduct(detail.getProduct().getNameProduct());
-        detailsPurchaseOrderDTO.setPriceProduct(detail.getPriceDetail());
+        //detailsPurchaseOrderDTO.setPriceProduct(detail.getPriceDetail());
+        detailsPurchaseOrderDTO.setPriceProduct(detail.getProduct().getPriceProduct());
+
         detailsPurchaseOrderDTO.setUnitProduct(detail.getQuantityDetail());
         return Optional.of(detailsPurchaseOrderDTO);
     }

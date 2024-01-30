@@ -31,3 +31,14 @@ export interface ConditionAfip {
   idConditionAfip: number;
   conditionAfip: string;
 }
+
+export interface Country {
+  idCountry: number;
+  country: string;
+}
+
+export interface Provinces {
+  idProvince: number;
+  country: string;
+  province: string;
+}
