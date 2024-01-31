@@ -42,7 +42,21 @@ public class PurchaseOrderService {
         List<PurchaseOrderDTO> responseDto = new ArrayList<>();
 
         for (PurchaseOrdersModel order : purchaseOrdersModels) {
-            responseDto.add(PurchaseOrderMapper.getPurchaseOrder(order).get());
+            if (!order.isDeleteOrder()) {
+                PurchaseOrderMapper.getPurchaseOrder(order).ifPresent(responseDto::add);
+            }
+        }
+        return responseDto;
+    }
+
+    public List<PurchaseOrderDTO> getAllPurchaseOrderDelete() {
+        List<PurchaseOrdersModel> purchaseOrdersModels = purchaseOrderRepository.findAll();
+        List<PurchaseOrderDTO> responseDto = new ArrayList<>();
+
+        for (PurchaseOrdersModel order : purchaseOrdersModels) {
+            if (order.isDeleteOrder()) {
+                PurchaseOrderMapper.getPurchaseOrder(order).ifPresent(responseDto::add);
+            }
         }
         return responseDto;
     }
@@ -172,15 +186,12 @@ public class PurchaseOrderService {
     }
     private void calculateTotal(PurchaseOrdersModel purchaseOrder) {
         double total = 0.0;
-
         for (DetailsPurchaseOrdersModel details : purchaseOrder.getDetailsPurchaseList()) {
             double price = details.getProduct().getPriceProduct();
             double quantity = details.getQuantityDetail();
             total += price * quantity;
         }
-
         purchaseOrder.setTotalPurchaseOrder(total);
-
         if (total < 0.01) {
             throw new ValidationException("El total debe ser mayor o igual a 0.01");
         }

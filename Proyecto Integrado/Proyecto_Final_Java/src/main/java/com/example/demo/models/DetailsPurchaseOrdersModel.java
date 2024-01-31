@@ -29,18 +29,14 @@ public class DetailsPurchaseOrdersModel {
 //	@JoinColumn(referencedColumnName = "id", name = "purchaseOrder", nullable = false)
 //	private PurchaseOrdersModel purchaseOrder;
 
-	@NotNull(message = "El ID de producto no puede estar vacio")
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id_product", name = "id_product")
 	private ProductModel product;
 
-	@NotNull(message = "La cantidad no puede estar vacio")
-	@Min(value = 1, message = "La cantidad debe ser como mínimo una unidad")
 	@Column(name="quantity_detail",nullable = false)
 	private Integer quantityDetail;
 
-	@NotNull(message = "El precio no puede estar vacio")
-	//@DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01")
 	@Column(name="price_detail",nullable = false)
 	private double priceDetail;
 

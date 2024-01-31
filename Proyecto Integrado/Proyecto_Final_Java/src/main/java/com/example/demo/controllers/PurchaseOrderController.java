@@ -33,6 +33,11 @@ public class PurchaseOrderController {
 		return ResponseEntity.ok(purchaseOrderService.getAllPurchaseOrder());
 	}
 
+	@GetMapping("/deleteTrue")
+	public ResponseEntity<List<PurchaseOrderDTO>> getAllPurchaseOrderDelete() {
+		return ResponseEntity.ok(purchaseOrderService.getAllPurchaseOrderDelete());
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<PurchaseOrderDTO>> getPurchaseOrderById(@PathVariable int id) {
 		Optional<PurchaseOrderDTO> order = purchaseOrderService.getPurchaseOrderrById(id);

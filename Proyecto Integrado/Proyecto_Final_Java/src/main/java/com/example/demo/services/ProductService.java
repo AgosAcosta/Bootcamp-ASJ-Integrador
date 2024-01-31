@@ -7,7 +7,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.example.demo.dto.ProvincesDTO;
+import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.mapper.ProvinceMapper;
+import com.example.demo.mapper.SupplierMapper;
 import com.example.demo.models.*;
 import com.example.demo.repositories.CategoriesProductRepository;
 import com.example.demo.repositories.SupplierRepository;
@@ -36,7 +38,21 @@ public class ProductService {
         List<ProductModel> product_Model = productRepository.findAll();
         List<ProductResponseDTO> responseDTOs = new ArrayList<ProductResponseDTO>();
         for (ProductModel product : product_Model) {
-            responseDTOs.add(ProductMapper.getProductResponse(product).get());
+            if(!product.isDeleteProduct()){
+                ProductMapper.getProductResponse(product).ifPresent(responseDTOs::add);
+            }
+
+        }
+        return responseDTOs;
+    }
+
+    public List<ProductResponseDTO> getAllProductsDelete() {
+        List<ProductModel> product_Model = productRepository.findAll();
+        List<ProductResponseDTO> responseDTOs = new ArrayList<ProductResponseDTO>();
+        for (ProductModel product : product_Model) {
+            if(product.isDeleteProduct()){
+                ProductMapper.getProductResponse(product).ifPresent(responseDTOs::add);
+            }
         }
         return responseDTOs;
     }
@@ -53,6 +69,10 @@ public class ProductService {
             throw new NoSuchElementException("No se encontró el producto con ID: " + id);
         }
 
+    }
+    public boolean validateProductCode(String code) {
+        boolean existsByCode = productRepository.existsByCodeProduct(code);
+        return existsByCode;
     }
 
     // POST PRODUCTOS
@@ -132,6 +152,20 @@ public class ProductService {
                 existProduct.setUpdate_at(new Timestamp(System.currentTimeMillis()));
                 productRepository.save(existProduct);
 
+                return ProductMapper.getProductResponse(existProduct);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<ProductResponseDTO> findByDeleteProductTrue(int id) {
+        Optional<ProductModel> optionalProductModel = productRepository.findById(id);
+        if (optionalProductModel.isPresent()) {
+            ProductModel existProduct = optionalProductModel.get();
+            if (existProduct.isDeleteProduct()) {
+                existProduct.setDeleteProduct(false);
+                existProduct.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+                productRepository.save(existProduct);
                 return ProductMapper.getProductResponse(existProduct);
             }
         }

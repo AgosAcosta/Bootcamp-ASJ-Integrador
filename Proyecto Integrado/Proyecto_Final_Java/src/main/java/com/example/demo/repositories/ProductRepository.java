@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<ProductModel, Integer> {
 
+    boolean existsByCodeProduct(String code);
     Optional<ProductModel> findByNameProduct(String nameProduct);
     List<ProductModel> findByDeleteProductFalse();
 

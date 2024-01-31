@@ -1,3 +1,7 @@
+.active-filter {
+  color: #007bff; 
+}
+
 .container-fluid {
   margin-top: 20px;
 }

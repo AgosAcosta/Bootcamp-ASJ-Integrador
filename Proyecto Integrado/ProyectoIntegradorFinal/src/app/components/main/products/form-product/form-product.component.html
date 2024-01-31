@@ -1,193 +1,199 @@
-<div class="container-fluid">
-  <form #myForm="ngForm" (ngSubmit)="createNewProduct(myForm)">
-    <div class="row">
-      <div class="col-6">
-        <!-- Sección Producto/Servicio -->
-        <fieldset>
-          <legend>Producto</legend>
-          <div class="form-group">
-            <label for="idSupplier">Imagen del Producto:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="urlLogo"
-              id="urlLogo"
-              [(ngModel)]="newProduct.urlLogo"
-              #urlLogo="ngModel"
-              [ngClass]="urlLogo.errors ? 'is-invalid' : 'is-valid'"
-            />
-          </div>
-          <div class="form-group">
-            <label for="codigo">SKU:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="codeProduct"
-              id="codeProduct"
-              minlength="4"
-              maxlength="10"
-              required
-              [(ngModel)]="newProduct.codeProduct"
-              #codeProduct="ngModel"
-              [ngClass]="codeProduct.errors ? 'is-invalid' : 'is-valid'"
-              [disabled]="isUpdate"
-            />
-            <div *ngIf="codeProduct.errors?.['minlength']" class="col-auto">
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 10</span
+<main>
+  <div class="container-fluid">
+    <form #myForm="ngForm" (ngSubmit)="createNewProduct(myForm)">
+      <div class="row">
+        <div class="col-6">
+          <!-- Sección Producto/Servicio -->
+          <fieldset>
+            <legend>Producto</legend>
+            <div class="form-group">
+              <label for="idSupplier">Imagen del Producto:</label>
+              <input
+                type="text"
+                class="form-control"
+                name="urlLogo"
+                id="urlLogo"
+                [(ngModel)]="newProduct.urlLogo"
+                #urlLogo="ngModel"
+                [ngClass]="urlLogo.errors ? 'is-invalid' : 'is-valid'"
+              />
+            </div>
+            <div class="form-group">
+              <label for="codigo">SKU:</label>
+              <input
+                type="text"
+                class="form-control"
+                name="codeProduct"
+                id="codeProduct"
+                minlength="4"
+                maxlength="10"
+                required
+                [(ngModel)]="newProduct.codeProduct"
+                #codeProduct="ngModel"
+                [ngClass]="codeProduct.errors ? 'is-invalid' : 'is-valid'"
+                [disabled]="isUpdate"
+              />
+              <div *ngIf="codeProduct.errors?.['minlength']" class="col-auto">
+                <span class="form-text"
+                  >Debe tener al menos 4 caracteres y un maximo de 10</span
+                >
+              </div>
+              <div *ngIf="codeProduct.errors?.['required']" class="col-auto">
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supplierProduct">Proveedor:</label>
+              <select
+                class="form-control"
+                name="supplierName"
+                id="supplierName"
+                [(ngModel)]="newProduct.supplierName"
+                required
+                #supplierName1="ngModel"
+                [ngClass]="supplierName1.errors ? 'is-invalid' : 'is-valid'"
               >
+                <option value="" disabled selected>
+                  Selecciona el proveedor
+                </option>
+                <option *ngFor="let name of suppliers" value="{{ name }}">
+                  {{ name }}
+                </option>
+              </select>
+              <div *ngIf="supplierName1.errors?.['required']" class="col-auto">
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
             </div>
-            <div *ngIf="codeProduct.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="supplierProduct">Proveedor:</label>
-            <select
-              class="form-control"
-              name="supplierName"
-              id="supplierName"
-              [(ngModel)]="newProduct.supplierName"
-              required
-              #supplierName1="ngModel"
-              [ngClass]="supplierName1.errors ? 'is-invalid' : 'is-valid'"
-            >
-              <option value="" disabled selected>
-                Selecciona el proveedor
-              </option>
-              <option *ngFor="let name of suppliers" value="{{ name }}">
-                {{ name }}
-              </option>
-            </select>
-            <div *ngIf="supplierName1.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="categoryProduct">Categoria:</label>
-            <select
-              class="form-control"
-              name="categoryProduct"
-              id="categoryProduct"
-              [(ngModel)]="newProduct.categoryProduct"
-              required
-              #categoryProduct="ngModel"
-              [ngClass]="categoryProduct.errors ? 'is-invalid' : 'is-valid'"
-            >
-              <option value="" disabled selected>
-                Selecciona una categoría
-              </option>
-              <option
-                *ngFor="let category of categories"
-                value="{{ category }}"
+            <div class="form-group">
+              <label for="categoryProduct">Categoria:</label>
+              <select
+                class="form-control"
+                name="categoryProduct"
+                id="categoryProduct"
+                [(ngModel)]="newProduct.categoryProduct"
+                required
+                #categoryProduct="ngModel"
+                [ngClass]="categoryProduct.errors ? 'is-invalid' : 'is-valid'"
               >
-                {{ category }}
-              </option>
-            </select>
-            <div *ngIf="categoryProduct.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="nameProduct">Nombre:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="nameProduct"
-              id="nameProduct"
-              minlength="4"
-              maxlength="40"
-              required
-              [(ngModel)]="newProduct.nameProduct"
-              #nameProduct="ngModel"
-              [ngClass]="nameProduct.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="nameProduct.errors?.['minlength']" class="col-auto">
-              <span class="form-text"
-                >Debe tener al menos 4 caracteres y un maximo de 40</span
+                <option value="" disabled selected>
+                  Selecciona una categoría
+                </option>
+                <option
+                  *ngFor="let category of categories"
+                  value="{{ category }}"
+                >
+                  {{ category }}
+                </option>
+              </select>
+              <div
+                *ngIf="categoryProduct.errors?.['required']"
+                class="col-auto"
               >
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
             </div>
-            <div *ngIf="nameProduct.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
+            <div class="form-group">
+              <label for="nameProduct">Nombre:</label>
+              <input
+                type="text"
+                class="form-control"
+                name="nameProduct"
+                id="nameProduct"
+                minlength="4"
+                maxlength="40"
+                required
+                [(ngModel)]="newProduct.nameProduct"
+                #nameProduct="ngModel"
+                [ngClass]="nameProduct.errors ? 'is-invalid' : 'is-valid'"
+              />
+              <div *ngIf="nameProduct.errors?.['minlength']" class="col-auto">
+                <span class="form-text"
+                  >Debe tener al menos 4 caracteres y un maximo de 40</span
+                >
+              </div>
+              <div *ngIf="nameProduct.errors?.['required']" class="col-auto">
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="descripcionProducto">Descripción:</label>
-            <textarea
-              type="text"
-              class="form-control"
-              name="descripcionProducto"
-              id="descripcionProducto"
-              minlength="4"
-              required
-              [(ngModel)]="newProduct.descriptionProduct"
-              #descriptionProduct="ngModel"
-              [ngClass]="descriptionProduct.errors ? 'is-invalid' : 'is-valid'"
-            >
-            </textarea>
-            <div
-              *ngIf="descriptionProduct.errors?.['minlength']"
-              class="col-auto"
-            >
-              <span class="form-text">Debe tener al menos 4 caracteres</span>
-            </div>
-            <div
-              *ngIf="descriptionProduct.errors?.['required']"
-              class="col-auto"
-            >
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="precioProducto">Precio:</label>
-            <input
-              type="number"
-              class="form-control"
-              name="precioProducto"
-              id="precioProducto"
-              required
-              [(ngModel)]="newProduct.priceProduct"
-              min="10"
-              max="9999999"
-              [(ngModel)]="newProduct.priceProduct"
-              #priceProduct="ngModel"
-              [ngClass]="priceProduct.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="priceProduct.errors?.['min']" class="col-auto">
-              <span class="form-text"
-                >Ingrese un valor del producto, solo números</span
+            <div class="form-group">
+              <label for="descripcionProducto">Descripción:</label>
+              <textarea
+                type="text"
+                class="form-control"
+                name="descripcionProducto"
+                id="descripcionProducto"
+                minlength="4"
+                required
+                [(ngModel)]="newProduct.descriptionProduct"
+                #descriptionProduct="ngModel"
+                [ngClass]="
+                  descriptionProduct.errors ? 'is-invalid' : 'is-valid'
+                "
               >
+              </textarea>
+              <div
+                *ngIf="descriptionProduct.errors?.['minlength']"
+                class="col-auto"
+              >
+                <span class="form-text">Debe tener al menos 4 caracteres</span>
+              </div>
+              <div
+                *ngIf="descriptionProduct.errors?.['required']"
+                class="col-auto"
+              >
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
             </div>
-            <div *ngIf="priceProduct.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
+            <div class="form-group">
+              <label for="precioProducto">Precio:</label>
+              <input
+                type="number"
+                class="form-control"
+                name="precioProducto"
+                id="precioProducto"
+                required
+                [(ngModel)]="newProduct.priceProduct"
+                min="10"
+                max="9999999"
+                [(ngModel)]="newProduct.priceProduct"
+                #priceProduct="ngModel"
+                [ngClass]="priceProduct.errors ? 'is-invalid' : 'is-valid'"
+              />
+              <div *ngIf="priceProduct.errors?.['min']" class="col-auto">
+                <span class="form-text"
+                  >Ingrese un valor del producto, solo números</span
+                >
+              </div>
+              <div *ngIf="priceProduct.errors?.['required']" class="col-auto">
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
             </div>
+          </fieldset>
+          <div *ngIf="msj" class="alert alert-success" role="alert">
+            Acción realizada con exito!
           </div>
-        </fieldset>
-        <div *ngIf="msj" class="alert alert-success" role="alert">
-          Acción realizada con exito!
+          <div *ngIf="msjId" class="alert alert-danger" role="alert">
+            Ya existe un proveedor con ese codigo
+          </div>
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!myForm.valid"
+          >
+            Guardar
+          </button>
+          <button type="submit" class="btn btn-danger" (click)="ClearForm()">
+            Limpiar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            routerLink="/list-product"
+          >
+            Volver
+          </button>
         </div>
-        <div *ngIf="msjId" class="alert alert-danger" role="alert">
-          Ya existe un proveedor con ese codigo
-        </div>
-        <button
-          type="submit"
-          class="btn btn-success"
-          [disabled]="!myForm.valid"
-        >
-          Guardar
-        </button>
-        <button type="submit" class="btn btn-danger" (click)="ClearForm()">
-          Limpiar
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          routerLink="/list-product"
-        >
-          Volver
-        </button>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+</main>

@@ -21,13 +21,12 @@ public class ProvincesModel {
 	@Column(name="id_province", unique = true, nullable = false)
 	private Integer idProvince;
 	
-	@NotNull(message = "El ID Pais no puede estar vacio" )
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id_country", name = "id_country")
 	private CountriesModel country;
 	
-	@NotNull(message = "La provincia no puede estar vacia" )
-	@Size(min = 4, max = 40, message = "La provincia debe tener entre 4 y 40 caracteres")
+
 	@Column(name="province",nullable = false)
 	private String  province;
 

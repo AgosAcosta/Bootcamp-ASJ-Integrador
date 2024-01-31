@@ -21,8 +21,7 @@ public class ConditionsAfipModel {
 	@Column(name="id_condition_afip", unique = true, nullable = false)
 	private Integer idConditionAfip;
 	
-	@NotNull(message = "La condicion ante AFIP no puede estar vacia" )
-	@Size(min = 4, max = 40, message = "La condicion ante AFIP debe tener entre 4 y 40 caracteres")
+
 	@Column(name="condition",nullable = false)
 	private String condition;
 	

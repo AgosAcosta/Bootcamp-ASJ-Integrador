@@ -1,8 +1,14 @@
 package com.example.demo.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class ProvincesDTO {
     private int idProvince;
+    @NotNull(message = "El Pais no puede estar vacio" )
     private String country;
+    @NotNull(message = "La provincia no puede estar vacia" )
+    @Size(min = 4, max = 40, message = "La provincia debe tener entre 4 y 40 caracteres")
     private String province;
 
     public ProvincesDTO() {

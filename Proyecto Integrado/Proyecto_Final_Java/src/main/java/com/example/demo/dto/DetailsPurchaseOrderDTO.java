@@ -1,13 +1,21 @@
 package com.example.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DetailsPurchaseOrderDTO {
     private int idDetailPurchase;
     private int idProduct;
+    @NotNull(message = "El producto no puede estar vacio")
     private String nameProduct;
+    @NotNull(message = "El precio no puede estar vacio")
+    @DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01")
     private double priceProduct;
+    @NotNull(message = "La cantidad no puede estar vacio")
+    @Min(value = 1, message = "La cantidad debe ser como mínimo una unidad")
     private int unitProduct;
 
     public DetailsPurchaseOrderDTO() {

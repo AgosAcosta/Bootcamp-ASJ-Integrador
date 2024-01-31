@@ -9,14 +9,17 @@ import { ServicePurchaseOrderService } from '../../../../Service/service-purchas
 })
 export class ListPurchaseOrderComponent implements OnInit {
   purchaseOrderList!: PurchaseOrder[];
+  purchaseOrderActive: boolean = true;
 
   constructor(public servicePurchaseOrder: ServicePurchaseOrderService) {}
 
   ngOnInit(): void {
-    this.listPurchaseOrder();
+    this.listPurchaseOrderActive();
   }
 
-  listPurchaseOrder() {
+  listPurchaseOrderActive() {
+    this.purchaseOrderActive = true;
+
     this.servicePurchaseOrder.getListPurchaseOrder().subscribe(
       (data: PurchaseOrder[]) => {
         console.log('Obteniendo orden de compra', data);
@@ -28,6 +31,20 @@ export class ListPurchaseOrderComponent implements OnInit {
     );
   }
 
+  listPurchaseOrderDelete() {
+    this.purchaseOrderActive = false;
+
+    this.servicePurchaseOrder.getListPurchaseOrderDelete().subscribe(
+      (data: PurchaseOrder[]) => {
+        console.log('Obteniendo orden de compra eliminadas', data);
+        this.purchaseOrderList = data;
+      },
+      (error) => {
+        console.error('Error al obtener orden de compra eliminadas', error);
+      }
+    );
+  }
+
   statusPucharseOrder(id: any) {
     let msj = confirm('Desea cancelar la orden de compra?');
     if (msj) {
@@ -35,10 +52,10 @@ export class ListPurchaseOrderComponent implements OnInit {
         .cancelledPurchaseOrder(id)
         .subscribe((data) => {
           console.log('CAMBIANDO ESTADO', data);
-          this.listPurchaseOrder();
+          this.listPurchaseOrderActive();
         });
       if (updatedOrder) {
-        this.listPurchaseOrder();
+        this.listPurchaseOrderActive();
       }
     }
   }

@@ -27,6 +27,8 @@ export class FormProductComponent implements OnInit {
   suppliers: string[] = [];
   categories: string[] = [];
 
+  existsCode: boolean = false;
+
   idProduct: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
@@ -42,21 +44,6 @@ export class FormProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    /*     this.route.paramMap.subscribe((response) => {
-      let id = response.get('id');
-      if (id != undefined) {
-        this.newProduct = this.serviceProduct.getIdProduct(id)!;
-        this.isUpdate = true;
-      }
-    });
-
-    this.getListCategoryProduct();
-    this.getListSupplier(); */
-
-    /*     this.supplierName = this.serviceSupplier
-      .getListSupplier()
-      .map((supplier) => supplier.nameSupplier); */
-
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
       if (id != undefined) {
@@ -70,7 +57,6 @@ export class FormProductComponent implements OnInit {
           }
         );
       }
-
       this.getListCategoryProduct();
       this.getListSupplier();
     });
@@ -87,7 +73,7 @@ export class FormProductComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error al obtener la lista de categorías:', error);
+        console.error('ERROR EN LISTA CATEGORIA:', error);
       }
     );
   }
@@ -103,29 +89,52 @@ export class FormProductComponent implements OnInit {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
       return;
-    } else {
-      if (this.isUpdate) {
-        this.serviceProduct
-          .updateProduct(this.newProduct.idProduct, this.newProduct)
-          .subscribe((data) => {
-            console.log(data);
-          });
-        this.msj = true;
-        setTimeout(() => {
-          this.router.navigate(['/list-product']);
-        }, 1500);
-      } else {
-        this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
-          console.log('Creando un producto', data);
+    }
+    const code = form.value.codeProduct;
+    this.serviceProduct.existsCode(code).subscribe((existsCode) => {
+      this.existsCode = existsCode;
 
-          this.msj = true;
-          setTimeout(() => {
-            this.router.navigate(['/list-product']);
-          }, 1500);
-        });
+      if (this.isUpdate) {
+        this.updateProduct();
+      } else {
+        this.postProduct();
       }
+    });
+  }
+
+  postProduct() {
+    if (this.existsCode) {
+      console.log('YA EXISTE ESTE CODIGO');
+      return;
+    } else {
+      this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
+        console.log('Creando un producto', data);
+        this.msj = true;
+      });
     }
   }
+
+  updateProduct() {
+    if (this.existsCode) {
+      console.log('YA EXISTE ESTE CODIGO');
+      return;
+    } else {
+      this.serviceProduct
+        .updateProduct(this.newProduct.idProduct, this.newProduct)
+        .subscribe((data) => {
+          console.log('ACTUALIZANDO PRODUCTO', data);
+          this.msj = true;
+          this.navigateToListSupplier();
+        });
+    }
+  }
+
+  navigateToListSupplier() {
+    setTimeout(() => {
+      this.router.navigate(['/list-product']);
+    }, 1500);
+  }
+
   ClearForm() {
     this.newProduct = {
       idProduct: 0,
@@ -137,7 +146,6 @@ export class FormProductComponent implements OnInit {
       priceProduct: 0,
       supplierName: '',
     };
-
     this.msj = false;
   }
 }

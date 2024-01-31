@@ -20,29 +20,22 @@ public class ContactsModel {
 	@Column(name="id_contact", unique = true, nullable = false)
 	private Integer idContact;
 
-	@NotNull(message = "El nombre de contacto no puede estar vacia")
-	@Size(min = 4, max = 40, message = "El nombre de contacto debe tener entre 4 y 40 caracteres")
 	@Column(name="name_contact",nullable = false)
 	private String nameContact;
 
-	@NotNull(message = "El Apellido de contacto no puede estar vacia")
-	@Size(min = 4, max = 40, message = "El Apellido de contacto debe tener entre 4 y 40 caracteres")
+
 	@Column(name="last_name_contact",nullable = false)
 	private String lastNameContact;
 
-	@NotNull(message = "El número de teléfono no puede estar vacio")
-	@Size(min = 10, max = 15, message = "El número de teléfono debe tener entre 10 y 15 caracteres")
-	@Pattern(regexp = "\\d+", message = "El número de teléfono solo puede contener dígitos")
+
 	@Column(name="tel_contact",nullable = false)
 	private String telContact;
 
-	@NotNull(message = "El correo electrónico no puede estar vacio")
-	@Email(message = "La dirección de correo electrónico no es válida")
+
 	@Column(name="email_contact",nullable = false)
 	private String emailContact;
 
-	@NotNull(message = "El Rol del contacto no puede estar vacia")
-	@Size(min = 3, max = 40, message = "El Rol del contacto debe tener entre 3 y 40 caracteres")
+
 	@Column(name="rol_contact",nullable = false)
 	private String rolContact;
 	

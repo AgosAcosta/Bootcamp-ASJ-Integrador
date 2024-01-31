@@ -35,7 +35,7 @@ export class FormPurchaseOrderComponent implements OnInit {
   };
 
   selectedProduct: any;
-  suppliers: string[] = [];
+  suppliers: any[] = [];
   products: any[] = [];
 
   idPurchaseOrden: string = '';
@@ -92,6 +92,13 @@ export class FormPurchaseOrderComponent implements OnInit {
     });
   }
 
+  getSelectedSupplierLogo(): string | undefined {
+    const selectedSupplier = this.suppliers.find(
+      (supplier) => supplier.name === this.newPurchaseOrder.supplier
+    );
+    return selectedSupplier ? selectedSupplier.urlLogo : '';
+  }
+
   onSupplierSelected(supplierName: string) {
     const selectedSupplier =
       this.suppliers.findIndex((supplier) => supplier === supplierName) + 1;
@@ -141,7 +148,6 @@ export class FormPurchaseOrderComponent implements OnInit {
       this.selectedProduct.priceProduct = '';
       this.supplierPoin = false;
       this.calculateTotal();
-
       console.log('PRODUCTOS DETALLE:', this.newPurchaseOrder.products);
     }
   }

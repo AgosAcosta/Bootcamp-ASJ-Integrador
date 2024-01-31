@@ -21,7 +21,6 @@ public class CategoriesProductModel {
 	private Integer idCategoryProduct;
 	
 	@NotNull(message = "La categoría del producto no puede estar vacio" )
-	@Size(min = 4, max = 40, message = "La categoría del producto debe tener entre 4 y 40 caracteres")
 	@Column(name="category_product",nullable = false)
 	private String categoryProduct;
 		

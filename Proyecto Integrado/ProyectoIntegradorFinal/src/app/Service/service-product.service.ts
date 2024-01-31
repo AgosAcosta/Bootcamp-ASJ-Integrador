@@ -23,6 +23,10 @@ export class ServiceProductService {
     return this.http.get(this.URL);
   }
 
+  public getListProductsDelete(): Observable<any> {
+    return this.http.get(`${this.URL}/deleteTrue`);
+  }
+
   public getProductById(id: number): Observable<any> {
     return this.http.get(`${this.URL}/${id}`);
   }
@@ -39,32 +43,15 @@ export class ServiceProductService {
     return this.http.get<any>(`${this.URL}/${supplierId}/supplier`);
   }
 
-  // ------------------------ ANTES DE BACK
-
-  deleteProduct(id: number) {
-    const index = this.productList.findIndex((item) => item.idProduct === id);
-    if (index !== -1) {
-      this.productList.splice(index, 1);
-    }
+  public deleteProduct(id: number): Observable<any> {
+    return this.http.patch(`${this.URL}/delete/${id}`, {});
   }
 
-  public getIdProduct(id: any): Product | undefined {
-    return this.productList.find((item) => item.idProduct == id);
+  public activeProduct(id: number): Observable<any> {
+    return this.http.patch(`${this.URL}/active/${id}`, {});
   }
 
-  public getProductByName(productName: string): Product | undefined {
-    return this.productList.find(
-      (product) => product.nameProduct === productName
-    );
-  }
-
-  getProductsBySupplier(supplier: string): Product[] {
-    return this.productList.filter(
-      (product) => product.supplierName === supplier
-    );
-  }
-
-  public doesProductExist(id: Number): boolean {
-    return this.productList.some((product) => product.idProduct === id);
+  public existsCode(code: string): Observable<boolean> {
+    return this.http.patch<boolean>(`${this.URL}/exists/code/${code}`, null);
   }
 }

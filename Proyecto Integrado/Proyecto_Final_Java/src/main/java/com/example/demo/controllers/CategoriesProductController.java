@@ -37,7 +37,6 @@ public class CategoriesProductController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PostMapping()
     public ResponseEntity<Object> postCategories(@Valid @RequestBody CategoriesProductDTO categoriesProductDTO,
                                                  BindingResult bindingResult) {

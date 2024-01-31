@@ -19,9 +19,7 @@ public class CategoriesSupplierModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_category_supplier", unique = true, nullable = false)
 	private Integer idCategorySupplier;
-	
-	@NotNull(message = "El rubro del proveedor no puede estar vacio" )
-	@Size(min = 4, max = 40, message = "El rubro del proveedor debe tener entre 4 y 40 caracteres")
+
 	@Column(name="category_supplier",nullable = false)
 	private String categorySupplier;
 

@@ -43,7 +43,6 @@ public class SupplierController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
 	@PostMapping()
 	public ResponseEntity<Object> postSupplier(@Valid @RequestBody SupplierResponseDTO supplier,
 			BindingResult bindingResult) {
@@ -53,7 +52,6 @@ public class SupplierController {
 		}
 		return ResponseEntity.ok(supplierService.postSupplier(supplier));
 	}
-
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> putSupplier(@PathVariable int id, @RequestBody SupplierResponseDTO supplier,
 			BindingResult bindingResult) {
@@ -92,6 +90,4 @@ public class SupplierController {
 		boolean response = supplierService.validateSupplierCode( code);
 		return ResponseEntity.ok().body(response);
 	}
-
-
 }

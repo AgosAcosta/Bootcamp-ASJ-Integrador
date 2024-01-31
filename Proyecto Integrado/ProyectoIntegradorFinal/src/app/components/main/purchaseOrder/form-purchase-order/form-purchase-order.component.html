@@ -25,7 +25,7 @@
               class="form-control"
               name="dateIssue"
               id="dateIssue"
-              min="{{ date | date : 'yyyy-MM-dd' }}"
+              [min]="date | date : 'yyyy-MM-dd'"
               required
               [disabled]="isUpdate"
               [(ngModel)]="newPurchaseOrder.dateIssue"
@@ -37,6 +37,7 @@
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
+
           <div class="form-group">
             <label for="dateDelivery">Fecha de Entrega:</label>
             <input
@@ -44,7 +45,7 @@
               class="form-control"
               name="dateDelivery"
               id="dateDelivery"
-              min="{{ getMinDateShippingTemplate() }}"
+              [min]="getMinDateShippingTemplate()"
               required
               [(ngModel)]="newPurchaseOrder.dateDelivery"
               [ngModelOptions]="{ standalone: true }"
@@ -55,16 +56,24 @@
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
+
           <div class="form-group">
-            <label for="recepcion">Información de Recepción</label>
+            <label for="recepcion">Información de recepción:</label>
             <textarea
+              type="text"
+              class="form-control"
+              name="recepcion"
+              id="recepcion"
+              minlength="1"
               required
               [(ngModel)]="newPurchaseOrder.recepcion"
-              [ngModelOptions]="{ standalone: true }"
-              minlength="1"
               #recepcion="ngModel"
               [ngClass]="recepcion.errors ? 'is-invalid' : 'is-valid'"
-            ></textarea>
+            >
+            </textarea>
+            <div *ngIf="recepcion.errors?.['minlength']" class="col-auto">
+              <span class="form-text">Debe tener al menos 1 caracteres</span>
+            </div>
             <div *ngIf="recepcion.errors?.['required']" class="col-auto">
               <span class="form-text">Se debe completar este campo</span>
             </div>
@@ -97,6 +106,7 @@
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
+
           <div class="form-group">
             <label for="product">Producto:</label>
             <select
@@ -171,7 +181,6 @@
             </tr>
           </tbody>
         </table>
-
         <div
           *ngIf="detailProducts.unitProduct > 0"
           class="form-group d-flex align-items-center"
@@ -191,7 +200,9 @@
     <button
       type="submit"
       class="btn btn-success"
-      [disabled]="isUpdate ? false : !myForm.valid"
+      [disabled]="
+        isUpdate ? false : !myForm.valid || newPurchaseOrder.total === 0
+      "
     >
       Guardar
     </button>

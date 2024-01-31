@@ -12,6 +12,11 @@ export class ListSupplierComponent {
   supplierList!: Supplier[];
   supplierActive: boolean = true;
 
+  currentCodeSortOrder: 'asc' | 'desc' = 'asc';
+  currentNameSortOrder: 'asc' | 'desc' = 'asc';
+  isCodeSortActive = false;
+  isNameSortActive = false;
+
   filteredList!: Supplier[];
   searchText: string = '';
   searchCode: string = '';
@@ -80,9 +85,44 @@ export class ListSupplierComponent {
     }
   }
 
+  toggleCodeSortOrder() {
+    this.currentCodeSortOrder =
+      this.currentCodeSortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortSupplierListByCode();
+    this.isCodeSortActive = true;
+    this.isNameSortActive = false;
+  }
 
+  toggleNameSortOrder() {
+    this.currentNameSortOrder =
+      this.currentNameSortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortSupplierListByName();
+    this.isCodeSortActive = false;
+    this.isNameSortActive = true;
+  }
 
-  
+  sortSupplierListByCode() {
+    this.supplierList.sort((a, b) => {
+      const codeA = a.codeSupplier.toUpperCase();
+      const codeB = b.codeSupplier.toUpperCase();
+
+      return this.currentCodeSortOrder === 'asc'
+        ? codeA.localeCompare(codeB)
+        : codeB.localeCompare(codeA);
+    });
+  }
+
+  sortSupplierListByName() {
+    this.supplierList.sort((a, b) => {
+      const nameA = a.nameSupplier.toUpperCase();
+      const nameB = b.nameSupplier.toUpperCase();
+
+      return this.currentNameSortOrder === 'asc'
+        ? nameA.localeCompare(nameB)
+        : nameB.localeCompare(nameA);
+    });
+  }
+
   handleImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
 

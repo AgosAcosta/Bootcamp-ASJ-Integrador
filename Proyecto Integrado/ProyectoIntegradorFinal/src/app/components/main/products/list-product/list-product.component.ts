@@ -10,6 +10,12 @@ import { Router } from '@angular/router';
 })
 export class ListProductComponent implements OnInit {
   productList!: Product[];
+  productActive: boolean = true;
+
+  currentSortOrder: 'asc' | 'desc' = 'asc';
+  currentPriceSortOrder: 'asc' | 'desc' = 'asc';
+  isNameSortActive = false;
+  isPriceSortActive = false;
 
   constructor(
     private serviceProduct: ServiceProductService,
@@ -17,16 +23,13 @@ export class ListProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.listProduct();
-    this.sortProductsByName();
+    this.getListProductActive();
   }
 
-  listProduct() {
-    // this.productList = this.serviceProduct.getListProduct();
-
+  getListProductActive() {
+    this.productActive = true;
     this.serviceProduct.getListProducts().subscribe((data) => {
       this.productList = data;
-
       console.log('Cargando Lista', data);
     });
   }
@@ -34,13 +37,76 @@ export class ListProductComponent implements OnInit {
   deleteProduct(id: any) {
     let msj = confirm('Desea eliminar el producto ' + id + '?');
     if (msj) {
-      this.serviceProduct.deleteProduct(id);
-      this.listProduct();
+      this.serviceProduct.deleteProduct(id).subscribe((data) => {
+        console.log('Eliminando producto', data);
+        this.getListProductActive();
+      });
     }
   }
-  sortProductsByName() {
-    // this.productList.sort((a, b) => a.nameProduct.localeCompare(b.nameProduct));
-    //Función que ordena y compara elementos
+
+  getListProductDelete() {
+    this.productActive = false;
+    this.serviceProduct.getListProductsDelete().subscribe((data) => {
+      this.productList = data;
+      console.log('Cargando Lista productos borrados', data);
+
+      this.sortProductListByName();
+    });
+  }
+
+  activeProduct(id: number) {
+    alert('activando el producto' + id);
+    this.serviceProduct.activeProduct(id).subscribe((data) => {
+      console.log('CAMBIANDO ACTIVO PRODUCTO', data);
+      this.getListProductActive();
+
+      this.sortProductListByName();
+    });
+  }
+
+  sortProductListByName() {
+    this.productList.sort((a, b) => {
+      const nameA = a.nameProduct.toUpperCase();
+      const nameB = b.nameProduct.toUpperCase();
+
+      if (nameA < nameB) {
+        return this.currentSortOrder === 'asc' ? -1 : 1;
+      }
+      if (nameA > nameB) {
+        return this.currentSortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  toggleSortOrder() {
+    this.currentSortOrder = this.currentSortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortProductListByName();
+    this.isNameSortActive = true;
+    this.isPriceSortActive = false;
+  }
+
+  sortProductListByPrice() {
+    this.productList.sort((a, b) => {
+      const priceA = a.priceProduct;
+      const priceB = b.priceProduct;
+
+      if (priceA < priceB) {
+        return this.currentPriceSortOrder === 'asc' ? -1 : 1;
+      }
+      if (priceA > priceB) {
+        return this.currentPriceSortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  togglePriceSortOrder() {
+    this.currentPriceSortOrder =
+      this.currentPriceSortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortProductListByPrice();
+    this.isNameSortActive = false;
+    this.isPriceSortActive = true;
   }
 
   handleImageError(event: Event): void {

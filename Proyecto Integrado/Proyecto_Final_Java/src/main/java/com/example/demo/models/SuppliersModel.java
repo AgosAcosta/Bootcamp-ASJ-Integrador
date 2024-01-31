@@ -29,17 +29,15 @@ public class SuppliersModel {
 	@Column(name="id_supplier", unique = true, nullable = false)
 	private Integer idSupplier;
 
-	@NotNull(message = "El ID de Condicion AFIP no puede estar vacio")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id_condition_afip", name = "id_condition_afip")
 	private ConditionsAfipModel conditionAfip;
 
-	@NotNull(message = "El ID de rubro proveedor no puede estar vacio")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id_category_supplier", name = "id_category_supplier")
 	private CategoriesSupplierModel categorySupplier;
 
-	@NotNull(message = "El ID Contacto no puede estar vacio")
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(referencedColumnName = "id_contact", name = "id_contact")
 	private ContactsModel contact;
@@ -49,37 +47,22 @@ public class SuppliersModel {
 	//@NotNull(message = "El ID Direccion no puede estar vacio")
 	private DirectionsModel direction;
 
-	@Column(columnDefinition = "TEXT", name = "url_supplier")
+	@Column(name = "url_supplier")
 	private String urlSupplier; // LOGO
 
-	@NotNull(message = "El código no puede estar vacio")
-	@Size(min = 4, max = 10, message = "El codigo debe tener entre 4 y 10 caracteres")
 	@Column(name="code_supplier",nullable = false)
 	private String codeSupplier;
-
-	@NotNull(message = "La razon social no puede estar vacio")
-	@Size(min = 4, max = 40, message = "La razon social debe tener entre 4 y 40 caracteres")
 	@Column(name="name_supplier",nullable = false)
 	private String nameSupplier;
 
-	@NotNull(message = "El cuit no puede estar vacio")
-	@Size(min = 13, max = 13, message = "El CUIT debe tener 13 caracteres")
-	@Pattern(regexp = "\\d{2}-\\d{8}-\\d{1}", message = "Formato de CUIT incorrecto")
 	@Column(name="cuit_supplier",nullable = false)
 	private String cuitSupplier;
 
-	@URL(message = "La URL no es válida")
 	@Column(name="web_supplier",nullable = false)
 	private String webSupplier;
-
-	@NotNull(message = "El correo electrónico no puede estar vacio")
-	@Email(message = "La dirección de correo electrónico no es válida")
 	@Column(name="email_supplier",nullable = false)
 	private String emailSupplier;
 
-	@NotNull(message = "El número de teléfono no puede estar vacio")
-	@Size(min = 10, max = 15, message = "El número de teléfono debe tener entre 10 y 15 caracteres")
-	@Pattern(regexp = "\\d+", message = "El número de teléfono solo puede contener dígitos")
 	@Column(name="tel_supplier",nullable = false)
 	private String telSupplier;
 

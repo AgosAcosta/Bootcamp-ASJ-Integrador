@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,30 +48,31 @@ public class SupplierService {
     @Autowired
     ProvinceRepository provinceRepository;
 
-    public List<SupplierResponseDTO> getAllSupplier() {
-//        List<SuppliersModel> suppliers_Model = supplierRepository.findAll();
-//        List<SupplierResponseDTO> responseDTO = new ArrayList<SupplierResponseDTO>();
-//
-//        for (SuppliersModel supplier : suppliers_Model) {
-//            responseDTO.add(SupplierMapper.getSupplierResponse(supplier).get());
-//        }
-//        return responseDTO;
 
-        List<SuppliersModel> suppliersModelList = supplierRepository.findByDeleteSupplierFalse();
-        return suppliersModelList.stream()
-                .filter(supplier -> !supplier.isDeleteSupplier())
-                .map(SupplierMapper::getSupplierResponse)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+    //PROVEEDORES NO BORRADOS
+    public List<SupplierResponseDTO> getAllSupplier() {
+        List<SuppliersModel> suppliersModelList = supplierRepository.findAll();
+        List<SupplierResponseDTO> responseDTO = new ArrayList<>();
+
+        for (SuppliersModel supplier : suppliersModelList) {
+            if (!supplier.isDeleteSupplier()) {
+                SupplierMapper.getSupplierResponse(supplier).ifPresent(responseDTO::add);
+            }
+        }
+        return responseDTO;
     }
 
+    //PROVEEDORES BORRADOS
     public List<SupplierResponseDTO> getAllSupplierDelete() {
-        return supplierRepository.findByDeleteSupplierTrue().stream()
-                .filter(SuppliersModel::isDeleteSupplier)
-                .map(SupplierMapper::getSupplierResponse)
-                .flatMap(Optional::stream)
-                .collect(Collectors.toList());
+        List<SuppliersModel> suppliersModelList = supplierRepository.findAll();
+        List<SupplierResponseDTO> responseDTO = new ArrayList<>();
+
+        for (SuppliersModel supplier : suppliersModelList) {
+            if (supplier.isDeleteSupplier()) {
+                SupplierMapper.getSupplierResponse(supplier).ifPresent(responseDTO::add);
+            }
+        }
+        return responseDTO;
     }
 
 

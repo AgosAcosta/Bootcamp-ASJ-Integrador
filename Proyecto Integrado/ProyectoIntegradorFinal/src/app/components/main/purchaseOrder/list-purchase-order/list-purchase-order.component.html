@@ -1,10 +1,25 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-6">
-      <h4>Listado Orden de Compra:</h4>
+      <h4>
+        {{
+          purchaseOrderActive
+            ? "Orden de compra activas"
+            : "Orden de compra eliminadas"
+        }}
+      </h4>
     </div>
     <div class="col-6">
-      <a routerLink="new" class="btn btn-success" id="newProduct">Agregar</a>
+      <a routerLink="new" class="btn btn-success" id="newProduct">
+        <i class="bi bi-plus"></i>Agregar</a
+      >
+
+      <a (click)="listPurchaseOrderActive()" class="ml-2">
+        <i class="bi bi-person-fill-check"></i>Activos
+      </a>
+      <a (click)="listPurchaseOrderDelete()" class="ml-2">
+        <i class="bi bi-person-fill-slash"></i>Eliminados
+      </a>
     </div>
   </div>
 

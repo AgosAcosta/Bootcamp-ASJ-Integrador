@@ -16,13 +16,85 @@
       class="collapse navbar-collapse justify-content-end"
       id="navbarNavAltMarkup"
     >
-      <div class="navbar-nav">
-        <a class="nav-link" aria-current="page" routerLink="list-supplier"
-          >Proveedores</a
-        >
-        <a class="nav-link" routerLink="list-product">Productos</a>
-        <a class="nav-link" routerLink="list-purchase-order">Orden de Compra</a>
-        <!-- <a class="nav-link" href="#">Facturación</a> -->
+      <div class="navbar-nav" style="background-color: rgb(31, 54, 170)">
+        <!-- Proveedores Dropdown -->
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="proveedoresDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Proveedores
+          </a>
+          <div
+            class="dropdown-menu"
+            aria-labelledby="proveedoresDropdown"
+            style="background-color: rgb(31, 54, 170)"
+          >
+            <a class="dropdown-item" routerLink="list-supplier">Listado</a>
+            <a class="dropdown-item" routerLink="list-supplier/new"
+              >Formulario</a
+            >
+            <a class="dropdown-item" routerLink="category-supplier">Rubro</a>
+          </div>
+        </div>
+
+        <!-- Productos Dropdown -->
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="productosDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Productos
+          </a>
+          <div
+            class="dropdown-menu"
+            aria-labelledby="productosDropdown"
+            style="background-color: rgb(31, 54, 170)"
+          >
+            <a class="dropdown-item" routerLink="list-product">Listado</a>
+            <a class="dropdown-item" routerLink="list-product/new"
+              >Formulario</a
+            >
+            <a class="dropdown-item" routerLink="category-product">Categoría</a>
+          </div>
+        </div>
+
+        <!-- Orden de Compra Dropdown -->
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="ordenCompraDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Orden de Compra
+          </a>
+          <div
+            class="dropdown-menu"
+            aria-labelledby="ordenCompraDropdown"
+            style="background-color: rgb(31, 54, 170)"
+          >
+            <a class="dropdown-item" routerLink="list-purchase-order"
+              >Listado</a
+            >
+            <a class="dropdown-item" routerLink="list-purchase-order/new"
+              >Formulario</a
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>

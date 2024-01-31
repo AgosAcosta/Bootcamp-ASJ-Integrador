@@ -2,6 +2,9 @@ package com.example.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -9,13 +12,21 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PurchaseOrderDTO {
     private int idPurchaseOrder;
+    @NotNull(message = "La fecha de emisión no puede estar vacia")
     private Timestamp dateIssue;
+    @NotNull(message = "La fecha de entrega no puede estar vacia")
     private Timestamp dateDelivery;
+    @NotNull(message = "La informacion de recepción no puede estar vacia")
+    @Size(min = 1, message = "La informacion de recepción debe tener min. 1 caracter")
     private String recepcion;
+    @NotNull(message = "El  proveedores no puede estar vacio")
     private String supplier;
-//    @Valid
+     @Valid
     private List<DetailsPurchaseOrderDTO> products;
+    @NotNull(message = "El total no puede estar vacio")
+    @DecimalMin(value = "0.01", message = "El total debe ser mayor o igual a 0.01")
     private double total;
+    @NotNull(message = "El estado de la orden de compra no puede estar vacio")
     private String status;
 
     public PurchaseOrderDTO() {

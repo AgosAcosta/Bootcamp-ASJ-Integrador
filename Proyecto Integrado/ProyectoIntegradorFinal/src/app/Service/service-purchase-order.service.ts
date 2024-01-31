@@ -24,6 +24,10 @@ export class ServicePurchaseOrderService {
     return this.http.get(this.URL);
   }
 
+  public getListPurchaseOrderDelete(): Observable<any> {
+    return this.http.get(`${this.URL}/deleteTrue`);
+  }
+
   public postPurchaseOrder(purchaseOrder: PurchaseOrder): Observable<any> {
     return this.http.post(this.URL, purchaseOrder);
   }

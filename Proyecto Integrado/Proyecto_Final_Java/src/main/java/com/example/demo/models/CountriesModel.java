@@ -18,8 +18,7 @@ public class CountriesModel {
 	@Column(name="id_country", unique = true, nullable = false)
 	private Integer idCountry;
 	
-	@NotNull(message = "El país no puede estar vacia" )
-	@Size(min = 4, max = 40, message = "El pais debe tener entre 4 y 40 caracteres")
+
 	@Column(name="country",nullable = false)
 	private String country;
 	

@@ -27,21 +27,17 @@ public class PurchaseOrdersModel {
 	@JoinColumn(referencedColumnName = "id_status_order", name = "id_status_order")
 	private StatusPurchaseOrdersModel statusOrder;
 
-	@NotNull(message = "La fecha de emisión no puede estar vacia")
 	@Column(name="date_issue_purchase_order",nullable = false)
 	private Timestamp dateIssuePurchaseOrder;
 
-	@NotNull(message = "La fecha de entrega no puede estar vacia")
 	@Column(name="date_delivery_purchase_order",nullable = false)
 	private Timestamp dateDeliveryPurchaseOrder;
 
-	@NotNull(message = "La informacion de recepción no puede estar vacia")
-	@Size(min = 1, message = "La informacion de recepción debe tener min. 1 caracter")
+
 	@Column(name="reception_purchase_order",nullable = false)
 	private String receptionPurchaseOrder;
 
-	@NotNull(message = "El total no puede estar vacio")
-	@DecimalMin(value = "0.01", message = "El total debe ser mayor o igual a 0.01")
+
 	@Column(name="total_purchase_order",nullable = false)
 	private double totalPurchaseOrder;
 

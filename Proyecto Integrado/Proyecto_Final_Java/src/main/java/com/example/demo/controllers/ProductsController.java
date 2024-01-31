@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.example.demo.dto.ProductResponseDTO;
 import com.example.demo.dto.ProvincesDTO;
+import com.example.demo.dto.SupplierResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,11 @@ public class ProductsController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
+    @GetMapping("/deleteTrue")
+    public ResponseEntity<List<ProductResponseDTO>> getAllProductsDelete() {
+        return ResponseEntity.ok(productService.getAllProductsDelete());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProductResponseDTO>> getProductById(@PathVariable int id) {
         Optional<ProductResponseDTO> product = productService.getroductById(id);
@@ -40,7 +46,6 @@ public class ProductsController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PostMapping()
     public ResponseEntity<Object> postProduct(@Valid @RequestBody ProductResponseDTO product,
                                               BindingResult bindingResult) {
@@ -81,4 +86,18 @@ public class ProductsController {
         }
     }
 
+    @PatchMapping("/active/{id}")
+    public ResponseEntity<ProductResponseDTO> activeById(@PathVariable Integer id) {
+        Optional<ProductResponseDTO> response = productService.findByDeleteProductTrue(id);
+        if (response.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(response.get());
+    }
+
+    @PatchMapping("/exists/code/{code}")
+    public ResponseEntity<Boolean> existsCode(@PathVariable String code) {
+        boolean response = productService.validateProductCode(code);
+        return ResponseEntity.ok().body(response);
+    }
 }

@@ -28,25 +28,16 @@ public class DirectionsModel {
 	@JoinColumn(referencedColumnName = "id_province", name = "id_province")
 	private ProvincesModel province;
 
-	@NotNull(message = "La calle no puede estar vacia")
-	@Size(min = 4, max = 40, message = "La calle debe tener entre 4 y 40 caracteres")
 	@Column(name="street_supplier",nullable = false)
 	private String streetSupplier;
-	
-	@NotNull(message = "El numero de la calle no puede estar vacio")
-    @Min(value = 1, message = "El número de la calle debe ser como mínimo 1 caracter")
-    @Max(value = 9999, message = "El número de la calle debe ser como máximo 4 caracter ")
+
 	@Column(name="num_supplier",nullable = false)
 	private Integer numSupplier;
-	
-	@NotNull(message = "El código postal no puede estar vacio")
-    @Min(value = 100, message = "El código postal debe ser como mínimo 3 caracter")
-    @Max(value = 9999, message = "El número de la calle debe ser como máximo 4 caracter ")
+
 	@Column(name="cp_supplier",nullable = false)
 	private Integer cpSupplier;
 	
-	@NotNull(message = "La localidad no puede estar vacia")
-	@Size(min = 4, max = 40, message = "La localidad debe tener entre 4 y 40 caracteres")
+
 	@Column(name="location",nullable = false)
 	private String location;
 		

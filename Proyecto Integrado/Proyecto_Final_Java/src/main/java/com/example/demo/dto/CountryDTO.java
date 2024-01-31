@@ -1,6 +1,8 @@
 package com.example.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
 public class CountryDTO {
 
     private int idCountry;
+    @NotNull(message = "El país no puede estar vacia" )
     private String country;
 
     public CountryDTO() {
