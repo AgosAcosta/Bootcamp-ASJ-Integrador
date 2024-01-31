@@ -18,6 +18,10 @@ import { DetailsSupplierComponent } from './components/main/suppliers/details-su
 import { DetailsProductComponent } from './components/main/products/details-product/details-product.component';
 import { DetailsPurchaseOrderComponent } from './components/main/purchaseOrder/details-purchase-order/details-purchase-order.component';
 import { DatePipe } from '@angular/common';
+import { ListCategorySupplierComponent } from './components/main/CategorySupplier/list-category-supplier/list-category-supplier.component';
+import { ListCategoryProductComponent } from './components/main/CategoryProduct/list-category-product/list-category-product.component';
+import { FromCategorySupplierComponent } from './components/main/CategorySupplier/from-category-supplier/from-category-supplier.component';
+import { FormCategoryProductComponent } from './components/main/CategoryProduct/form-category-product/form-category-product.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,10 @@ import { DatePipe } from '@angular/common';
     DetailsSupplierComponent,
     DetailsProductComponent,
     DetailsPurchaseOrderComponent,
+    ListCategorySupplierComponent,
+    ListCategoryProductComponent,
+    FromCategorySupplierComponent,
+    FormCategoryProductComponent,
   ],
   imports: [
     BrowserModule,

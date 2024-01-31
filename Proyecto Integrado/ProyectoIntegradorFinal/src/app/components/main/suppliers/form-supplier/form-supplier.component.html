@@ -140,10 +140,10 @@
                 </div>
               </div>
 
-              <div class="row d-flex align-content-end">
-                <div class="col-md-11">
-                  <div class="form-group">
-                    <label for="categorySupplier">Rubro:</label>
+              <div class="form-group">
+                <label for="categorySupplier">Rubro:</label>
+                <div class="row d-flex align-items-center">
+                  <div class="col">
                     <select
                       class="form-select"
                       name="categorySupplier"
@@ -165,26 +165,24 @@
                         {{ category }}
                       </option>
                     </select>
-                    <div
-                      *ngIf="categorySupplier.errors?.['required']"
-                      class="col-auto"
+                  </div>
+                  <div class="col-1">
+                    <!-- Button trigger modal -->
+                    <button
+                      type="button"
+                      class="btn btn-primary m-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
                     >
-                      <span class="form-text"
-                        >Se debe completar este campo</span
-                      >
-                    </div>
+                      +
+                    </button>
                   </div>
                 </div>
-                <div class="col-md-1">
-                  <!-- Button trigger modal -->
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    +
-                  </button>
+                <div
+                  *ngIf="categorySupplier.errors?.['required']"
+                  class="col-auto"
+                >
+                  <span class="form-text">Se debe completar este campo</span>
                 </div>
               </div>
               <!-- Modal -->
@@ -212,10 +210,36 @@
                     <div class="modal-body">
                       <input
                         type="text"
-                        [(ngModel)]="newCategory"
+                        [(ngModel)]="newCategory.categorySupplier"
                         name="categorySupplier"
                         placeholder="Rubro"
+                        required
+                        minlength="4"
+                        maxlength="40"
+                        #categorySupplierModal="ngModel"
+                        [ngClass]="
+                          categorySupplierModal.errors
+                            ? 'is-invalid'
+                            : 'is-valid'
+                        "
                       />
+                    </div>
+                    <div
+                      *ngIf="categorySupplierModal.errors?.['required']"
+                      class="col-auto"
+                    >
+                      <span class="form-text"
+                        >Se debe completar este campo</span
+                      >
+                    </div>
+                    <div
+                      *ngIf="categorySupplierModal.errors?.['minlength']"
+                      class="col-auto"
+                    >
+                      <span class="form-text"
+                        >Debe tener al menos 4 caracteres y un maximo de
+                        40</span
+                      >
                     </div>
 
                     <div
@@ -354,54 +378,69 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="numero_Calle">Número:</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="numSupplier"
-                  id="numSupplier"
-                  [(ngModel)]="newsupplier.numSupplier"
-                  min="1"
-                  max="9999"
-                  required
-                  #numSupplier="ngModel"
-                  [ngClass]="numSupplier.errors ? 'is-invalid' : 'is-valid'"
-                />
-                <div
-                  *ngIf="numSupplier.errors?.['min'] || numSupplier.errors?.['max']"
-                  class="col-auto"
-                >
-                  <span class="form-text"
-                    >Debe tener al menos 1 caracteres y un maximo de 5</span
-                  >
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="numero_Calle">Número:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="numSupplier"
+                      id="numSupplier"
+                      [(ngModel)]="newsupplier.numSupplier"
+                      min="1"
+                      max="9999"
+                      required
+                      #numSupplier="ngModel"
+                      [ngClass]="numSupplier.errors ? 'is-invalid' : 'is-valid'"
+                    />
+                    <div
+                      *ngIf="numSupplier.errors?.['min'] || numSupplier.errors?.['max']"
+                      class="col-auto"
+                    >
+                      <span class="form-text"
+                        >Debe tener al menos 1 caracteres y un maximo de 5</span
+                      >
+                    </div>
+                    <div
+                      *ngIf="numSupplier.errors?.['required']"
+                      class="col-auto"
+                    >
+                      <span class="form-text"
+                        >Se debe completar este campo</span
+                      >
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="numSupplier.errors?.['required']" class="col-auto">
-                  <span class="form-text">Se debe completar este campo</span>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="cp_Domicilio">CP:</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="cpSupplier"
-                  id="cpSupplier"
-                  [(ngModel)]="newsupplier.cpSupplier"
-                  min="100"
-                  max="9999"
-                  required
-                  #cpSupplier="ngModel"
-                  [ngClass]="cpSupplier.errors ? 'is-invalid' : 'is-valid'"
-                />
-                <div *ngIf="cpSupplier.errors?.['min']" class="col-auto">
-                  <span class="form-text"
-                    >Debe tener al menos 3 caracteres y un máximo de 5</span
-                  >
-                </div>
-                <div *ngIf="cpSupplier.errors?.['required']" class="col-auto">
-                  <span class="form-text">Se debe completar este campo</span>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="cp_Domicilio">Código Postal:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="cpSupplier"
+                      id="cpSupplier"
+                      [(ngModel)]="newsupplier.cpSupplier"
+                      min="100"
+                      max="9999"
+                      required
+                      #cpSupplier="ngModel"
+                      [ngClass]="cpSupplier.errors ? 'is-invalid' : 'is-valid'"
+                    />
+                    <div *ngIf="cpSupplier.errors?.['min']" class="col-auto">
+                      <span class="form-text"
+                        >Debe tener al menos 3 caracteres y un máximo de 5</span
+                      >
+                    </div>
+                    <div
+                      *ngIf="cpSupplier.errors?.['required']"
+                      class="col-auto"
+                    >
+                      <span class="form-text"
+                        >Se debe completar este campo</span
+                      >
+                    </div>
+                  </div>
                 </div>
               </div>
 

@@ -46,4 +46,23 @@ public class CategoriesProductController {
         }
         return ResponseEntity.ok(categoriesProductService.postCategoryProduct(categoriesProductDTO));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> putCategories(@PathVariable int id, @RequestBody CategoriesProductDTO categoriesProductDTO,
+                                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
+            return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(categoriesProductService.putCategoryProduct(id,categoriesProductDTO));
+    }
+
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<CategoriesProductDTO> deleteById(@PathVariable Integer id) {
+        Optional<CategoriesProductDTO> response = categoriesProductService.findByDeleteCategoryProduct(id);
+        if (response.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(response.get());
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
 import {
   ConditionAfip,
@@ -8,7 +8,6 @@ import {
 } from '../../../../Models/supplier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Ubication } from '../../../../Models/location';
 import { CategorySupplierService } from '../../../../Service/category-supplier.service';
 import { CategorySupplier } from '../../../../Models/supplier';
 import { ConditionAfipService } from '../../../../Service/condition-afip.service';
@@ -44,6 +43,11 @@ export class FormSupplierComponent {
     rolcontactSupplier: '',
   };
 
+  newCategory: CategorySupplier = {
+    idCategorySupplier: 0,
+    categorySupplier: '',
+  };
+
   conditionsAfip: string[] = [];
   categoriesSupplier: string[] = [];
   provinces: string[] = [];
@@ -52,15 +56,11 @@ export class FormSupplierComponent {
   existsCode: boolean = false;
   existsCuit: boolean = false;
 
-  idSupplier: string = '';
   isUpdate: boolean = false;
 
-  newCategory: string = '';
   isModalOpen: boolean = false;
   successMessage: string | null = null;
 
-  ubication = Ubication;
-  //provinces: string[] = [];
   msj: boolean = false;
   msjId: boolean = false;
 
@@ -155,23 +155,15 @@ export class FormSupplierComponent {
       );
   }
 
-  openModal() {
-    this.newCategory = '';
-    this.isModalOpen = true;
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-    this.successMessage = null;
-  }
-
   addCategory() {
-    if (this.newCategory.trim() !== '') {
-      //    this.category.push(this.newCategory);
-      this.newCategory = '';
-      this.successMessage = 'Categoría agregada con éxito';
-      setTimeout(() => this.closeModal(), 1000);
-    }
+    this.isModalOpen = true;
+    this.categorySupplierService
+      .postCategoriesSupplier(this.newCategory)
+      .subscribe((data) => {
+        console.log('CREANDO NUEVO RUBRO', data);
+        this.getListCategorySupplier();
+
+      });
   }
 
   createNewSupplier(form: NgForm) {

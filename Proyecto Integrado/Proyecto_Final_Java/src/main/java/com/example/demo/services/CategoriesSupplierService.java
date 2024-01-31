@@ -4,6 +4,7 @@ import com.example.demo.dto.CategoriesSupplierDTO;
 import com.example.demo.mapper.CategoriesSupplierMapper;
 import com.example.demo.models.CategoriesSupplierModel;
 import com.example.demo.repositories.CategoriesSupplierRespository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,9 @@ public class CategoriesSupplierService {
         List<CategoriesSupplierDTO> responseDTO = new ArrayList<CategoriesSupplierDTO>();
 
         for (CategoriesSupplierModel category : categoriesSupplier) {
-            responseDTO.add(CategoriesSupplierMapper.getCategorySupplier(category).get());
+            if(!category.isDeleteCategorySupplier()){
+                CategoriesSupplierMapper.getCategorySupplier(category).ifPresent(responseDTO::add);
+            }
         }
         return responseDTO;
     }
@@ -36,12 +39,11 @@ public class CategoriesSupplierService {
         if(optionalCategoriesSupplier.isPresent()){
             return CategoriesSupplierMapper.getCategorySupplier(optionalCategoriesSupplier.get());
         }else{
-
             throw new NoSuchElementException("No se encontró el rubro proveedor con ID: " + id);
         }
     }
 
-    public CategoriesSupplierModel postCategorySupplie(CategoriesSupplierDTO category) {
+    public CategoriesSupplierModel postCategorySupplier(CategoriesSupplierDTO category) {
         CategoriesSupplierModel categoriesSupplierModel = convertToEntity(category);
         categoriesSupplierModel.setDeleteCategorySupplier(false);
         categoriesSupplierModel.setCreated_at(new Timestamp(System.currentTimeMillis()));
@@ -50,12 +52,41 @@ public class CategoriesSupplierService {
     }
     public CategoriesSupplierModel convertToEntity(CategoriesSupplierDTO categoriesSupplierDTO) {
         CategoriesSupplierModel category = new CategoriesSupplierModel();
-        //category.setId_category_supplier(categoriesSupplierDTO.getId_category_supplier());
         category.setCategory_supplier(categoriesSupplierDTO.getCategorySupplier());
         categoriesSupplierRespository.save(category);
         return category;
     }
 
+    public CategoriesSupplierModel putCategorySupplier(int id, CategoriesSupplierDTO category) {
+        Optional<CategoriesSupplierModel> supplierModelOptional = categoriesSupplierRespository.findById(id);
+        if(supplierModelOptional.isEmpty()){
+            throw new EntityNotFoundException("Categoria no encontrado con ID: " + id);
+        }
+        CategoriesSupplierModel categoriesSupplierModel = supplierModelOptional.get();
+        convertToEntityUpdate(category,categoriesSupplierModel );
+        categoriesSupplierModel.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+        return categoriesSupplierRespository.save(categoriesSupplierModel);
+    }
+
+    public CategoriesSupplierModel convertToEntityUpdate(CategoriesSupplierDTO categoriesSupplierDTO, CategoriesSupplierModel category) {
+        category.setCategory_supplier(categoriesSupplierDTO.getCategorySupplier());
+        categoriesSupplierRespository.save(category);
+        return category;
+    }
+
+    public Optional<CategoriesSupplierDTO> findByDeleteCategorySupplier(int id) {
+        Optional<CategoriesSupplierModel> optional = categoriesSupplierRespository.findById(id);
+        if (optional.isPresent()) {
+            CategoriesSupplierModel existingCatgory = optional.get();
+            if (!existingCatgory.isDeleteCategorySupplier()) {
+                existingCatgory.setDeleteCategorySupplier(true);
+                existingCatgory.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+                categoriesSupplierRespository.save(existingCatgory);
+                return CategoriesSupplierMapper.getCategorySupplier(existingCatgory);
+            }
+        }
+        return Optional.empty();
+    }
 
 }
 

@@ -1,0 +1,45 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  align-self: flex-start;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  border: 2px solid #ced4da;
+  padding: 5px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+legend {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-top: 15px;
+  margin-right: 10px;
+}
+
+.container-fluid {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+fieldset {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}

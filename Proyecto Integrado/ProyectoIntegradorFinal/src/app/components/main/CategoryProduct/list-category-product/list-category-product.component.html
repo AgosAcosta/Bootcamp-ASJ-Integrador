@@ -1,0 +1,55 @@
+<div class="container">
+  <header class="row align-items-center">
+    <div class="col-8">
+      <h4>Categoría Productos:</h4>
+    </div>
+    <div class="col-4 text-end">
+      <a routerLink="new" class="btn btn-success" id="altaProveedores">
+        <i class="bi bi-plus"></i> Agregar
+      </a>
+    </div>
+  </header>
+
+  <main class="row mt-3">
+    <div
+      *ngIf="!categoryProductList || categoryProductList.length === 0"
+      class="alert alert-info"
+      role="alert"
+    >
+      No hay Rubros cargados
+    </div>
+
+    <table
+      *ngIf="categoryProductList && categoryProductList.length > 0"
+      class="table mt-3"
+    >
+      <thead>
+        <tr>
+          <th class="col-rubro">Rubro</th>
+          <th class="col-actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of categoryProductList">
+          <td>{{ item.categoryProduct }}</td>
+          <td>
+            <a
+              class="btn btn-success btn-sm"
+              [routerLink]="['/list-category-product', item.idCategoryProduct]"
+              ngbTooltip="Editar"
+            >
+              <i class="bi bi-pencil-square"></i>
+            </a>
+            <a
+              class="btn btn-danger btn-sm ml-2"
+              (click)="deleteCategory(item.idCategoryProduct)"
+              ngbTooltip="Eliminar"
+            >
+              <i class="bi bi-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</div>

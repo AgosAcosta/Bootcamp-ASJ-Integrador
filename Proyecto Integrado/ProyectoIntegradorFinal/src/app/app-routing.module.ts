@@ -10,6 +10,10 @@ import { DetailsProductComponent } from './components/main/products/details-prod
 import { ListPurchaseOrderComponent } from './components/main/purchaseOrder/list-purchase-order/list-purchase-order.component';
 import { FormPurchaseOrderComponent } from './components/main/purchaseOrder/form-purchase-order/form-purchase-order.component';
 import { DetailsPurchaseOrderComponent } from './components/main/purchaseOrder/details-purchase-order/details-purchase-order.component';
+import { ListCategorySupplierComponent } from './components/main/CategorySupplier/list-category-supplier/list-category-supplier.component';
+import { FromCategorySupplierComponent } from './components/main/CategorySupplier/from-category-supplier/from-category-supplier.component';
+import { ListCategoryProductComponent } from './components/main/CategoryProduct/list-category-product/list-category-product.component';
+import { FormCategoryProductComponent } from './components/main/CategoryProduct/form-category-product/form-category-product.component';
 
 const routes: Routes = [
   { path: '', component: MenuComponent },
@@ -23,12 +27,28 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'list-category-supplier',
+    children: [
+      { path: '', component: ListCategorySupplierComponent },
+      { path: 'new', component: FromCategorySupplierComponent },
+      { path: ':id', component: FromCategorySupplierComponent },
+    ],
+  },
+  {
     path: 'list-product',
     children: [
       { path: '', component: ListProductComponent },
       { path: 'new', component: FormProductComponent },
       { path: ':id', component: FormProductComponent },
       { path: 'detail/:id', component: DetailsProductComponent },
+    ],
+  },
+  {
+    path: 'list-category-product',
+    children: [
+      { path: '', component: ListCategoryProductComponent },
+      { path: 'new', component: FormCategoryProductComponent },
+      { path: ':id', component: FormCategoryProductComponent },
     ],
   },
   {

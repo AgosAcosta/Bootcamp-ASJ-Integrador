@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.CategoriesProductDTO;
 import com.example.demo.dto.CategoriesSupplierDTO;
 import com.example.demo.dto.ProductResponseDTO;
 import com.example.demo.models.ErrorHandler;
@@ -46,6 +47,25 @@ public class CategoriesSupplierController {
             Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
             return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(categoriesSupplierService.postCategorySupplie(categoriesSupplierDTO));
+        return ResponseEntity.ok(categoriesSupplierService.postCategorySupplier(categoriesSupplierDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> putCategories(@PathVariable int id, @RequestBody CategoriesSupplierDTO categoriesSupplierDTO,
+                                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
+            return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(categoriesSupplierService.putCategorySupplier(id,categoriesSupplierDTO));
+    }
+
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<CategoriesSupplierDTO> deleteById(@PathVariable Integer id) {
+        Optional<CategoriesSupplierDTO> response = categoriesSupplierService.findByDeleteCategorySupplier(id);
+        if (response.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(response.get());
     }
 }

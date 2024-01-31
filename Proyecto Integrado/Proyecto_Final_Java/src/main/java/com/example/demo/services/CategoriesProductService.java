@@ -4,6 +4,7 @@ import com.example.demo.dto.CategoriesProductDTO;
 import com.example.demo.mapper.CategoriesProductMapper;
 import com.example.demo.models.CategoriesProductModel;
 import com.example.demo.repositories.CategoriesProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,37 @@ public class CategoriesProductService {
         categoriesProductRepository.save(category);
         return category;
     }
-    
 
 
+    public CategoriesProductModel putCategoryProduct(int id, CategoriesProductDTO category) {
+
+        Optional<CategoriesProductModel> optionalCategoriesProduct = categoriesProductRepository.findById(id);
+        if(optionalCategoriesProduct.isEmpty()){
+            throw new EntityNotFoundException("Categoria no encontrado con ID: " + id);
+        }
+        CategoriesProductModel categoriesProductModel = optionalCategoriesProduct.get();
+        convertToEntityUpdate(category,categoriesProductModel );
+        categoriesProductModel.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+        return categoriesProductRepository.save(categoriesProductModel);
+    }
+
+    public CategoriesProductModel convertToEntityUpdate(CategoriesProductDTO categoriesProductDTO, CategoriesProductModel category) {
+        category.setCategoryProduct(categoriesProductDTO.getCategoryProduct());
+        categoriesProductRepository.save(category);
+        return category;
+    }
+
+    public Optional<CategoriesProductDTO> findByDeleteCategoryProduct(int id) {
+        Optional<CategoriesProductModel> optional = categoriesProductRepository.findById(id);
+        if (optional.isPresent()) {
+            CategoriesProductModel existingCatgory = optional.get();
+            if (!existingCatgory.isDeleteCategoryProduct()) {
+                existingCatgory.setDeleteCategoryProduct(true);
+                existingCatgory.setUpdate_at(new Timestamp(System.currentTimeMillis()));
+                categoriesProductRepository.save(existingCatgory);
+                return CategoriesProductMapper.getCategoryProduct(existingCatgory);
+            }
+        }
+        return Optional.empty();
+    }
 }

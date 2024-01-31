@@ -1,0 +1,66 @@
+<main>
+  <div class="container-fluid">
+    <form #myForm="ngForm" (ngSubmit)="createnewCategoryProduct(myForm)">
+      <div class="row">
+        <div class="col-6">
+          <!-- Sección Rubro -->
+          <fieldset>
+            <legend>Categoría</legend>
+            <div class="form-group">
+              <label for="categorySupplier">Categoría:</label>
+              <input
+                type="text"
+                class="form-control"
+                name="categorySupplier"
+                id="categorySupplier"
+                minlength="4"
+                maxlength="40"
+                required
+                [(ngModel)]="newCategoryProduct.categoryProduct"
+                #categoryProduct="ngModel"
+                [ngClass]="categoryProduct.errors ? 'is-invalid' : 'is-valid'"
+              />
+              <div
+                *ngIf="categoryProduct.errors?.['minlength']"
+                class="col-auto"
+              >
+                <span class="form-text"
+                  >Debe tener al menos 4 caracteres y un maximo de 40</span
+                >
+              </div>
+              <div
+                *ngIf="categoryProduct.errors?.['required']"
+                class="col-auto"
+              >
+                <span class="form-text">Se debe completar este campo</span>
+              </div>
+            </div>
+          </fieldset>
+          <div *ngIf="msj" class="alert alert-success" role="alert">
+            Acción realizada con exito!
+          </div>
+          <div *ngIf="msj" class="alert alert-danger" role="alert">
+            Ya existe un proveedor con ese codigo
+          </div>
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!myForm.valid"
+          >
+            Guardar
+          </button>
+          <button type="submit" class="btn btn-danger" (click)="ClearForm()">
+            Limpiar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            routerLink="/list-category-supplier"
+          >
+            Volver
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
