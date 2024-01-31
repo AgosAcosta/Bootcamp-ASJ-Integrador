@@ -24,16 +24,24 @@ export class FormProductComponent implements OnInit {
     supplierName: '',
   };
 
+  newCategory: CategoryProduct = {
+    idCategoryProduct: 0,
+    categoryProduct: '',
+  };
+
   suppliers: string[] = [];
   categories: string[] = [];
 
   existsCode: boolean = false;
+
+  isModalOpen: boolean = false;
 
   idProduct: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
   msj: boolean = false;
   msjId: boolean = false;
+  successMessage: any;
 
   constructor(
     private serviceSupplier: ServiceSupplierService,
@@ -133,6 +141,16 @@ export class FormProductComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['/list-product']);
     }, 1500);
+  }
+
+  addCategory() {
+    this.isModalOpen = true;
+    this.categoryProductService
+      .postCategoriesProduct(this.newCategory)
+      .subscribe((data) => {
+        console.log('CREANDO NUEVO RUBRO', data);
+        this.getListCategoryProduct();
+      });
   }
 
   ClearForm() {
