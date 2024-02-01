@@ -11,15 +11,13 @@
       <div class="col-8 text-right">
         <input
           type="text"
-          [(ngModel)]="searchText"
+          [(ngModel)]="searchName"
           placeholder="Filtrar por razon social"
-          (keyup.enter)="applyFilter()"
         />
         <input
           type="text"
           [(ngModel)]="searchCode"
           placeholder="Filtrar por código"
-          (keyup.enter)="applyFilter()"
         />
 
         <a routerLink="new" class="btn btn-success" id="altaProveedores">
@@ -109,12 +107,46 @@
 
               <th>Información Contacto</th>
               <th>Datos de contacto</th>
-              <th>Ubicación</th>
+              <th>
+              <div
+                  style="
+                 display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
+                  Ubicación
+                  <span
+                    style="cursor: pointer"
+                    (click)="sortLocation()"
+                    [ngClass]="{ 'active-filter': isCountrySortActive }"
+                    ngbTooltip="Ordenar por Pais"
+                  >
+                    <i
+                    [ngClass]="{
+                      'bi bi-sort-alpha-down': currentLocationSortOrder === 'asc',
+                      'bi bi-sort-alpha-up-alt': currentLocationSortOrder === 'desc'
+                    }"
+                    ></i>
+                  </span>
+                </div>
+
+              </th>
+
+
+
+
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of supplierList">
+            <tr
+              *ngFor="
+                let item of supplierList
+                  | search : { field: 'nameSupplier', searchText: searchName }
+                  | search : { field: 'codeSupplier', searchText: searchCode }
+              "
+            >
               <td>
                 <img
                   src="{{ item?.urlLogo }}"
@@ -127,16 +159,20 @@
               </td>
               <td>{{ item.codeSupplier }}</td>
               <td>{{ item.nameSupplier }}</td>
+
               <td>
-                <strong>Sitio web:</strong> {{ item.webSupplier }} <br />
-                <strong>Email:</strong> {{ item.emailSupplier }} <br />
-                <strong>Tel.:</strong> {{ item.telSupplier }}
+                <i class="bi bi-globe" ngbTooltip="Sitio web"></i>
+                {{ item.webSupplier }} <br />
+                <i class="bi bi-envelope" ngbTooltip="Correo electrónico"></i>
+                {{ item.emailSupplier }} <br />
+                <i class="bi bi-telephone" ngbTooltip="Teléfono"></i>
+                {{ item.telSupplier }}
               </td>
               <td>
                 {{ item.namecontactSupplier }},
                 {{ item.lastNamecontactSupplier }}
               </td>
-              <td>{{ item.provinceSupplier }}, {{ item.countrySupplier }}</td>
+              <td>{{ item.countrySupplier }} , {{ item.provinceSupplier }} </td>
               <td *ngIf="deleteSupplier">
                 <a
                   *ngIf="supplierActive"

@@ -31,7 +31,6 @@
                 [(ngModel)]="newProduct.codeProduct"
                 #codeProduct="ngModel"
                 [ngClass]="codeProduct.errors ? 'is-invalid' : 'is-valid'"
-                [disabled]="isUpdate"
               />
               <div *ngIf="codeProduct.errors?.['minlength']" class="col-auto">
                 <span class="form-text"

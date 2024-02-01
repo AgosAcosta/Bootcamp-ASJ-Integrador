@@ -85,7 +85,6 @@ public class ProductsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
     @PatchMapping("/active/{id}")
     public ResponseEntity<ProductResponseDTO> activeById(@PathVariable Integer id) {
         Optional<ProductResponseDTO> response = productService.findByDeleteProductTrue(id);
@@ -99,5 +98,16 @@ public class ProductsController {
     public ResponseEntity<Boolean> existsCode(@PathVariable String code) {
         boolean response = productService.validateProductCode(code);
         return ResponseEntity.ok().body(response);
+    }
+
+    //PROBANDO SI FUNCIONA
+    @GetMapping("/{supplierName}/supplierName")
+    public ResponseEntity<List<ProductResponseDTO>> getProductBySupplierId(@PathVariable String supplierName) {
+        try {
+            List<ProductResponseDTO> productResponseDTOS = productService.getProductBySupplierName(supplierName);
+            return new ResponseEntity<>(productResponseDTOS, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

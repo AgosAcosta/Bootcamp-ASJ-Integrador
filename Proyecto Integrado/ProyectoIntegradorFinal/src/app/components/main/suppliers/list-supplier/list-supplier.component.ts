@@ -14,11 +14,13 @@ export class ListSupplierComponent {
 
   currentCodeSortOrder: 'asc' | 'desc' = 'asc';
   currentNameSortOrder: 'asc' | 'desc' = 'asc';
+  currentLocationSortOrder: 'asc' | 'desc' = 'asc';
   isCodeSortActive = false;
   isNameSortActive = false;
+  isCountrySortActive = false;
 
   filteredList!: Supplier[];
-  searchText: string = '';
+  searchName: string = '';
   searchCode: string = '';
 
   constructor(
@@ -62,35 +64,13 @@ export class ListSupplierComponent {
     });
   }
 
-  applyFilter() {
-    const searchTextLower = this.searchText.toLowerCase();
-    const searchCodeLower = this.searchCode.toLowerCase();
-
-    if (this.supplierActive) {
-      this.filteredList = this.supplierList.filter((supplier: Supplier) => {
-        return (
-          supplier.nameSupplier.toLowerCase().includes(searchTextLower) &&
-          supplier.codeSupplier.includes(searchCodeLower)
-        );
-      });
-    } else {
-      this.supplierService.getListSupplierDelete().subscribe((data) => {
-        this.filteredList = data.filter((supplier: Supplier) => {
-          return (
-            supplier.nameSupplier.toLowerCase().includes(searchTextLower) &&
-            supplier.codeSupplier.includes(searchCodeLower)
-          );
-        });
-      });
-    }
-  }
-
   toggleCodeSortOrder() {
     this.currentCodeSortOrder =
       this.currentCodeSortOrder === 'asc' ? 'desc' : 'asc';
     this.sortSupplierListByCode();
     this.isCodeSortActive = true;
     this.isNameSortActive = false;
+    this.isCountrySortActive = false;
   }
 
   toggleNameSortOrder() {
@@ -99,6 +79,7 @@ export class ListSupplierComponent {
     this.sortSupplierListByName();
     this.isCodeSortActive = false;
     this.isNameSortActive = true;
+    this.isCountrySortActive = false;
   }
 
   sortSupplierListByCode() {
@@ -121,6 +102,28 @@ export class ListSupplierComponent {
         ? nameA.localeCompare(nameB)
         : nameB.localeCompare(nameA);
     });
+  }
+
+  sortLocation() {
+    this.supplierList.sort((a, b) => {
+      const locationA = `${a.countrySupplier}, ${a.provinceSupplier}`;
+      const locationB = `${b.countrySupplier}, ${b.provinceSupplier}`;
+
+      if (this.currentLocationSortOrder === 'asc') {
+        return locationA.localeCompare(locationB);
+      } else {
+        return locationB.localeCompare(locationA);
+      }
+    });
+
+    this.currentLocationSortOrder =
+      this.currentLocationSortOrder === 'asc' ? 'desc' : 'asc';
+
+    this.currentCodeSortOrder = 'asc';
+    this.currentNameSortOrder = 'asc';
+    this.isCodeSortActive = false;
+    this.isNameSortActive = false;
+    this.isCountrySortActive = true;
   }
 
   handleImageError(event: Event): void {

@@ -16,6 +16,9 @@ export class ListProductComponent implements OnInit {
   currentPriceSortOrder: 'asc' | 'desc' = 'asc';
   isNameSortActive = false;
   isPriceSortActive = false;
+  
+  searchCategory: string = '';
+  searchNameProduct: string = '';
 
   constructor(
     private serviceProduct: ServiceProductService,

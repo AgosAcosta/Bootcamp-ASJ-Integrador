@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<ProductModel, Integer> {
-
+    List<ProductModel> findBySupplierDeleteSupplierIsFalse();
     boolean existsByCodeProduct(String code);
     Optional<ProductModel> findByNameProduct(String nameProduct);
     List<ProductModel> findByDeleteProductFalse();

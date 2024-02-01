@@ -1,20 +1,13 @@
 package com.example.demo.services;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
-import com.example.demo.dto.ProvincesDTO;
-import com.example.demo.dto.SupplierResponseDTO;
-import com.example.demo.mapper.ProvinceMapper;
-import com.example.demo.mapper.SupplierMapper;
+
 import com.example.demo.models.*;
 import com.example.demo.repositories.CategoriesProductRepository;
 import com.example.demo.repositories.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,15 +28,28 @@ public class ProductService {
 
     // OBTENER TODOS LOS PRODUCTOS
     public List<ProductResponseDTO> getAllProducts() {
-        List<ProductModel> product_Model = productRepository.findAll();
-        List<ProductResponseDTO> responseDTOs = new ArrayList<ProductResponseDTO>();
+//        List<ProductModel> product_Model = productRepository.findAll();
+//        List<ProductResponseDTO> responseDTOs = new ArrayList<ProductResponseDTO>();
+//        for (ProductModel product : product_Model) {
+//            if(!product.isDeleteProduct()){
+//                ProductMapper.getProductResponse(product).ifPresent(responseDTOs::add);
+//            }
+//
+//        }
+//        return responseDTOs;
+
+        List<ProductModel> product_Model = productRepository.findBySupplierDeleteSupplierIsFalse();
+        List<ProductResponseDTO> responseDTOs = new ArrayList<>();
+
         for (ProductModel product : product_Model) {
-            if(!product.isDeleteProduct()){
+            if (!product.isDeleteProduct()) {
                 ProductMapper.getProductResponse(product).ifPresent(responseDTOs::add);
             }
-
         }
+
         return responseDTOs;
+
+
     }
 
     public List<ProductResponseDTO> getAllProductsDelete() {
@@ -191,5 +197,29 @@ public class ProductService {
     }
 
 
+    //PROBANDO SI SE PUEDE MANDAR EL NOMBRE
+
+    public List<ProductResponseDTO> getProductBySupplierName(String supplierName) {
+        Optional<SuppliersModel> suppliersModel = supplierRepository.findByNameSupplier(supplierName);
+
+        if (suppliersModel.isPresent()) {
+            SuppliersModel supplier = suppliersModel.get();
+            if (!supplier.isDeleteSupplier()) {
+                List<ProductModel> productModels = productRepository.findBySupplierIdSupplier(supplier.getIdSupplier());
+                List<ProductResponseDTO> responseDTO = new ArrayList<>();
+
+                for (ProductModel product : productModels) {
+                     if (!product.isDeleteProduct()) {
+                        responseDTO.add(ProductMapper.getProductResponse(product).get());
+                    }
+                }
+                return responseDTO;
+            } else {
+                return Collections.emptyList();
+            }
+        } else {
+            throw new EntityNotFoundException("PROVEEDOR no encontrado con nombre: " + supplierName + "PRODUCTOS NO BORRADOS");
+        }
+    }
 
 }

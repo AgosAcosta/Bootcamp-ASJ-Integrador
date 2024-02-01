@@ -92,19 +92,12 @@ export class FormPurchaseOrderComponent implements OnInit {
     });
   }
 
-  getSelectedSupplierLogo(): string | undefined {
-    const selectedSupplier = this.suppliers.find(
-      (supplier) => supplier.name === this.newPurchaseOrder.supplier
-    );
-    return selectedSupplier ? selectedSupplier.urlLogo : '';
-  }
-
   onSupplierSelected(supplierName: string) {
-    const selectedSupplier =
-      this.suppliers.findIndex((supplier) => supplier === supplierName) + 1;
+    const selectedSupplier = this.suppliers.find((supplier) => supplier === supplierName);
+
     if (selectedSupplier) {
       this.serviceProduct
-        .getProductsBySupplierId(selectedSupplier)
+        .getProductsBySupplierName(selectedSupplier)
         .subscribe((data: Product[]) => {
           this.products = data.map((product: Product) => ({
             idProduct: product.idProduct,
@@ -114,7 +107,8 @@ export class FormPurchaseOrderComponent implements OnInit {
           console.log('Productos del proveedor:', this.products);
         });
     }
-  }
+  } 
+
 
   onProductSelected() {
     this.selectedProduct = this.products.find(

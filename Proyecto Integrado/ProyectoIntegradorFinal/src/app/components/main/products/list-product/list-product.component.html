@@ -10,6 +10,17 @@
         <a routerLink="new" class="btn btn-success" id="newProduct">
           <i class="bi bi-plus"></i> Agregar</a
         >
+
+        <input
+          type="text"
+          [(ngModel)]="searchNameProduct"
+          placeholder="Filtrar por nombre"
+        />
+        <input
+          type="text"
+          [(ngModel)]="searchCategory"
+          placeholder="Filtrar por categoría"
+        />
       </div>
 
       <a (click)="getListProductActive()" class="ml-2">
@@ -37,20 +48,52 @@
               <th>Producto</th>
               <th>SKU</th>
               <th>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
                   Nombre
-                  <span style="cursor: pointer;" (click)="toggleSortOrder()" [ngClass]="{'active-filter': isNameSortActive}">
-                    <i [ngClass]="{'bi bi-sort-alpha-down': currentSortOrder === 'asc', 'bi bi-sort-alpha-up-alt': currentSortOrder === 'desc'}"></i>
+                  <span
+                    style="cursor: pointer"
+                    (click)="toggleSortOrder()"
+                    [ngClass]="{ 'active-filter': isNameSortActive }"
+                  >
+                    <i
+                      [ngClass]="{
+                        'bi bi-sort-alpha-down': currentSortOrder === 'asc',
+                        'bi bi-sort-alpha-up-alt': currentSortOrder === 'desc'
+                      }"
+                    ></i>
                   </span>
                 </div>
               </th>
               <th>Categoría</th>
               <th>Proveedor</th>
               <th>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
                   Precio
-                  <span style="cursor: pointer;" (click)="togglePriceSortOrder()" [ngClass]="{'active-filter': isPriceSortActive}">
-                    <i [ngClass]="{'bi bi-sort-numeric-down': currentPriceSortOrder === 'asc', 'bi bi-sort-numeric-up-alt': currentPriceSortOrder === 'desc'}"></i>
+                  <span
+                    style="cursor: pointer"
+                    (click)="togglePriceSortOrder()"
+                    [ngClass]="{ 'active-filter': isPriceSortActive }"
+                  >
+                    <i
+                      [ngClass]="{
+                        'bi bi-sort-numeric-down':
+                          currentPriceSortOrder === 'asc',
+                        'bi bi-sort-numeric-up-alt':
+                          currentPriceSortOrder === 'desc'
+                      }"
+                    ></i>
                   </span>
                 </div>
               </th>
@@ -58,7 +101,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of productList">
+            <tr
+              *ngFor="
+                let item of productList
+                  | search
+                    : { field: 'nameProduct', searchText: searchNameProduct }
+                  | search
+                    : { field: 'categoryProduct', searchText: searchCategory }
+              "
+            >
               <td>
                 <img
                   *ngIf="item.urlLogo"

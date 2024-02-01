@@ -54,4 +54,8 @@ export class ServiceProductService {
   public existsCode(code: string): Observable<boolean> {
     return this.http.patch<boolean>(`${this.URL}/exists/code/${code}`, null);
   }
+
+  public getProductsBySupplierName(supplierName: string): Observable<any> {
+    return this.http.get<any>(`${this.URL}/${supplierName}/supplierName`);
+  }
 }
