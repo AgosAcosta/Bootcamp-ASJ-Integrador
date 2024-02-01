@@ -18,42 +18,48 @@
               disabled
             />
           </div>
-          <div class="form-group">
-            <label for="dateIssue">Fecha Emisión:</label>
-            <input
-              type="date"
-              class="form-control"
-              name="dateIssue"
-              id="dateIssue"
-              [min]="date | date : 'yyyy-MM-dd'"
-              required
-              [disabled]="isUpdate"
-              [(ngModel)]="newPurchaseOrder.dateIssue"
-              [ngModelOptions]="{ standalone: true }"
-              #dateIssue="ngModel"
-              [ngClass]="dateIssue.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="dateIssue.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label for="dateDelivery">Fecha de Entrega:</label>
-            <input
-              type="date"
-              class="form-control"
-              name="dateDelivery"
-              id="dateDelivery"
-              [min]="getMinDateShippingTemplate()"
-              required
-              [(ngModel)]="newPurchaseOrder.dateDelivery"
-              [ngModelOptions]="{ standalone: true }"
-              #dateDelivery="ngModel"
-              [ngClass]="dateDelivery.errors ? 'is-invalid' : 'is-valid'"
-            />
-            <div *ngIf="dateDelivery.errors?.['required']" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="dateIssue">Fecha Emisión:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  name="dateIssue"
+                  id="dateIssue"
+                  [min]="date | date : 'yyyy-MM-dd'"
+                  required
+                  [disabled]="isUpdate"
+                  [(ngModel)]="newPurchaseOrder.dateIssue"
+                  [ngModelOptions]="{ standalone: true }"
+                  #dateIssue="ngModel"
+                  [ngClass]="dateIssue.errors ? 'is-invalid' : 'is-valid'"
+                />
+                <div *ngIf="dateIssue.errors?.['required']" class="col-auto">
+                  <span class="form-text">Se debe completar este campo</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="dateDelivery">Fecha de Entrega:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  name="dateDelivery"
+                  id="dateDelivery"
+                  [min]="getMinDateShippingTemplate()"
+                  required
+                  [(ngModel)]="newPurchaseOrder.dateDelivery"
+                  [ngModelOptions]="{ standalone: true }"
+                  #dateDelivery="ngModel"
+                  [ngClass]="dateDelivery.errors ? 'is-invalid' : 'is-valid'"
+                />
+                <div *ngIf="dateDelivery.errors?.['required']" class="col-auto">
+                  <span class="form-text">Se debe completar este campo</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -78,117 +84,180 @@
               <span class="form-text">Se debe completar este campo</span>
             </div>
           </div>
+
+          <div *ngIf="newPurchaseOrder.total > 0">
+            <label>Proveedor:</label>
+            <input
+              type="text"
+              id="supplier"
+              class="form-control"
+              [readonly]="true"
+              [value]="newPurchaseOrder.supplier"
+              disabled
+            />
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let item of newPurchaseOrder.products; let i = index"
+                >
+                  <td>{{ item.nameProduct }}</td>
+                  <td>{{ item.unitProduct }}</td>
+                  <td>{{ item.unitProduct * item.priceProduct | currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div
+              *ngIf="detailProducts.unitProduct > 0"
+              class="form-group d-flex align-items-center"
+            >
+              <label>Total</label>
+              <input
+                type="text"
+                id="priceProduct"
+                class="form-control"
+                [readonly]="true"
+                [value]="newPurchaseOrder.total | currency"
+                disabled
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="
+              isUpdate ? false : !myForm.valid || newPurchaseOrder.total === 0
+            "
+          >
+            Guardar
+          </button>
+          <button type="button" class="btn btn-danger" (click)="ClearForm()">
+            Limpiar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            routerLink="/list-purchase-order"
+          >
+            Volver
+          </button>
         </fieldset>
 
         <!-- Sección Detalle Orden -->
-        <fieldset *ngIf="!isUpdate">
-          <div class="form-group">
-            <label for="supplierName">Proveedor:</label>
-            <select
-              class="form-control"
-              name="supplierName"
-              [(ngModel)]="newPurchaseOrder.supplier"
-              [ngModelOptions]="{ standalone: true }"
-              required
-              (change)="onSupplierSelected(newPurchaseOrder.supplier)"
-              [disabled]="!supplierPoin || isUpdate"
-              #supplier="ngModel"
-              [ngClass]="supplier.errors ? 'is-invalid' : 'is-valid'"
-            >
-              <option value="" disabled selected>
-                Selecciona el proveedor
-              </option>
-              <option *ngFor="let name of suppliers" value="{{ name }}">
-                {{ name }}
-              </option>
-            </select>
-            <div *ngIf="!newPurchaseOrder.supplier" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="product">Producto:</label>
-            <select
-              class="form-control"
-              name="product"
-              [(ngModel)]="detailProducts.nameProduct"
-              (ngModelChange)="onProductSelected()"
-              required
-              [disabled]="isUpdate"
-            >
-              <option value="" disabled selected>Selecciona el producto</option>
-              <option
-                *ngFor="let product of products"
-                [value]="product.nameProduct"
-              >
-                {{ product.nameProduct }}
-              </option>
-            </select>
-            <div *ngIf="!detailProducts.nameProduct" class="col-auto">
-              <span class="form-text">Se debe completar este campo</span>
-            </div>
-          </div>
-          <div class="form-group text-left">
-            <label for="priceProduct">Precio:</label>
-            <span *ngIf="selectedProduct" class="form-control" disabled>{{
-              selectedProduct.priceProduct | currency
-            }}</span>
-          </div>
-
-          <div class="form-group">
-            <label for="unitProduct">Cantidad:</label>
-            <input
-              type="number"
-              class="form-control"
-              name="unitProduct"
-              min="0"
-              required
-              [(ngModel)]="detailProducts.unitProduct"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="calculateTotal()"
-              [disabled]="isUpdate"
-            />
-            <div *ngIf="detailProducts.unitProduct <= 0" class="col-auto">
-              <span class="form-text">La cantidad no puede ser menor a 0</span>
-            </div>
-          </div>
-        </fieldset>
-        <button
-          *ngIf="!isUpdate"
-          type="button"
-          class="btn btn-primary"
-          (click)="addOrderDetails()"
-        >
-          Agregar Detalle
-        </button>
       </div>
 
       <div class="col-6">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Cantidad</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of newPurchaseOrder.products; let i = index">
-              <td>{{ item.nameProduct }}</td>
-              <td>{{ item.unitProduct }}</td>
-              <td>{{ item.unitProduct * item.priceProduct | currency }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div
-          *ngIf="detailProducts.unitProduct > 0"
-          class="form-group d-flex align-items-center"
-        >
-          <span class="total-value" id="idTotal"
-            >Total: {{ newPurchaseOrder.total | currency }}</span
-          >
-        </div>
+        <fieldset *ngIf="!isUpdate">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="supplierName">Proveedor:</label>
+                <select
+                  class="form-control"
+                  name="supplierName"
+                  [(ngModel)]="newPurchaseOrder.supplier"
+                  [ngModelOptions]="{ standalone: true }"
+                  required
+                  (change)="onSupplierSelected(newPurchaseOrder.supplier)"
+                  [disabled]="!supplierPoin || isUpdate"
+                  #supplier="ngModel"
+                  [ngClass]="supplier.errors ? 'is-invalid' : 'is-valid'"
+                >
+                  <option value="" disabled selected>
+                    Selecciona el proveedor
+                  </option>
+                  <option *ngFor="let name of suppliers" value="{{ name }}">
+                    {{ name }}
+                  </option>
+                </select>
+                <div *ngIf="!newPurchaseOrder.supplier" class="col-auto">
+                  <span class="form-text">Se debe completar este campo</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="product">Producto:</label>
+                <select
+                  class="form-control"
+                  name="product"
+                  [(ngModel)]="detailProducts.nameProduct"
+                  (ngModelChange)="onProductSelected()"
+                  required
+                  [disabled]="isUpdate"
+                >
+                  <option value="" disabled selected>
+                    Selecciona el producto
+                  </option>
+                  <option
+                    *ngFor="let product of products"
+                    [value]="product.nameProduct"
+                  >
+                    {{ product.nameProduct }}
+                  </option>
+                </select>
+                <div *ngIf="!detailProducts.nameProduct" class="col-auto">
+                  <span class="form-text">Se debe completar este campo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row d-flex align-items-center">
+            <div class="col">
+              <div class="form-group">
+                <label for="priceProduct">Precio:</label>
+                <input
+                  type="text"
+                  id="priceProduct"
+                  class="form-control"
+                  [readonly]="true"
+                  [value]="selectedProduct?.priceProduct | currency"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="unitProduct">Cantidad:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="unitProduct"
+                  min="0"
+                  required
+                  [(ngModel)]="detailProducts.unitProduct"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="calculateTotal()"
+                  [disabled]="isUpdate"
+                />
+              </div>
+            </div>
+
+            <div class="col">
+              <button
+                *ngIf="!isUpdate || detailProducts.unitProduct < 0"
+                type="button"
+                class="btn btn-primary"
+                (click)="addOrderDetails()"
+              >
+                <i class="bi bi-plus"></i> Agregar
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="detailProducts.unitProduct <= 0" class="col-auto">
+            <span class="form-text">La cantidad no puede ser menor a 0</span>
+          </div>
+        </fieldset>
       </div>
     </div>
     <div *ngIf="msj" class="alert alert-success" role="alert">
@@ -197,24 +266,5 @@
     <div *ngIf="msjId" class="alert alert-danger" role="alert">
       Ya existe un proveedor con ese codigo
     </div>
-    <button
-      type="submit"
-      class="btn btn-success"
-      [disabled]="
-        isUpdate ? false : !myForm.valid || newPurchaseOrder.total === 0
-      "
-    >
-      Guardar
-    </button>
-    <button type="button" class="btn btn-danger" (click)="ClearForm()">
-      Limpiar
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      routerLink="/list-purchase-order"
-    >
-      Volver
-    </button>
   </form>
 </div>

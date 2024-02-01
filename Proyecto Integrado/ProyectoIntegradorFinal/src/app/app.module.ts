@@ -22,6 +22,7 @@ import { ListCategorySupplierComponent } from './components/main/CategorySupplie
 import { ListCategoryProductComponent } from './components/main/CategoryProduct/list-category-product/list-category-product.component';
 import { FromCategorySupplierComponent } from './components/main/CategorySupplier/from-category-supplier/from-category-supplier.component';
 import { FormCategoryProductComponent } from './components/main/CategoryProduct/form-category-product/form-category-product.component';
+import { SearchPipe } from './Pipe/search.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FormCategoryProductComponent } from './components/main/CategoryProduct/
     ListCategoryProductComponent,
     FromCategorySupplierComponent,
     FormCategoryProductComponent,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,
