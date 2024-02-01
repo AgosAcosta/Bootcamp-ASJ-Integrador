@@ -283,14 +283,6 @@
                       >
                     </div>
 
-                    <div
-                      *ngIf="successMessage"
-                      class="alert alert-success mt-2"
-                      role="alert"
-                    >
-                      {{ successMessage }}
-                    </div>
-
                     <div class="modal-footer">
                       <button
                         type="button"
@@ -799,13 +791,6 @@
       </div>
     </main>
     <footer>
-      <div *ngIf="msj" class="alert alert-success" role="alert">
-        Acción realizada con exito!
-      </div>
-      <div *ngIf="msjId" class="alert alert-danger" role="alert">
-        Ya existe un proveedor con ese codigo
-      </div>
-
       <button type="submit" class="btn btn-success" [disabled]="!myForm.valid">
         Guardar
       </button>

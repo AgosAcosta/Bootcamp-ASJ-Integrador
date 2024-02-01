@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../../Models/product';
 import { ServiceProductService } from '../../../../Service/service-product.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-product',
@@ -16,7 +17,7 @@ export class ListProductComponent implements OnInit {
   currentPriceSortOrder: 'asc' | 'desc' = 'asc';
   isNameSortActive = false;
   isPriceSortActive = false;
-  
+
   searchCategory: string = '';
   searchNameProduct: string = '';
 
@@ -37,14 +38,24 @@ export class ListProductComponent implements OnInit {
     });
   }
 
-  deleteProduct(id: any) {
-    let msj = confirm('Desea eliminar el producto ' + id + '?');
-    if (msj) {
-      this.serviceProduct.deleteProduct(id).subscribe((data) => {
-        console.log('Eliminando producto', data);
-        this.getListProductActive();
-      });
-    }
+  deleteProduct(id: any, nameProduct: string) {
+    Swal.fire({
+      title: 'Eliminar Producto',
+      text: `¿Estás seguro de que deseas eliminar el producto ${nameProduct}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.serviceProduct.deleteProduct(id).subscribe((data) => {
+          console.log('Eliminando producto', data);
+          this.getListProductActive();
+        });
+      }
+    });
   }
 
   getListProductDelete() {
@@ -57,13 +68,25 @@ export class ListProductComponent implements OnInit {
     });
   }
 
-  activeProduct(id: number) {
-    alert('activando el producto' + id);
-    this.serviceProduct.activeProduct(id).subscribe((data) => {
-      console.log('CAMBIANDO ACTIVO PRODUCTO', data);
-      this.getListProductActive();
+  activeProduct(id: number, nameProduct: string) {
+    Swal.fire({
+      title: 'Activar producto',
+      text: `¿Estás seguro de que deseas activar el producto ${nameProduct}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, activarlo',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.serviceProduct.activeProduct(id).subscribe((data) => {
+          console.log('CAMBIANDO ACTIVO PRODUCTO', data);
+          this.getListProductActive();
 
-      this.sortProductListByName();
+          this.sortProductListByName();
+        });
+      }
     });
   }
 

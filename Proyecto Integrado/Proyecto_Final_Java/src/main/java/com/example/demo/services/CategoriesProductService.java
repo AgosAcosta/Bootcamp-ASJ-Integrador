@@ -1,8 +1,11 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CategoriesProductDTO;
+import com.example.demo.dto.CategoriesSupplierDTO;
 import com.example.demo.mapper.CategoriesProductMapper;
+import com.example.demo.mapper.CategoriesSupplierMapper;
 import com.example.demo.models.CategoriesProductModel;
+import com.example.demo.models.CategoriesSupplierModel;
 import com.example.demo.repositories.CategoriesProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +27,14 @@ public class CategoriesProductService {
         List<CategoriesProductModel> categoriesProductModels = categoriesProductRepository.findAll();
         List<CategoriesProductDTO> categoriesProductDTOS = new ArrayList<CategoriesProductDTO>();
         for(CategoriesProductModel category : categoriesProductModels){
-            categoriesProductDTOS.add(CategoriesProductMapper.getCategoryProduct(category).get());
+
+            if(!category.isDeleteCategoryProduct()){
+                CategoriesProductMapper.getCategoryProduct(category).ifPresent(categoriesProductDTOS::add);
+            }
+
         }
         return categoriesProductDTOS;
+
     }
 
     public Optional<CategoriesProductDTO> getCategoryProductById(int id){

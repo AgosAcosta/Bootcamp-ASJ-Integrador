@@ -144,7 +144,7 @@
                 <a
                   *ngIf="productActive"
                   class="btn btn-danger btn-sm ml-2"
-                  (click)="deleteProduct(item.idProduct)"
+                  (click)="deleteProduct(item.idProduct, item.nameProduct)"
                   ngbTooltip="Eliminar"
                   ><i class="bi bi-trash"></i
                 ></a>
@@ -152,7 +152,7 @@
                 <a
                   *ngIf="!productActive"
                   class="btn btn-primary btn-sm ml-2"
-                  (click)="activeProduct(item.idProduct)"
+                  (click)="activeProduct(item.idProduct, item.nameProduct)"
                   ngbTooltip="Activar"
                   ><i class="bi bi-check-lg"></i
                 ></a>

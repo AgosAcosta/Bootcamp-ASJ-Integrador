@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Supplier } from '../../../../Models/supplier';
 import { Router } from '@angular/router';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-supplier',
@@ -48,19 +49,44 @@ export class ListSupplierComponent {
     });
   }
 
-  deleteSupplier(id: number) {
-    alert('Eliminando el proveedor' + id);
-    this.supplierService.deleteSupplier(id).subscribe((data) => {
-      console.log('CAMBIANDO EL DELETE', data);
-      this.getListSupplierActive();
+  deleteSupplier(id: number, name: string) {
+    Swal.fire({
+      title: 'Eliminar proveedor',
+      text: `¿Estás seguro de que deseas eliminar el proveedor ${name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText:'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.supplierService.deleteSupplier(id).subscribe((data) => {
+          console.log('CAMBIANDO EL DELETE', data);
+          this.getListSupplierActive();
+        });
+      }
     });
   }
 
-  activeSupplier(id: number) {
-    alert('activando el proveedor' + id);
-    this.supplierService.activeSupplier(id).subscribe((data) => {
-      console.log('CAMBIANDO ACTIVE', data);
-      this.getListSupplierActive();
+  activeSupplier(id: number, name: string) {
+
+    Swal.fire({
+      title: 'Activar proveedor',
+      text: `¿Estás seguro de que deseas activar el proveedor ${name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, activarlo',
+      cancelButtonText:'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.supplierService.activeSupplier(id).subscribe((data) => {
+          console.log('CAMBIANDO ACTIVE', data);
+          this.getListSupplierActive();
+        });
+      }
     });
   }
 

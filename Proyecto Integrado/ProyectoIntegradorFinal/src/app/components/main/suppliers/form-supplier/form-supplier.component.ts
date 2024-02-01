@@ -12,6 +12,7 @@ import { CategorySupplierService } from '../../../../Service/category-supplier.s
 import { CategorySupplier } from '../../../../Models/supplier';
 import { ConditionAfipService } from '../../../../Service/condition-afip.service';
 import { UbicationService } from '../../../../Service/ubication.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-supplier',
@@ -59,10 +60,6 @@ export class FormSupplierComponent {
   isUpdate: boolean = false;
 
   isModalOpen: boolean = false;
-  successMessage: string | null = null;
-
-  msj: boolean = false;
-  msjId: boolean = false;
 
   constructor(
     private supplierService: ServiceSupplierService,
@@ -161,14 +158,43 @@ export class FormSupplierComponent {
       .postCategoriesSupplier(this.newCategory)
       .subscribe((data) => {
         console.log('CREANDO NUEVO RUBRO', data);
-        this.getListCategorySupplier();
 
+        Swal.fire({
+          title: 'Se agrego con éxito el nuevo rubro',
+          icon: 'success',
+          position: 'bottom-left',
+          toast: true,
+          timer: 3000,
+          showConfirmButton: false,
+          width: '300px',
+          customClass: {
+            popup: 'custom-popup-class',
+            title: 'custom-title-class',
+          },
+        });
+
+        this.getListCategorySupplier();
       });
   }
 
   createNewSupplier(form: NgForm) {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
+
+      Swal.fire({
+        title: 'Error, revisar los campos obligatorios',
+        icon: 'error',
+        position: 'center',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+
       return;
     }
     const cuit = form.value.cuitSupplier;
@@ -192,17 +218,62 @@ export class FormSupplierComponent {
   updateSupplier() {
     if (this.existsCode) {
       console.log('YA EXISTE ESTE CODIGO');
+
+      Swal.fire({
+        title: 'Error, ya existe un proveedor con ese código',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newsupplier.codeSupplier = '';
+
       return;
     } else if (this.existsCuit) {
       console.log('YA EXISTE ESTE CUIT');
+
+      Swal.fire({
+        title: 'Error, ya existe un proveedor con ese CUIT',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newsupplier.cuitSupplier = '';
+
       return;
     } else {
       this.supplierService
         .updateSupplier(this.newsupplier.idSupplier, this.newsupplier)
         .subscribe((data) => {
           console.log('Actualizando Proveedor:', data);
-          this.msj = true;
-          this.navigateToListSupplier();
+          Swal.fire({
+            title: 'Se actualizo con éxito el proveedor',
+            icon: 'success',
+            position: 'bottom-left',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          }).then(() => {
+            this.navigateToListSupplier();
+          });
         });
     }
   }
@@ -210,15 +281,60 @@ export class FormSupplierComponent {
   createSupplier() {
     if (this.existsCode) {
       console.log('YA EXISTE ESTE CODIGO');
+
+      Swal.fire({
+        title: 'Error, ya existe un proveedor con ese código',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newsupplier.codeSupplier = '';
+
       return;
     } else if (this.existsCuit) {
       console.log('YA EXISTE ESTE CUIT');
+
+      Swal.fire({
+        title: 'Error, ya existe un proveedor con ese CUIT',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newsupplier.cuitSupplier = '';
       return;
     } else {
       this.supplierService.postSupplier(this.newsupplier).subscribe((data) => {
         console.log('Creando un proveedor', data);
-        this.msj = true;
-        this.navigateToListSupplier();
+
+        Swal.fire({
+          title: 'Se creó con éxito el proveedor',
+          icon: 'success',
+          position: 'bottom-left',
+          toast: true,
+          timer: 3000,
+          showConfirmButton: false,
+          width: '300px',
+          customClass: {
+            popup: 'custom-popup-class',
+            title: 'custom-title-class',
+          },
+        }).then(() => {
+          this.navigateToListSupplier();
+        });
       });
     }
   }
@@ -253,8 +369,6 @@ export class FormSupplierComponent {
       emailcontactSupplier: '',
       rolcontactSupplier: '',
     };
-
-    this.msj = false;
   }
 
   //MANEJO DE VALIDACION CUIT CON -

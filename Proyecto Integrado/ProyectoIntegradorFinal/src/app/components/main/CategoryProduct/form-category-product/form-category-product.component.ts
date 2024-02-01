@@ -3,11 +3,12 @@ import { CategoryProduct } from '../../../../Models/product';
 import { CategoryProductService } from '../../../../Service/category-product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-category-product',
   templateUrl: './form-category-product.component.html',
-  styleUrl: './form-category-product.component.css'
+  styleUrl: './form-category-product.component.css',
 })
 export class FormCategoryProductComponent {
   newCategoryProduct: CategoryProduct = {
@@ -28,15 +29,17 @@ export class FormCategoryProductComponent {
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
       if (id != undefined) {
-        this.categoryProductService.getCategoriesProductById(Number(id)).subscribe(
-          (product) => {
-            this.newCategoryProduct = product;
-            this.isUpdate = true;
-          },
-          (error) => {
-            console.error('Error al obtener el producto por ID:', error);
-          }
-        );
+        this.categoryProductService
+          .getCategoriesProductById(Number(id))
+          .subscribe(
+            (product) => {
+              this.newCategoryProduct = product;
+              this.isUpdate = true;
+            },
+            (error) => {
+              console.error('Error al obtener el producto por ID:', error);
+            }
+          );
       }
     });
   }
@@ -44,6 +47,19 @@ export class FormCategoryProductComponent {
   createnewCategoryProduct(form: NgForm) {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
+      Swal.fire({
+        title: 'Error, revisar los campos obligatorios',
+        icon: 'error',
+        position: 'center',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
       return;
     }
     if (this.isUpdate) {
@@ -54,12 +70,42 @@ export class FormCategoryProductComponent {
         )
         .subscribe((data) => {
           console.log('ACTUALIZANDO categoria', data);
+          Swal.fire({
+            title: 'Se actualizo con éxito la categoría',
+            icon: 'success',
+            position: 'center',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          }).then(() => {
+            this.router.navigate(['/list-category-product']);
+          });
         });
     } else {
       this.categoryProductService
         .postCategoriesProduct(this.newCategoryProduct)
         .subscribe((data) => {
           console.log('CREANDO categoria', data);
+          Swal.fire({
+            title: 'Se creó con éxito la categoría',
+            icon: 'success',
+            position: 'center',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          }).then(() => {
+            this.router.navigate(['/list-category-product']);
+          });
         });
     }
   }

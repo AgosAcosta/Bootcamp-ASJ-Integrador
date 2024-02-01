@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceSupplierService } from '../../../../Service/service-supplier.service';
 import { CategoryProductService } from '../../../../Service/category-product.service';
 import { Supplier } from '../../../../Models/supplier';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-form-product',
@@ -39,9 +41,6 @@ export class FormProductComponent implements OnInit {
   idProduct: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
-  msj: boolean = false;
-  msjId: boolean = false;
-  successMessage: any;
 
   constructor(
     private serviceSupplier: ServiceSupplierService,
@@ -96,6 +95,20 @@ export class FormProductComponent implements OnInit {
   createNewProduct(form: NgForm) {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
+
+      Swal.fire({
+        title: 'Error, revisar los campos obligatorios',
+        icon: 'error',
+        position: 'center',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
       return;
     }
     const code = form.value.codeProduct;
@@ -113,11 +126,41 @@ export class FormProductComponent implements OnInit {
   postProduct() {
     if (this.existsCode) {
       console.log('YA EXISTE ESTE CODIGO');
+      Swal.fire({
+        title: 'Error, ya existe un producto con ese SKU',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newProduct.codeProduct = '';
+
       return;
     } else {
       this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
         console.log('Creando un producto', data);
-        this.msj = true;
+
+        Swal.fire({
+          title: 'Se creó con éxito el producto',
+          icon: 'success',
+          position: 'bottom-left',
+          toast: true,
+          timer: 3000,
+          showConfirmButton: false,
+          width: '300px',
+          customClass: {
+            popup: 'custom-popup-class',
+            title: 'custom-title-class',
+          },
+        }).then(() => {
+          this.navigateToListSupplier();
+        });
       });
     }
   }
@@ -125,14 +168,42 @@ export class FormProductComponent implements OnInit {
   updateProduct() {
     if (this.existsCode) {
       console.log('YA EXISTE ESTE CODIGO');
+      Swal.fire({
+        title: 'Error, ya existe un producto con ese SKU',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer:3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newProduct.codeProduct = '';
       return;
     } else {
       this.serviceProduct
         .updateProduct(this.newProduct.idProduct, this.newProduct)
         .subscribe((data) => {
           console.log('ACTUALIZANDO PRODUCTO', data);
-          this.msj = true;
-          this.navigateToListSupplier();
+
+          Swal.fire({
+            title: 'Se actualizo con éxito el producto',
+            icon: 'success',
+            position: 'bottom-left',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          }).then(() => {
+            this.navigateToListSupplier();
+          });
         });
     }
   }
@@ -140,7 +211,7 @@ export class FormProductComponent implements OnInit {
   navigateToListSupplier() {
     setTimeout(() => {
       this.router.navigate(['/list-product']);
-    }, 1500);
+    }, 1000);
   }
 
   addCategory() {
@@ -148,7 +219,20 @@ export class FormProductComponent implements OnInit {
     this.categoryProductService
       .postCategoriesProduct(this.newCategory)
       .subscribe((data) => {
-        console.log('CREANDO NUEVO RUBRO', data);
+        console.log('CREANDO NUEVO CATEGORIA', data);
+        Swal.fire({
+          title: 'Se agrego con éxito la nueva categoría',
+          icon: 'success',
+          position: 'bottom-left',
+          toast: true,
+          timer: 3000,
+          showConfirmButton: false,
+          width: '300px',
+          customClass: {
+            popup: 'custom-popup-class',
+            title: 'custom-title-class',
+          },
+        });
         this.getListCategoryProduct();
       });
   }
@@ -164,6 +248,5 @@ export class FormProductComponent implements OnInit {
       priceProduct: 0,
       supplierName: '',
     };
-    this.msj = false;
   }
 }

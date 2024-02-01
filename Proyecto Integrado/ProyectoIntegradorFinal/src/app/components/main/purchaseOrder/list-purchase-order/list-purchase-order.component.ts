@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PurchaseOrder } from '../../../../Models/purchaseOrder';
 import { ServicePurchaseOrderService } from '../../../../Service/service-purchase-order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-purchase-order',
@@ -46,17 +47,24 @@ export class ListPurchaseOrderComponent implements OnInit {
   }
 
   statusPucharseOrder(id: any) {
-    let msj = confirm('Desea cancelar la orden de compra?');
-    if (msj) {
-      const updatedOrder = this.servicePurchaseOrder
-        .cancelledPurchaseOrder(id)
-        .subscribe((data) => {
-          console.log('CAMBIANDO ESTADO', data);
-          this.listPurchaseOrderActive();
-        });
-      if (updatedOrder) {
-        this.listPurchaseOrderActive();
+    Swal.fire({
+      title: 'Eliminar Producto',
+      text: `¿Estás seguro de que deseas cancelar la orden de compra N° ${id}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedOrder = this.servicePurchaseOrder
+          .cancelledPurchaseOrder(id)
+          .subscribe((data) => {
+            console.log('CAMBIANDO ESTADO', data);
+            this.listPurchaseOrderActive();
+          });
       }
-    }
+    });
   }
 }

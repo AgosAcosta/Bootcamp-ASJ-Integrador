@@ -9,6 +9,7 @@ import { DetailProducts } from '../../../../Models/purchaseOrder';
 import { Supplier } from '../../../../Models/supplier';
 import { DatePipe } from '@angular/common';
 import { Product } from '../../../../Models/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-purchase-order',
@@ -41,12 +42,11 @@ export class FormPurchaseOrderComponent implements OnInit {
   idPurchaseOrden: string = '';
   isUpdate: boolean = false;
   supplierName: string[] = [];
-  msj: boolean = false;
+
   allProducts: any[] = [];
   supplierPoin = true;
 
   date = new Date();
-  msjId: boolean = false;
 
   constructor(
     public servicePurchaseOrder: ServicePurchaseOrderService,
@@ -93,7 +93,9 @@ export class FormPurchaseOrderComponent implements OnInit {
   }
 
   onSupplierSelected(supplierName: string) {
-    const selectedSupplier = this.suppliers.find((supplier) => supplier === supplierName);
+    const selectedSupplier = this.suppliers.find(
+      (supplier) => supplier === supplierName
+    );
 
     if (selectedSupplier) {
       this.serviceProduct
@@ -107,8 +109,7 @@ export class FormPurchaseOrderComponent implements OnInit {
           console.log('Productos del proveedor:', this.products);
         });
     }
-  } 
-
+  }
 
   onProductSelected() {
     this.selectedProduct = this.products.find(
@@ -149,6 +150,21 @@ export class FormPurchaseOrderComponent implements OnInit {
   createNewPuchseOrder(form: NgForm) {
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
+
+      Swal.fire({
+        title: 'Error, revisar los campos obligatorios',
+        icon: 'error',
+        position: 'center',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+
       return;
     }
     if (this.isUpdate) {
@@ -159,23 +175,49 @@ export class FormPurchaseOrderComponent implements OnInit {
         )
         .subscribe((data) => {
           console.log('Actualizando orden:', data);
-        });
 
-      this.msj = true;
-      setTimeout(() => {
-        this.router.navigate(['/list-purchase-order']);
-      }, 1500);
+          Swal.fire({
+            title: 'Se actualizo con éxito la orden de compra',
+            icon: 'success',
+            position: 'bottom-right',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          }).then(() => {
+            setTimeout(() => {
+              this.router.navigate(['/list-purchase-order']);
+            }, 1500);
+          });
+        });
     } else {
       this.servicePurchaseOrder
         .postPurchaseOrder(this.newPurchaseOrder)
         .subscribe((data) => {
           console.log('CREANDO NUEVA ORDEN DE COMPRA', data);
-        });
 
-      this.msj = true;
-      setTimeout(() => {
-        this.router.navigate(['/list-purchase-order']);
-      }, 1500);
+          Swal.fire({
+            title: 'Se creó con éxito el producto',
+            icon: 'success',
+            position: 'bottom-right',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          }).then(() => {
+            setTimeout(() => {
+              this.router.navigate(['/list-purchase-order']);
+            }, 1500);
+          });
+        });
     }
   }
 
@@ -210,7 +252,6 @@ export class FormPurchaseOrderComponent implements OnInit {
     };
 
     this.selectedProduct.priceProduct;
-    this.msj = false;
     this.supplierPoin = true;
   }
 

@@ -108,9 +108,9 @@
               <th>Información Contacto</th>
               <th>Datos de contacto</th>
               <th>
-              <div
+                <div
                   style="
-                 display: flex;
+                    display: flex;
                     justify-content: space-between;
                     align-items: center;
                   "
@@ -123,19 +123,16 @@
                     ngbTooltip="Ordenar por Pais"
                   >
                     <i
-                    [ngClass]="{
-                      'bi bi-sort-alpha-down': currentLocationSortOrder === 'asc',
-                      'bi bi-sort-alpha-up-alt': currentLocationSortOrder === 'desc'
-                    }"
+                      [ngClass]="{
+                        'bi bi-sort-alpha-down':
+                          currentLocationSortOrder === 'asc',
+                        'bi bi-sort-alpha-up-alt':
+                          currentLocationSortOrder === 'desc'
+                      }"
                     ></i>
                   </span>
                 </div>
-
               </th>
-
-
-
-
               <th>Acciones</th>
             </tr>
           </thead>
@@ -172,7 +169,7 @@
                 {{ item.namecontactSupplier }},
                 {{ item.lastNamecontactSupplier }}
               </td>
-              <td>{{ item.countrySupplier }} , {{ item.provinceSupplier }} </td>
+              <td>{{ item.countrySupplier }} , {{ item.provinceSupplier }}</td>
               <td *ngIf="deleteSupplier">
                 <a
                   *ngIf="supplierActive"
@@ -191,14 +188,14 @@
                 <a
                   *ngIf="supplierActive"
                   class="btn btn-danger btn-sm ml-2"
-                  (click)="deleteSupplier(item.idSupplier)"
+                  (click)="deleteSupplier(item.idSupplier, item.nameSupplier)"
                   ngbTooltip="Eliminar"
                   ><i class="bi bi-trash"></i
                 ></a>
                 <a
                   *ngIf="!supplierActive"
                   class="btn btn-primary btn-sm ml-2"
-                  (click)="activeSupplier(item.idSupplier)"
+                  (click)="activeSupplier(item.idSupplier, item.nameSupplier)"
                   ngbTooltip="Activar"
                   ><i class="bi bi-check-lg"></i
                 ></a>
