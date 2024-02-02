@@ -1,23 +1,6 @@
-.row {
-  margin-top: 15px;
-}
-
-
 img {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f8f9fa;
-  width: 20vw;
-  height: 40vh;
   object-fit: cover;
-}
-
-p {
-  margin-bottom: 10px;
-}
-
-
-button {
-  margin-top: 15px;
-  margin-right: 10px;
+  width: 60%;
+  height: 50vh;
+  margin: auto;
 }

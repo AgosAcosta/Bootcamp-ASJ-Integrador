@@ -35,8 +35,6 @@ public class PurchaseOrderMapper {
             purchaseOrderDTO.setNameProduct(details.getProduct().getNameProduct());
             purchaseOrderDTO.setUnitProduct(details.getQuantityDetail());
            purchaseOrderDTO.setPriceProduct(details.getProduct().getPriceProduct());
-            System.out.println("purchaseOrderDTO: " + purchaseOrderDTO);
-
             dtoList.add(purchaseOrderDTO);
         }
         return dtoList;

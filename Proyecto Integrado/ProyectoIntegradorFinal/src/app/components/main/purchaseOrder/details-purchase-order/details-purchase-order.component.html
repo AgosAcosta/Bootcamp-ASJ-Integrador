@@ -1,38 +1,87 @@
-<div class="row">
-  <div class="col-8">
-    <h4>Información de la orden de compra:</h4>
-    <p>N° Orden: {{ purchaseOrder?.idPurchaseOrder }}</p>
-    <p>
-      Fecha de emisión: {{ purchaseOrder?.dateIssue | date : "dd-MM-yyyy" }}
-    </p>
-    <p>
-      Fecha de entrega: {{ purchaseOrder?.dateDelivery | date : "dd-MM-yyyy" }}
-    </p>
-    <p>Información de entrega: {{ purchaseOrder?.recepcion }}</p>
-
-    <div *ngFor="let detail of purchaseOrder?.products; let i = index">
-      <p>
-        <strong>Producto:</strong> {{ i + 1 }}: {{ detail.nameProduct }}
-        <strong>Cantidad:</strong> {{ detail.unitProduct }}
-      </p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="card-header">
+                Información de la orden de compra:
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  <strong> N° Orden: </strong
+                  > {{ purchaseOrder?.idPurchaseOrder }}
+                </p>
+                <p class="card-text">
+                  <strong> Fecha de Emisión:: </strong
+                  > {{ purchaseOrder?.dateIssue |date : "dd-MM-yyyy"}}
+                </p>
+                <p class="card-text">
+                  <strong> Fecha de Entrega:</strong
+                  > {{ purchaseOrder?.dateDelivery |date : "dd-MM-yyyy"}}
+                </p>
+                <p class="card-text">
+                  <strong> Informacion de recepción: </strong
+                  > {{ purchaseOrder?.recepcion }}
+                </p>
+                <p class="card-text">
+                  <strong> Estado: </strong
+                  > {{ purchaseOrder?.status }}
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card-header">Detalle:</div>
+              <div class="card-body">
+                <p class="card-text">
+                  <strong> Proveedor: </strong
+                  > {{ purchaseOrder?.supplier }}
+                </p>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let detail of purchaseOrder?.products; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ detail.nameProduct }}</td>
+                      <td>{{ detail.unitProduct }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="card-text">
+                  <strong>Total:</strong> {{ purchaseOrder?.total | currency }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <p>Total: {{ purchaseOrder?.total | currency }}</p>
-
-    <p>Estado: {{ purchaseOrder?.status }}</p>
-    <button
-      type="button"
-      class="btn btn-success btn-sm"
-      [routerLink]="['/list-purchase-order', purchaseOrder?.idPurchaseOrder]"
-    >
-      Editar
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary btn-sm"
-      routerLink="/list-purchase-order"
-    >
-      Volver
-    </button>
+  <div class="row">
+    <div class="col text-center">
+      <button
+        class="btn btn-success btn-m"
+        [routerLink]="['/list-purchase-order', purchaseOrder?.idPurchaseOrder]"
+        style="margin-right: 5px"
+      >
+        Editar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-m"
+        routerLink="/list-purchase-order"
+        style="margin-left: 5px"
+      >
+        Volver
+      </button>
+    </div>
   </div>
 </div>

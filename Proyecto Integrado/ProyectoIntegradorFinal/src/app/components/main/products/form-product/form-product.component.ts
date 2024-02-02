@@ -8,7 +8,6 @@ import { CategoryProductService } from '../../../../Service/category-product.ser
 import { Supplier } from '../../../../Models/supplier';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-form-product',
   templateUrl: './form-product.component.html',
@@ -33,14 +32,13 @@ export class FormProductComponent implements OnInit {
 
   suppliers: string[] = [];
   categories: string[] = [];
+  supplierName: string[] = [];
 
   existsCode: boolean = false;
-
   isModalOpen: boolean = false;
 
-  idProduct: string = '';
   isUpdate: boolean = false;
-  supplierName: string[] = [];
+  checkBtn: boolean = false;
 
   constructor(
     private serviceSupplier: ServiceSupplierService,
@@ -143,9 +141,10 @@ export class FormProductComponent implements OnInit {
 
       return;
     } else {
+      this.checkBtn = true;
       this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
         console.log('Creando un producto', data);
-
+        this.checkBtn = true;
         Swal.fire({
           title: 'Se creó con éxito el producto',
           icon: 'success',
@@ -173,7 +172,7 @@ export class FormProductComponent implements OnInit {
         icon: 'error',
         position: 'bottom-left',
         toast: true,
-        timer:3000,
+        timer: 3000,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -184,10 +183,12 @@ export class FormProductComponent implements OnInit {
       this.newProduct.codeProduct = '';
       return;
     } else {
+      this.checkBtn = true;
       this.serviceProduct
         .updateProduct(this.newProduct.idProduct, this.newProduct)
         .subscribe((data) => {
           console.log('ACTUALIZANDO PRODUCTO', data);
+   
 
           Swal.fire({
             title: 'Se actualizo con éxito el producto',

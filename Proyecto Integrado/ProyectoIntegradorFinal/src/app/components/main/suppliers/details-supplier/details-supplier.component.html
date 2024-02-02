@@ -1,11 +1,10 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 h-100">
-      <div class="card mb-3 h-100">
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <div class="card h-100 d-flex justify-content-center">
         <img
           src="{{ supplier?.urlLogo }}"
           (error)="handleImageError($event)"
-          class="img-fixed"
           alt="Responsive image"
         />
         <div class="card-body">
@@ -16,7 +15,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 h-100">
+    <div class="col-md-6">
       <div class="card mb-3 h-100">
         <div class="card-body">
           <div class="row">
