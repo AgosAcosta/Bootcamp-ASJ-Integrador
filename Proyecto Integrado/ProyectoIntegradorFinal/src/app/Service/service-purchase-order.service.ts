@@ -1,7 +1,5 @@
-import { Injectable, IterableDiffers } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PurchaseOrder } from '../Models/purchaseOrder';
-import { Supplier } from '../Models/supplier';
-import { Product } from '../Models/product';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -11,11 +9,6 @@ import { Observable } from 'rxjs';
 export class ServicePurchaseOrderService {
   purchaseOrderList: PurchaseOrder[] = [];
 
-  //Revisar si los uso:
-  supplierList: Supplier[] = [];
-  productList: Product[] = [];
-
-  //Varios productos Orden de compra:
   constructor(private http: HttpClient) {}
 
   private URL = 'http://localhost:8080/purchaseOrder';

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Supplier } from '../Models/supplier';
-import { Observable, of } from 'rxjs';
-import { supplierData } from '../data/supplierData';
+import { Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -9,8 +8,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ServiceSupplierService {
   constructor(private http: HttpClient) {}
-
-  //supplierList: Supplier[] = supplierData;
 
   private URL = 'http://localhost:8080/supplier';
 

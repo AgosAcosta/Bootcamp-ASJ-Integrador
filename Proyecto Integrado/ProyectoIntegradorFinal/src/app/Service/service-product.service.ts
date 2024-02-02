@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../Models/product';
-import { Supplier } from '../Models/supplier';
-import { productData } from '../data/productData';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -9,13 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ServiceProductService {
+  
   productList: Product[] = [];
-  //Para buscar el nombre del proveedor
-  supplierList: Supplier[] = [];
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-    this.productList = [...productData];
-  }
 
   private URL = 'http://localhost:8080/product';
 
