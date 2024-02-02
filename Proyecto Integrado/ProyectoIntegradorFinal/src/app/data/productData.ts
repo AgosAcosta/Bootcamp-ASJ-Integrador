@@ -1,7 +1,7 @@
 import { Product } from '../Models/product';
 
 export const productData: Product[] = [
-  {
+  /*  {
     idProduct: 1,
     urlLogo:
       'https://jumboargentina.vtexassets.com/arquivos/ids/674442-800-auto?v=637716164583130000&width=800&height=auto&aspect=true',
@@ -66,5 +66,5 @@ export const productData: Product[] = [
     descriptionProduct: 'Gaseosa Paso De Los Toros Pomelo Botella 1,5ltx1',
     priceProduct: 1160,
     supplierName: 'Gaseosa SRL',
-  },
+  }, */
 ];

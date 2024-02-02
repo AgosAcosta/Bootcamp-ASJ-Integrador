@@ -1,4 +1,4 @@
-export const Ubication = [
+/* export const Ubication = [
   {
     countrySupplier: 'Argentina',
     locationSupplier: [
@@ -16,4 +16,4 @@ export const Ubication = [
     countrySupplier: 'Brasil',
     locationSupplier: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais'],
   },
-];
+]; */

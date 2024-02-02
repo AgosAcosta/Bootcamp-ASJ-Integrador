@@ -2,37 +2,22 @@
   margin-top: 15px;
 }
 
-.col-4 {
-  text-align: center;
-  border: 1px solid rgb(205, 211, 242);
-}
 
 img {
-  max-width: 90%;
-  height: 90%;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #f8f9fa;
-}
-.col-8 {
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h4 {
-  color: rgb(31, 54, 170);
+  width: 20vw;
+  height: 40vh;
+  object-fit: cover;
 }
 
 p {
   margin-bottom: 10px;
 }
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+
+
+button {
+  margin-top: 15px;
+  margin-right: 10px;
 }

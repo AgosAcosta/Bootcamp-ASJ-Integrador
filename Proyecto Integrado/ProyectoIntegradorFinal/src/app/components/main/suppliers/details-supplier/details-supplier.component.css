@@ -1,30 +1,16 @@
 .container {
   margin-top: 20px;
 }
-
-.row img {
-  margin-bottom: 0;
-}
-
-.col-4,
-.col-6,
-.col-12 {
-  margin-bottom: 10px;
+button {
+  margin-top: 15px;
+  margin-right: 10px;
 }
 
 img {
-  max-width: 50%;
-  max-height: 50%;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #f8f9fa;
-}
-
-.col-4,
-.col-6 {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  border: 1px solid #b3cee9;
+  width: 40vw;
+  height: 50vh;
+  object-fit: cover;
 }

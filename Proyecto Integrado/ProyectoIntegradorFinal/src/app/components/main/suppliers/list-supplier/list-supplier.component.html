@@ -1,39 +1,95 @@
-<div class="container-fluid mt-3">
+<div class="container" >
   <header>
-    <div class="row">
+    <div class="row mt-2">
       <div class="col-4">
         <h4>
           {{
-            supplierActive ? "Proveedores Activos" : "Proveedores Eliminados"
+            supplierActive ? "PROVEEDORES ACTIVOS" : "PROVEEDORES ELIMINADOS"
           }}
         </h4>
       </div>
-      <div class="col-8 text-right">
-        <input
-          type="text"
-          [(ngModel)]="searchName"
-          placeholder="Filtrar por razon social"
-        />
-        <input
-          type="text"
-          [(ngModel)]="searchCode"
-          placeholder="Filtrar por código"
-        />
+      <div class="row">
+        <div class="col mt-3">
+          <div class="row">
+            <div class="col">
+              <input
+                type="text"
+                [(ngModel)]="searchName"
+                placeholder="Filtrar por razón social"
+                class="form-control"
+              />
+            </div>
+            <div class="col">
+              <input
+                type="text"
+                [(ngModel)]="searchCode"
+                placeholder="Filtrar por código"
+                class="form-control"
+              />
+            </div>
+            <div class="col">
+              <button
+                class="btn btn-danger"
+                (click)="cleanFilter()"
+                ngbTooltip="Limpiar Filtros"
+              >
+                <i class="bi bi-eraser"></i>
+              </button>
+            </div>
+            <div class="col">
+    
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  id="radActive"
+                  name="supplierStatus"
+                  [(ngModel)]="selectedStatus"
+                  [value]="true"
+                  (change)="onRadioChange()"
+                />
+                <label
+                  class="form-check-label"
+                  for="radActive"
+                  ngbTooltip="Proveedores Activos"
+                  >Activos</label
+                >
+              </div>
 
-        <a routerLink="new" class="btn btn-success" id="altaProveedores">
-          <i class="bi bi-plus"></i> Agregar
-        </a>
-        <a (click)="getListSupplierActive()" class="ml-2">
-          <i class="bi bi-person-fill-check"></i>Activos
-        </a>
-        <a (click)="getListSupplierDelete()" class="ml-2">
-          <i class="bi bi-person-fill-slash"></i>Eliminados
-        </a>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  id="radDeleted"
+                  name="supplierStatus"
+                  [(ngModel)]="selectedStatus"
+                  [value]="false"
+                  (change)="onRadioChange()"
+                />
+                <label
+                  class="form-check-label"
+                  for="radDeleted"
+                  ngbTooltip="Proveedores Eliminados"
+                  >Eliminados</label
+                >
+              </div>
+            </div>
+            <div class="col">
+              <a
+                routerLink="new"
+                class="btn btn-success ml-2"
+                id="altaProveedores"
+              >
+                <i class="bi bi-plus"></i> Agregar
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
   <main>
-    <div class="row mt-3">
+    <div class="row">
       <div class="col-12">
         <div
           *ngIf="
@@ -47,7 +103,7 @@
 
         <table
           *ngIf="supplierList && supplierList.length > 0"
-          class="table"
+          class="table table-striped"
           style="margin-top: 10px"
         >
           <thead>
@@ -103,9 +159,7 @@
                     ></i>
                   </span>
                 </div>
-              </th>
-
-              <th>Información Contacto</th>
+              </th>      
               <th>Datos de contacto</th>
               <th>
                 <div
@@ -150,24 +204,18 @@
                   class="rounded mx-auto d-block"
                   alt="..."
                   (error)="handleImageError($event)"
-                  width="65"
-                  height="70"
+                  width="50"
+                  height="50"
                 />
               </td>
               <td>{{ item.codeSupplier }}</td>
               <td>{{ item.nameSupplier }}</td>
 
-              <td>
-                <i class="bi bi-globe" ngbTooltip="Sitio web"></i>
-                {{ item.webSupplier }} <br />
-                <i class="bi bi-envelope" ngbTooltip="Correo electrónico"></i>
-                {{ item.emailSupplier }} <br />
-                <i class="bi bi-telephone" ngbTooltip="Teléfono"></i>
-                {{ item.telSupplier }}
-              </td>
+              
               <td>
                 {{ item.namecontactSupplier }},
                 {{ item.lastNamecontactSupplier }}
+                <i class="bi bi-info-circle" [ngbTooltip]="item.webSupplier + '\n' + item.emailSupplier + '\n' + item.telSupplier"></i>
               </td>
               <td>{{ item.countrySupplier }} , {{ item.provinceSupplier }}</td>
               <td *ngIf="deleteSupplier">

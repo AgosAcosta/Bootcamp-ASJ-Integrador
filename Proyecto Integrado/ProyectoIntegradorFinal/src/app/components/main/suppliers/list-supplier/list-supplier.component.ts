@@ -20,6 +20,8 @@ export class ListSupplierComponent {
   isNameSortActive = false;
   isCountrySortActive = false;
 
+  selectedStatus: boolean = true;
+
   filteredList!: Supplier[];
   searchName: string = '';
   searchCode: string = '';
@@ -58,7 +60,7 @@ export class ListSupplierComponent {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, eliminarlo',
-      cancelButtonText:'Cancelar'
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.supplierService.deleteSupplier(id).subscribe((data) => {
@@ -70,7 +72,6 @@ export class ListSupplierComponent {
   }
 
   activeSupplier(id: number, name: string) {
-
     Swal.fire({
       title: 'Activar proveedor',
       text: `¿Estás seguro de que deseas activar el proveedor ${name}?`,
@@ -79,7 +80,7 @@ export class ListSupplierComponent {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, activarlo',
-      cancelButtonText:'Cancelar'
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.supplierService.activeSupplier(id).subscribe((data) => {
@@ -150,6 +151,19 @@ export class ListSupplierComponent {
     this.isCodeSortActive = false;
     this.isNameSortActive = false;
     this.isCountrySortActive = true;
+  }
+
+  onRadioChange(): void {
+    if (this.selectedStatus) {
+      this.getListSupplierActive();
+    } else {
+      this.getListSupplierDelete();
+    }
+  }
+
+  cleanFilter() {
+    this.searchName = '';
+    this.searchCode = '';
   }
 
   handleImageError(event: Event): void {
