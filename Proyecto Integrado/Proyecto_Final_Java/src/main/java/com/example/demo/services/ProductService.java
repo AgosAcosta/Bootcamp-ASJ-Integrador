@@ -77,7 +77,7 @@ public class ProductService {
 
     }
     public boolean validateProductCode(String code) {
-        boolean existsByCode = productRepository.existsByCodeProduct(code);
+        boolean existsByCode = productRepository.existsByCodeProductIgnoreCase(code);
         return existsByCode;
     }
 

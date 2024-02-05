@@ -295,6 +295,7 @@
                         type="button"
                         class="btn btn-primary"
                         (click)="addCategory()"
+                        [disabled]="isSaveCategory || categorySupplierModal.invalid"
                       >
                         Guardar
                       </button>
@@ -306,9 +307,7 @@
           </section>
           <section>
             <!-- Sección Contacto Empresa (Información de Contacto) -->
-            <fieldset
-     
-            >
+            <fieldset>
               <legend>Datos de Contacto</legend>
               <div class="form-group">
                 <label for="sitio_web">Sitio Web:</label>
@@ -374,7 +373,7 @@
                       name="telSupplier"
                       id="telSupplier"
                       [(ngModel)]="newsupplier.telSupplier"
-                      pattern="[0-9]{10}"
+                      pattern="[0-9]{10,13}"
                       required
                       #telSupplier="ngModel"
                       [ngClass]="telSupplier.errors ? 'is-invalid' : 'is-valid'"
@@ -697,7 +696,7 @@
                       name="telcontactSupplier"
                       id="telcontactSupplier"
                       [(ngModel)]="newsupplier.telcontactSupplier"
-                      pattern="[0-9]{10}"
+                      pattern="[0-9]{10,13}"
                       required
                       #telcontactSupplier="ngModel"
                       [ngClass]="
@@ -793,7 +792,11 @@
       </div>
     </main>
     <footer>
-      <button type="submit" class="btn btn-success" [disabled]="!myForm.valid">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!myForm.valid || isSave"
+      >
         Guardar
       </button>
       <button type="submit" class="btn btn-danger" (click)="ClearForm()">

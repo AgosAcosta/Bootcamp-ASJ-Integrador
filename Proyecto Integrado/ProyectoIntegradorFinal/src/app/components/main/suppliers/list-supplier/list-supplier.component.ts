@@ -22,7 +22,6 @@ export class ListSupplierComponent {
 
   selectedStatus: boolean = true;
 
-  filteredList!: Supplier[];
   searchName: string = '';
   searchCode: string = '';
 
@@ -34,6 +33,7 @@ export class ListSupplierComponent {
   ngOnInit(): void {
     this.getListSupplierActive();
   }
+
 
   getListSupplierActive() {
     this.supplierActive = true;

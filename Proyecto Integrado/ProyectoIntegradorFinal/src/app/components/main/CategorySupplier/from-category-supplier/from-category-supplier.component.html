@@ -36,16 +36,11 @@
               </div>
             </div>
           </fieldset>
-          <div *ngIf="msj" class="alert alert-success" role="alert">
-            Acción realizada con exito!
-          </div>
-          <div *ngIf="msj" class="alert alert-danger" role="alert">
-            Ya existe un proveedor con ese codigo
-          </div>
+
           <button
             type="submit"
             class="btn btn-success"
-            [disabled]="!myForm.valid"
+            [disabled]="!myForm.valid || isSave"
           >
             Guardar
           </button>

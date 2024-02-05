@@ -39,12 +39,13 @@ export class FormPurchaseOrderComponent implements OnInit {
   suppliers: any[] = [];
   products: any[] = [];
 
-  idPurchaseOrden: string = '';
   isUpdate: boolean = false;
-  supplierName: string[] = [];
+  isSave: boolean = false;
 
   allProducts: any[] = [];
   supplierPoin = true;
+
+  supplierLogo: string = '';
 
   date = new Date();
 
@@ -58,6 +59,8 @@ export class FormPurchaseOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getListSupplier();
+
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
       if (id != undefined) {
@@ -72,7 +75,9 @@ export class FormPurchaseOrderComponent implements OnInit {
               order.dateDelivery,
               'yyyy-MM-dd'
             )!;
-            this.onSupplierSelected(order.nameSupplier);
+
+            this.onSupplierSelected(order.supplier);
+            this.supplierPoin = false;
             this.onProductSelected();
             this.isUpdate = true;
           },
@@ -82,24 +87,24 @@ export class FormPurchaseOrderComponent implements OnInit {
         );
       }
     });
-    this.getListSupplier();
   }
 
   getListSupplier() {
     this.serviceSupplier.getListSupplier().subscribe((data: Supplier[]) => {
       console.log('Proveedores:', data);
-      this.suppliers = data.map((supplier: Supplier) => supplier.nameSupplier);
+      this.suppliers = data;
     });
   }
 
   onSupplierSelected(supplierName: string) {
+    console.log('supplierName', supplierName);
     const selectedSupplier = this.suppliers.find(
-      (supplier) => supplier === supplierName
+      (supplier) => supplier.nameSupplier === supplierName
     );
-
+    console.log('SELECT', selectedSupplier);
     if (selectedSupplier) {
       this.serviceProduct
-        .getProductsBySupplierName(selectedSupplier)
+        .getProductsBySupplierName(selectedSupplier.nameSupplier)
         .subscribe((data: Product[]) => {
           this.products = data.map((product: Product) => ({
             idProduct: product.idProduct,
@@ -108,6 +113,8 @@ export class FormPurchaseOrderComponent implements OnInit {
           }));
           console.log('Productos del proveedor:', this.products);
         });
+
+      this.supplierLogo = selectedSupplier.urlLogo;
     }
   }
 
@@ -148,9 +155,9 @@ export class FormPurchaseOrderComponent implements OnInit {
   }
 
   createNewPuchseOrder(form: NgForm) {
+    this.isSave = true;
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
-
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
@@ -164,7 +171,7 @@ export class FormPurchaseOrderComponent implements OnInit {
           title: 'custom-title-class',
         },
       });
-
+      this.isSave = false;
       return;
     }
     if (this.isUpdate) {
@@ -201,7 +208,7 @@ export class FormPurchaseOrderComponent implements OnInit {
           console.log('CREANDO NUEVA ORDEN DE COMPRA', data);
 
           Swal.fire({
-            title: 'Se creó con éxito el producto',
+            title: 'Se creó con éxito la orden de compra',
             icon: 'success',
             position: 'bottom-right',
             toast: true,

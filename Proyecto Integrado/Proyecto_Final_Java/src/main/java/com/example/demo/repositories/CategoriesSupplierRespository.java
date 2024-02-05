@@ -9,4 +9,5 @@ import com.example.demo.models.CategoriesSupplierModel;
 public interface CategoriesSupplierRespository extends JpaRepository<CategoriesSupplierModel, Integer> {
 
 	  Optional<CategoriesSupplierModel> findByCategorySupplier(String category_supplier);
+	  boolean existsByCategorySupplierIgnoreCase(String categorySupplier);
 }

@@ -56,10 +56,7 @@ VALUES      ('Tecnologico',
              CURRENT_TIMESTAMP, false),
             ('Cosmeticos',
              CURRENT_TIMESTAMP,
-             CURRENT_TIMESTAMP, false),
-            ('Otro',
-             CURRENT_TIMESTAMP,
-             CURRENT_TIMESTAMP, false); 
+             CURRENT_TIMESTAMP, false);          
 
 INSERT INTO countries
             (country

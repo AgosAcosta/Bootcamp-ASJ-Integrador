@@ -58,6 +58,8 @@ export class FormSupplierComponent {
   existsCuit: boolean = false;
 
   isUpdate: boolean = false;
+  isSave: boolean = false;
+  isSaveCategory: boolean = false;
 
   isModalOpen: boolean = false;
 
@@ -153,31 +155,53 @@ export class FormSupplierComponent {
   }
 
   addCategory() {
-    this.isModalOpen = true;
+    this.isSaveCategory = true;
     this.categorySupplierService
-      .postCategoriesSupplier(this.newCategory)
-      .subscribe((data) => {
-        console.log('CREANDO NUEVO RUBRO', data);
-
-        Swal.fire({
-          title: 'Se agrego con éxito el nuevo rubro',
-          icon: 'success',
-          position: 'bottom-left',
-          toast: true,
-          timer: 3000,
-          showConfirmButton: false,
-          width: '300px',
-          customClass: {
-            popup: 'custom-popup-class',
-            title: 'custom-title-class',
-          },
-        });
-
-        this.getListCategorySupplier();
+      .existsNameCategory(this.newCategory.categorySupplier)
+      .subscribe((exists: boolean) => {
+        if (exists) {
+          Swal.fire({
+            title: 'Error, ya existe ese Rubro',
+            icon: 'error',
+            position: 'bottom-left',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          });
+          this.newCategory.categorySupplier = '';
+          this.isSaveCategory = false;
+          return;
+        }
+        this.categorySupplierService
+          .postCategoriesSupplier(this.newCategory)
+          .subscribe((data) => {
+            console.log('CREANDO NUEVO RUBRO', data);
+            Swal.fire({
+              title: 'Se agregó con éxito el nuevo rubro',
+              icon: 'success',
+              position: 'bottom-left',
+              toast: true,
+              timer: 3000,
+              showConfirmButton: false,
+              width: '300px',
+              customClass: {
+                popup: 'custom-popup-class',
+                title: 'custom-title-class',
+              },
+            });
+            this.newCategory.categorySupplier = '';
+            this.getListCategorySupplier();
+          });
       });
   }
 
   createNewSupplier(form: NgForm) {
+    this.isSave = true;
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
 
@@ -194,7 +218,7 @@ export class FormSupplierComponent {
           title: 'custom-title-class',
         },
       });
-
+      this.isSave = false;
       return;
     }
     const cuit = form.value.cuitSupplier;
@@ -233,6 +257,7 @@ export class FormSupplierComponent {
         },
       });
       this.newsupplier.codeSupplier = '';
+      this.isSave = false;
 
       return;
     } else if (this.existsCuit) {
@@ -252,7 +277,7 @@ export class FormSupplierComponent {
         },
       });
       this.newsupplier.cuitSupplier = '';
-
+      this.isSave = false;
       return;
     } else {
       this.supplierService
@@ -281,7 +306,6 @@ export class FormSupplierComponent {
   createSupplier() {
     if (this.existsCode) {
       console.log('YA EXISTE ESTE CODIGO');
-
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese código',
         icon: 'error',
@@ -296,6 +320,7 @@ export class FormSupplierComponent {
         },
       });
       this.newsupplier.codeSupplier = '';
+      this.isSave = false;
 
       return;
     } else if (this.existsCuit) {
@@ -315,6 +340,7 @@ export class FormSupplierComponent {
         },
       });
       this.newsupplier.cuitSupplier = '';
+      this.isSave = false;
       return;
     } else {
       this.supplierService.postSupplier(this.newsupplier).subscribe((data) => {
@@ -375,6 +401,4 @@ export class FormSupplierComponent {
   countHyphens(cuit: string): number {
     return (cuit.match(/-/g) || []).length;
   }
-
-
 }

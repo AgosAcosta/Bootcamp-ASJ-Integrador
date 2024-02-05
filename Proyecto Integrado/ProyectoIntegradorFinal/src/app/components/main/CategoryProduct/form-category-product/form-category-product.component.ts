@@ -16,8 +16,9 @@ export class FormCategoryProductComponent {
     categoryProduct: '',
   };
 
-  msj: any;
+  existsName: boolean = false;
   isUpdate: boolean = false;
+  isSave: boolean = false;
 
   constructor(
     private categoryProductService: CategoryProductService,
@@ -45,6 +46,8 @@ export class FormCategoryProductComponent {
   }
 
   createnewCategoryProduct(form: NgForm) {
+    this.isSave = true;
+
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
       Swal.fire({
@@ -60,9 +63,62 @@ export class FormCategoryProductComponent {
           title: 'custom-title-class',
         },
       });
+
+      this.isSave = false;
       return;
     }
-    if (this.isUpdate) {
+    const name = form.value.categorySupplier;
+
+    this.categoryProductService
+      .existsNameCategory(name)
+      .subscribe((existsName: boolean) => {
+        if (existsName) {
+          console.log('YA EXISTE ESE NOMBRE');
+          Swal.fire({
+            title: 'Error, ya existe una categoría con ese nombre',
+            icon: 'error',
+            position: 'bottom-left',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          });
+          this.newCategoryProduct.categoryProduct = '';
+          this.isSave = false;
+        } else {
+          if (this.isUpdate) {
+            this.updateCategory();
+          } else {
+            this.postCategory();
+          }
+        }
+      });
+  }
+
+  updateCategory() {
+    if (this.existsName) {
+      console.log('YA EXISTE ESE NOMBRE');
+      Swal.fire({
+        title: 'Error, ya existe un categoría con ese nombre',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newCategoryProduct.categoryProduct = '';
+      this.isSave = false;
+      return;
+    } else {
       this.categoryProductService
         .putCategoriesProduct(
           this.newCategoryProduct.idCategoryProduct,
@@ -86,6 +142,27 @@ export class FormCategoryProductComponent {
             this.router.navigate(['/list-category-product']);
           });
         });
+    }
+  }
+  postCategory() {
+    if (this.existsName) {
+      console.log('YA EXISTE ESE NOMBRE');
+      Swal.fire({
+        title: 'Error, ya existe un Rubro con ese nombre',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newCategoryProduct.categoryProduct = '';
+      this.isSave = false;
+      return;
     } else {
       this.categoryProductService
         .postCategoriesProduct(this.newCategoryProduct)

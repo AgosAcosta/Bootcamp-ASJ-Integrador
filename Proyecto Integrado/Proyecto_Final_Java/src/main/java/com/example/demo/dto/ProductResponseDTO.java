@@ -28,7 +28,6 @@ public class ProductResponseDTO {
 	private String descriptionProduct;
 	@NotNull(message = "El precio del producto no puede estar vacio")
 	@DecimalMin(value = "0.01", message = "El precio debe ser mayor o igual a 0.01")
-	@DecimalMax(value = "1000000.00", message = "El precio debe ser menor o igual a 1000000.00")
 	private double priceProduct;
 	@NotNull(message = "El proveedores no puede estar vacio")
 	private String supplierName;

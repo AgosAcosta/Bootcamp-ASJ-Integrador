@@ -8,26 +8,33 @@ import { CategorySupplier } from '../Models/supplier';
 })
 export class CategorySupplierService {
   constructor(private http: HttpClient) {}
-  private url = 'http://localhost:8080/categorySupplier';
+  private URL = 'http://localhost:8080/categorySupplier';
 
   public getCategoriesSupplier(): Observable<any> {
-    return this.http.get(this.url);
+    return this.http.get(this.URL);
   }
   public getCategoriesSupplierById(id: number): Observable<any> {
-    return this.http.get(`${this.url}/${id}`);
+    return this.http.get(`${this.URL}/${id}`);
   }
   public postCategoriesSupplier(category: CategorySupplier): Observable<any> {
-    return this.http.post(this.url, category);
+    return this.http.post(this.URL, category);
   }
 
   public putCategoriesSupplier(
     id: number,
     category: CategorySupplier
   ): Observable<any> {
-    return this.http.put(`${this.url}/${id}`, category);
+    return this.http.put(`${this.URL}/${id}`, category);
   }
 
   public deleteCategoriesSupplier(id: number): Observable<any> {
-    return this.http.patch<any>(`${this.url}/delete/${id}`, {});
+    return this.http.patch<any>(`${this.URL}/delete/${id}`, {});
+  }
+
+  public existsNameCategory(nameCategory: string): Observable<boolean> {
+    return this.http.patch<boolean>(
+      `${this.URL}/exists/name/${nameCategory}`,
+      null
+    );
   }
 }

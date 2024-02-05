@@ -4,13 +4,22 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'search',
 })
 export class SearchPipe implements PipeTransform {
-  transform(value: any[], args?: { field: string; searchText: string }): any {
+  transform(value: any[], args?: { field: string[]; searchText: string }): any {
+    let list = [];
     if (!args || !args.searchText) {
       return value;
     }
+
     const searchValue = args.searchText.toLowerCase();
-    return value.filter((item) =>
-      item[args.field].toLowerCase().includes(searchValue)
-    );
+
+    for (let i of value) {
+      for (let j of args.field) {
+        if (i[j].toLowerCase().includes(searchValue)) {
+          list.push(i);
+          break;
+        }
+      }
+    }
+    return list;
   }
 }

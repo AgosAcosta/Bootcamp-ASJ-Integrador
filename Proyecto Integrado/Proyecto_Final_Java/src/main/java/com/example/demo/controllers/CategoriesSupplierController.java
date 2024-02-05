@@ -68,4 +68,10 @@ public class CategoriesSupplierController {
         }
         return ResponseEntity.ok().body(response.get());
     }
+
+    @PatchMapping("/exists/name/{category}")
+    public ResponseEntity<Boolean> existeNameCategory(@PathVariable String category) {
+        boolean response = categoriesSupplierService.validateSupplierCategory(category);
+        return ResponseEntity.ok().body(response);
+    }
 }

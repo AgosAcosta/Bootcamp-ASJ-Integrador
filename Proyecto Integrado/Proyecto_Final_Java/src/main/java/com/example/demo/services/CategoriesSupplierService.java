@@ -43,6 +43,11 @@ public class CategoriesSupplierService {
         }
     }
 
+    public boolean validateSupplierCategory(String category) {
+        boolean existsByCategory = categoriesSupplierRespository.existsByCategorySupplierIgnoreCase(category);
+        return existsByCategory;
+    }
+
     public CategoriesSupplierModel postCategorySupplier(CategoriesSupplierDTO category) {
         CategoriesSupplierModel categoriesSupplierModel = convertToEntity(category);
         categoriesSupplierModel.setDeleteCategorySupplier(false);

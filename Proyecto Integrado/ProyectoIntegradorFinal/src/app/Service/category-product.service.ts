@@ -32,4 +32,11 @@ export class CategoryProductService {
   public deleteCategoriesProduct(id: number): Observable<any> {
     return this.http.patch<any>(`${this.URL}/delete/${id}`, {});
   }
+
+  public existsNameCategory(nameCategory: string): Observable<boolean> {
+    return this.http.patch<boolean>(
+      `${this.URL}/exists/name/${nameCategory}`,
+      null
+    );
+  }
 }

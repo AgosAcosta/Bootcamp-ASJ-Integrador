@@ -1,90 +1,125 @@
 <div class="container">
-  <div class="row">
-    <div class="col-6">
-      <h4>
-        {{
-          purchaseOrderActive
-            ? "ORDENES DE COMPRA ACTIVAS"
-            : "ORDENES DE COMPRA ELIMINADAS"
-        }}
-      </h4>
-    </div>
-    <div class="col-6">
-      <a routerLink="new" class="btn btn-success" id="newProduct">
-        <i class="bi bi-plus"></i>Agregar</a
-      >
-
-      <a (click)="listPurchaseOrderActive()" class="ml-2">
-        <i class="bi bi-person-fill-check"></i>Activos
-      </a>
-      <a (click)="listPurchaseOrderDelete()" class="ml-2">
-        <i class="bi bi-person-fill-slash"></i>Eliminados
-      </a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <div
-        *ngIf="!purchaseOrderList || purchaseOrderList.length === 0"
-        class="alert alert-info"
-        role="alert"
-      >
-        No hay órdenes de compra cargadas.
+  <header>
+    <div class="row mt-2">
+      <div class="col-4">
+        <h4>
+          {{
+            purchaseOrderActive
+              ? "ORDENES DE COMPRA ACTIVAS"
+              : "ORDENES DE COMPRA ELIMINADAS"
+          }}
+        </h4>
       </div>
-
-      <table *ngIf="purchaseOrderList && purchaseOrderList.length > 0">
-        <thead>
-          <tr>
-            <th>N° Orden</th>
-            <th>Fecha de Emisión</th>
-            <th>Fecha de Entrega</th>
-            <th>Total</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="let item of purchaseOrderList"
-            [ngClass]="{ 'canceled-order': item.status === 'Cancelado' }"
-          >
-            <td>{{ item.idPurchaseOrder }}</td>
-            <td>{{ item.dateIssue | date : "dd-MM-yyyy" }}</td>
-            <td>{{ item.dateDelivery | date : "dd-MM-yyyy" }}</td>
-            <td>{{ item.total | currency }}</td>
-            <td>{{ item.status }}</td>
-            <td>
-              <a
-                class="btn btn-primary btn-sm"
-                [routerLink]="[
-                  '/list-purchase-order/detail',
-                  item.idPurchaseOrder
-                ]"
-                ngbTooltip="Ver"
-              >
-                <i class="bi bi-eye"></i>
-              </a>
-              <a
-                *ngIf="item.status != 'Cancelado'"
-                class="btn btn-success btn-sm"
-                [routerLink]="['/list-purchase-order', item.idPurchaseOrder]"
-                ngbTooltip="Editar"
-              >
-                <i class="bi bi-pencil-square"></i>
-              </a>
-              <a
-                *ngIf="item.status != 'Cancelado'"
-                class="btn btn-danger btn-sm ml-2"
-                ngbTooltip="Cancelar"
-                (click)="statusPucharseOrder(item.idPurchaseOrder)"
-              >
-                <i class="bi bi-ban"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row">
+        <div class="col">
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              class="form-check-input"
+              id="radActive"
+              name="purchaseOrderStatus"
+              [(ngModel)]="selectedStatus"
+              [value]="true"
+              (change)="onRadioChange()"
+            />
+            <label
+              class="form-check-label"
+              for="radActive"
+              ngbTooltip="Ordenes de compras activas"
+              >Activas</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              class="form-check-input"
+              id="radDeleted"
+              name="purchaseOrderStatus"
+              [(ngModel)]="selectedStatus"
+              [value]="false"
+              (change)="onRadioChange()"
+            />
+            <label
+              class="form-check-label"
+              for="radDeleted"
+              ngbTooltip="Ordenes de compras eliminadas"
+              >Eliminadas</label
+            >
+          </div>
+        </div>
+        <div class="col-6">
+          <a routerLink="new" class="btn btn-success" id="newProduct">
+            <i class="bi bi-plus"></i>Agregar
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
+  </header>
+  <main>
+    <div class="row">
+      <div class="col-12">
+        <div
+          *ngIf="!purchaseOrderList || purchaseOrderList.length === 0"
+          class="alert alert-info"
+          role="alert"
+        >
+          No hay órdenes de compra cargadas.
+        </div>
+
+        <table *ngIf="purchaseOrderList && purchaseOrderList.length > 0"      class="table table-striped"
+          style="margin-top: 10px">
+          <thead>
+            <tr>
+              <th>N° Orden</th>
+              <th>Fecha de Emisión</th>
+              <th>Fecha de Entrega</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of purchaseOrderList"
+              [ngClass]="{ 'canceled-order': item.status === 'Cancelado' }"
+            >
+              <td>{{ item.idPurchaseOrder }}</td>
+              <td>{{ item.dateIssue | date : "dd-MM-yyyy" }}</td>
+              <td>{{ item.dateDelivery | date : "dd-MM-yyyy" }}</td>
+              <td>{{ item.total | currency }}</td>
+              <td>{{ item.status }}</td>
+              <td>
+                <a
+                  class="btn btn-primary btn-sm"
+                  [routerLink]="[
+                    '/list-purchase-order/detail',
+                    item.idPurchaseOrder
+                  ]"
+                  ngbTooltip="Ver"
+                >
+                  <i class="bi bi-eye"></i>
+                </a>
+                <a
+                  *ngIf="item.status != 'Cancelado'"
+                  class="btn btn-success btn-sm"
+                  [routerLink]="['/list-purchase-order', item.idPurchaseOrder]"
+                  ngbTooltip="Editar"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+                <a
+                  *ngIf="item.status != 'Cancelado'"
+                  class="btn btn-danger btn-sm ml-2"
+                  ngbTooltip="Cancelar"
+                  (click)="statusPucharseOrder(item.idPurchaseOrder)"
+                >
+                  <i class="bi bi-ban"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
 </div>

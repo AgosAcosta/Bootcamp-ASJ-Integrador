@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,7 +95,7 @@ public class SupplierService {
     }
 
     public boolean validateSupplierCode(String code) {
-        boolean existsByCode = supplierRepository.existsByCodeSupplier(code);
+        boolean existsByCode = supplierRepository.existsByCodeSupplierIgnoreCase(code);
         return existsByCode;
     }
 

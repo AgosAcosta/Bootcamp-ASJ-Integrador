@@ -37,6 +37,12 @@ public class CategoriesProductService {
 
     }
 
+    public boolean validateProductCategory(String category) {
+        boolean existsByCategory = categoriesProductRepository.existsByCategoryProductIgnoreCase(category);
+        return existsByCategory;
+    }
+
+
     public Optional<CategoriesProductDTO> getCategoryProductById(int id){
         if (id <= 0) {
             throw new IllegalArgumentException("El ID de categoria producto debe ser mayor que 0");

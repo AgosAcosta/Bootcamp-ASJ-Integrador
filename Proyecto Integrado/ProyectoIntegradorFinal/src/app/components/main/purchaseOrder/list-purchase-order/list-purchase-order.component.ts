@@ -11,11 +11,20 @@ import Swal from 'sweetalert2';
 export class ListPurchaseOrderComponent implements OnInit {
   purchaseOrderList!: PurchaseOrder[];
   purchaseOrderActive: boolean = true;
+  selectedStatus: boolean = true;
 
   constructor(public servicePurchaseOrder: ServicePurchaseOrderService) {}
 
   ngOnInit(): void {
     this.listPurchaseOrderActive();
+  }
+
+  onRadioChange(): void {
+    if (this.selectedStatus) {
+      this.listPurchaseOrderActive();
+    } else {
+      this.listPurchaseOrderDelete();
+    }
   }
 
   listPurchaseOrderActive() {

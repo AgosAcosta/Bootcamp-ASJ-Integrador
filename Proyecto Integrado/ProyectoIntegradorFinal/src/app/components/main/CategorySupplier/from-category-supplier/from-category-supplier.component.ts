@@ -16,8 +16,9 @@ export class FromCategorySupplierComponent implements OnInit {
     categorySupplier: '',
   };
 
-  msj: any;
+  existsName: boolean = false;
   isUpdate: boolean = false;
+  isSave: boolean = false;
 
   constructor(
     private categorySupplier: CategorySupplierService,
@@ -43,6 +44,8 @@ export class FromCategorySupplierComponent implements OnInit {
   }
 
   createNewCategorySupplier(form: NgForm) {
+    this.isSave = true;
+  
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
       Swal.fire({
@@ -58,9 +61,60 @@ export class FromCategorySupplierComponent implements OnInit {
           title: 'custom-title-class',
         },
       });
+      this.isSave = false;
       return;
     }
-    if (this.isUpdate) {
+  
+    const name = form.value.categorySupplier;
+  
+    this.categorySupplier.existsNameCategory(name).subscribe((existsName: boolean) => {
+      if (existsName) {
+        console.log('YA EXISTE ESE NOMBRE');
+        Swal.fire({
+          title: 'Error, ya existe un Rubro con ese nombre',
+          icon: 'error',
+          position: 'bottom-left',
+          toast: true,
+          timer: 3000,
+          showConfirmButton: false,
+          width: '300px',
+          customClass: {
+            popup: 'custom-popup-class',
+            title: 'custom-title-class',
+          },
+        });
+        this.newCategorySupplier.categorySupplier = '';
+        this.isSave = false;
+      } else {
+        if (this.isUpdate) {
+          this.updateCategory();
+        } else {
+          this.postCategory();
+        }
+      }
+    });
+  }
+
+  updateCategory() {
+    if (this.existsName) {
+      console.log('YA EXISTE ESE NOMBRE');
+      Swal.fire({
+        title: 'Error, ya existe un Rubro con ese nombre',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newCategorySupplier.categorySupplier = '';
+      this.isSave = false;
+      return;
+    } else {
       this.categorySupplier
         .putCategoriesSupplier(
           this.newCategorySupplier.idCategorySupplier,
@@ -84,6 +138,28 @@ export class FromCategorySupplierComponent implements OnInit {
             this.router.navigate(['/list-category-supplier']);
           });
         });
+    }
+  }
+
+  postCategory() {
+    if (this.existsName) {
+      console.log('YA EXISTE ESE NOMBRE');
+      Swal.fire({
+        title: 'Error, ya existe un Rubro con ese nombre',
+        icon: 'error',
+        position: 'bottom-left',
+        toast: true,
+        timer: 3000,
+        showConfirmButton: false,
+        width: '300px',
+        customClass: {
+          popup: 'custom-popup-class',
+          title: 'custom-title-class',
+        },
+      });
+      this.newCategorySupplier.categorySupplier = '';
+      this.isSave = false;
+      return;
     } else {
       this.categorySupplier
         .postCategoriesSupplier(this.newCategorySupplier)

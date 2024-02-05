@@ -38,7 +38,8 @@ export class FormProductComponent implements OnInit {
   isModalOpen: boolean = false;
 
   isUpdate: boolean = false;
-  checkBtn: boolean = false;
+  isSave: boolean = false;
+  isSaveCategory: boolean = false;
 
   constructor(
     private serviceSupplier: ServiceSupplierService,
@@ -91,6 +92,7 @@ export class FormProductComponent implements OnInit {
   }
 
   createNewProduct(form: NgForm) {
+    this.isSave = true;
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
 
@@ -107,6 +109,7 @@ export class FormProductComponent implements OnInit {
           title: 'custom-title-class',
         },
       });
+      this.isSave = false;
       return;
     }
     const code = form.value.codeProduct;
@@ -138,13 +141,12 @@ export class FormProductComponent implements OnInit {
         },
       });
       this.newProduct.codeProduct = '';
+      this.isSave = false;
 
       return;
     } else {
-      this.checkBtn = true;
       this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
         console.log('Creando un producto', data);
-        this.checkBtn = true;
         Swal.fire({
           title: 'Se creó con éxito el producto',
           icon: 'success',
@@ -181,14 +183,13 @@ export class FormProductComponent implements OnInit {
         },
       });
       this.newProduct.codeProduct = '';
+      this.isSave = false;
       return;
     } else {
-      this.checkBtn = true;
       this.serviceProduct
         .updateProduct(this.newProduct.idProduct, this.newProduct)
         .subscribe((data) => {
           console.log('ACTUALIZANDO PRODUCTO', data);
-   
 
           Swal.fire({
             title: 'Se actualizo con éxito el producto',
@@ -216,25 +217,50 @@ export class FormProductComponent implements OnInit {
   }
 
   addCategory() {
-    this.isModalOpen = true;
+    this.isSaveCategory = true;
     this.categoryProductService
-      .postCategoriesProduct(this.newCategory)
-      .subscribe((data) => {
-        console.log('CREANDO NUEVO CATEGORIA', data);
-        Swal.fire({
-          title: 'Se agrego con éxito la nueva categoría',
-          icon: 'success',
-          position: 'bottom-left',
-          toast: true,
-          timer: 3000,
-          showConfirmButton: false,
-          width: '300px',
-          customClass: {
-            popup: 'custom-popup-class',
-            title: 'custom-title-class',
-          },
-        });
-        this.getListCategoryProduct();
+      .existsNameCategory(this.newCategory.categoryProduct)
+      .subscribe((existsCategory: boolean) => {
+        if (existsCategory) {
+          Swal.fire({
+            title: 'Error, ya existe esa Categoría',
+            icon: 'error',
+            position: 'bottom-left',
+            toast: true,
+            timer: 3000,
+            showConfirmButton: false,
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          });
+
+          this.newCategory.categoryProduct = '';
+          this.isSaveCategory = false;
+          return;
+        }
+        this.isModalOpen = true;
+        this.categoryProductService
+          .postCategoriesProduct(this.newCategory)
+          .subscribe((data) => {
+            console.log('CREANDO NUEVO CATEGORIA', data);
+            Swal.fire({
+              title: 'Se agrego con éxito la nueva categoría',
+              icon: 'success',
+              position: 'bottom-left',
+              toast: true,
+              timer: 3000,
+              showConfirmButton: false,
+              width: '300px',
+              customClass: {
+                popup: 'custom-popup-class',
+                title: 'custom-title-class',
+              },
+            });
+            this.newCategory.categoryProduct = '';
+            this.getListCategoryProduct();
+          });
       });
   }
 

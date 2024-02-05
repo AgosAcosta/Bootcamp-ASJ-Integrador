@@ -216,7 +216,7 @@
           <button
             type="submit"
             class="btn btn-success"
-            [disabled]="!myForm.valid || checkBtn"
+            [disabled]="!myForm.valid || isSave"
           >
             Guardar
           </button>
@@ -289,7 +289,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cerrar
         </button>
-        <button type="button" class="btn btn-primary" (click)="addCategory()">
+        <button type="button" class="btn btn-primary" (click)="addCategory()"   [disabled]="isSaveCategory || categoryProductModal.invalid">
           Agregar
         </button>
       </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../../../Models/product';
+import { CategoryProduct, Product } from '../../../../Models/product';
 import { ServiceProductService } from '../../../../Service/service-product.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CategoryProductService } from '../../../../Service/category-product.service';
 
 @Component({
   selector: 'app-list-product',
@@ -22,14 +23,20 @@ export class ListProductComponent implements OnInit {
   searchNameProduct: string = '';
   selectedStatus: boolean = true;
 
+  selectedCategory: string = '';
+  categories: string[] = [];
+
   constructor(
     private serviceProduct: ServiceProductService,
-    private route: Router
+    private route: Router,
+    private categoryProductService: CategoryProductService
   ) {}
 
   ngOnInit(): void {
     this.getListProductActive();
+    this.getListCategoryProduct();
   }
+
 
   getListProductActive() {
     this.productActive = true;
@@ -39,6 +46,21 @@ export class ListProductComponent implements OnInit {
     });
   }
 
+  getListCategoryProduct() {
+    this.categoryProductService.getListCategoryProduct().subscribe(
+      (data: CategoryProduct[]) => {
+        console.log('Categorías de productos:', data);
+        this.categories = data.map(
+          (category: CategoryProduct) => category.categoryProduct
+        );
+      },
+      (error) => {
+        console.error('ERROR EN LISTA DE CATEGORÍAS:', error);
+      }
+    );
+  }
+
+  
   deleteProduct(id: any, nameProduct: string) {
     Swal.fire({
       title: 'Eliminar Producto',
@@ -148,6 +170,7 @@ export class ListProductComponent implements OnInit {
   cleanFilter() {
     this.searchCategory = '';
     this.searchNameProduct = '';
+    this.selectedCategory = '';
   }
 
   onRadioChange(): void {
