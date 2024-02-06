@@ -1,4 +1,16 @@
 <div class="container">
+
+  <div class="row mt-2">  
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item"><a routerLink="/list-purchase-order">Listado de Ordenes de Compra</a></li>
+        <li class="breadcrumb-item active" aria-current="page">    <span>{{ !isUpdate ? "Nueva Orden de Compra" : "Actualizando Orden de Compra" }}</span></li>
+      </ol>
+    </nav>
+  </div>
+
+
   <form #myForm="ngForm" (ngSubmit)="createNewPuchseOrder(myForm)">
     <div class="row">
       <div class="col-6">
@@ -29,16 +41,13 @@
                   name="dateIssue"
                   id="dateIssue"
                   [min]="date | date : 'yyyy-MM-dd'"
-                  required
+
                   [disabled]="isUpdate"
                   [(ngModel)]="newPurchaseOrder.dateIssue"
                   [ngModelOptions]="{ standalone: true }"
-                  #dateIssue="ngModel"
-                  [ngClass]="dateIssue.errors ? 'is-invalid' : 'is-valid'"
+                  
                 />
-                <div *ngIf="dateIssue.errors?.['required']" class="col-auto">
-                  <span class="form-text">Se debe completar este campo</span>
-                </div>
+              
               </div>
             </div>
             <div class="col">
@@ -53,12 +62,9 @@
                   required
                   [(ngModel)]="newPurchaseOrder.dateDelivery"
                   [ngModelOptions]="{ standalone: true }"
-                  #dateDelivery="ngModel"
-                  [ngClass]="dateDelivery.errors ? 'is-invalid' : 'is-valid'"
+                  
                 />
-                <div *ngIf="dateDelivery.errors?.['required']" class="col-auto">
-                  <span class="form-text">Se debe completar este campo</span>
-                </div>
+               
               </div>
             </div>
           </div>
@@ -179,8 +185,7 @@
                 <select
                   class="form-control"
                   name="supplierName"
-                  [(ngModel)]="newPurchaseOrder.supplier"
-                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="newPurchaseOrder.supplier"                
                   required
                   (change)="onSupplierSelected(newPurchaseOrder.supplier)"
                   [disabled]="!supplierPoin || isUpdate"

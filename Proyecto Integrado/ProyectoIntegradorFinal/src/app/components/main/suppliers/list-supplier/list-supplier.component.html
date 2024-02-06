@@ -1,7 +1,18 @@
 <div class="container">
   <header>
     <div class="row mt-2">
-      <div class="col-4">
+      <div class="col-5">
+        <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Listado de Proveedores
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="col">
         <h4>
           {{
             supplierActive ? "PROVEEDORES ACTIVOS" : "PROVEEDORES ELIMINADOS"

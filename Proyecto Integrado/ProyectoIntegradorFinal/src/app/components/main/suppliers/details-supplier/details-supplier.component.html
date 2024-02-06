@@ -1,4 +1,15 @@
 <div class="container">
+
+  <div class="row mt-2">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item"><a routerLink="/list-supplier">Listado de Proveedores</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> Proveedor {{supplier?.nameSupplier}}</li>
+      </ol>
+    </nav>
+  </div>
+
   <div class="row mt-3">
     <div class="col-md-6">
       <div class="card h-100 d-flex justify-content-center">
@@ -63,13 +74,23 @@
               <div class="card-header">Datos de contacto:</div>
               <div class="card-body">
                 <p class="card-text">
-                  <strong>Email:</strong> {{ supplier?.emailSupplier }}
+                  <strong>Email: </strong>
+                  <a
+                    href="{{ supplier?.emailSupplier }}"
+                    ngbTooltip="Toca para enviar un email"
+                    >{{ supplier?.emailSupplier }}</a
+                  >
                 </p>
                 <p class="card-text">
                   <strong>N° Tel:</strong> {{ supplier?.telSupplier }}
                 </p>
                 <p class="card-text">
-                  <strong>Sitio Web:</strong> {{ supplier?.webSupplier }}
+                  <strong>Sitio Web:</strong>
+                  <a
+                    href="{{ supplier?.webSupplier }}"
+                    ngbTooltip="Toca para ingresar a la WEB"
+                    >{{ supplier?.webSupplier }}</a
+                  >
                 </p>
               </div>
             </div>
@@ -77,7 +98,12 @@
               <div class="card-header">Información de contacto:</div>
               <div class="card-body">
                 <p class="card-text">
-                  <strong>Email:</strong> {{ supplier?.emailcontactSupplier }}
+                  <strong>Email:</strong>
+                  <a
+                    href="{{ supplier?.emailcontactSupplier }}"
+                    ngbTooltip="Toca para enviar un email"
+                    >{{ supplier?.emailcontactSupplier }}</a
+                  >
                 </p>
                 <p class="card-text">
                   <strong>Teléfono:</strong> {{ supplier?.telcontactSupplier }}
@@ -93,8 +119,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="col text-center">
+    <div class="col text-center mt-4">
       <button
+        type="button"
         class="btn btn-success btn-m"
         [routerLink]="['/list-supplier', supplier?.idSupplier]"
         style="margin-right: 5px"

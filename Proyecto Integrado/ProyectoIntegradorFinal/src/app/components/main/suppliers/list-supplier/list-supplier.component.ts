@@ -25,15 +25,11 @@ export class ListSupplierComponent {
   searchName: string = '';
   searchCode: string = '';
 
-  constructor(
-    private supplierService: ServiceSupplierService,
-    private router: Router
-  ) {}
+  constructor(private supplierService: ServiceSupplierService) {}
 
   ngOnInit(): void {
     this.getListSupplierActive();
   }
-
 
   getListSupplierActive() {
     this.supplierActive = true;

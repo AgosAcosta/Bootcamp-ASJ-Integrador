@@ -1,4 +1,16 @@
 <div class="container">
+
+  <div class="row mt-2">
+  
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item"><a routerLink="/list-product">Listado de Productos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">    <span>{{ !isUpdate ? "Nuevo Producto" : "Actualizando Producto" }}</span></li>
+      </ol>
+    </nav>
+  </div>
+
   <form #myForm="ngForm" (ngSubmit)="createNewProduct(myForm)">
     <main>
       <div class="row">
@@ -7,7 +19,7 @@
           <fieldset>
             <legend>Producto</legend>
             <div class="form-group">
-              <label for="idSupplier">Imagen del Producto:</label>
+              <label for="urlLogo">Imagen del Producto:</label>
               <input
                 type="text"
                 class="form-control"
@@ -22,7 +34,7 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="codigo">SKU:</label>
+                  <label for="codeProduct">SKU:</label>
                   <input
                     type="text"
                     class="form-control"
@@ -54,7 +66,7 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="supplierProduct">Proveedor:</label>
+                  <label for="supplierName">Proveedor:</label>
                   <select
                     class="form-control"
                     name="supplierName"

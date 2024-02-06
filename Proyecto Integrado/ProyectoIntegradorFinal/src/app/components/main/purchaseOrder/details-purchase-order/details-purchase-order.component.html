@@ -1,33 +1,43 @@
 <div class="container">
+  <div class="row mt-2">
+    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item">
+          <a routerLink="/list-purchase-order">Listado de Ordenes de Compra</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Orden N° {{ purchaseOrder?.idPurchaseOrder }}
+        </li>
+      </ol>
+    </nav>
+  </div>
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <div class="card-header">
-                Información de la orden de compra:
-              </div>
+              <div class="card-header">Información de la orden de compra:</div>
               <div class="card-body">
                 <p class="card-text">
-                  <strong> N° Orden: </strong
-                  > {{ purchaseOrder?.idPurchaseOrder }}
+                  <strong> N° Orden: </strong>
+                  {{ purchaseOrder?.idPurchaseOrder }}
                 </p>
                 <p class="card-text">
-                  <strong> Fecha de Emisión:</strong
-                  > {{ purchaseOrder?.dateIssue |date : "dd-MM-yyyy"}}
+                  <strong> Fecha de Emisión:</strong>
+                  {{ purchaseOrder?.dateIssue | date : "dd-MM-yyyy" }}
                 </p>
                 <p class="card-text">
-                  <strong> Fecha de Entrega:</strong
-                  > {{ purchaseOrder?.dateDelivery |date : "dd-MM-yyyy"}}
+                  <strong> Fecha de Entrega:</strong>
+                  {{ purchaseOrder?.dateDelivery | date : "dd-MM-yyyy" }}
                 </p>
                 <p class="card-text">
-                  <strong> Informacion de recepción: </strong
-                  > {{ purchaseOrder?.recepcion }}
+                  <strong> Informacion de recepción: </strong>
+                  {{ purchaseOrder?.recepcion }}
                 </p>
                 <p class="card-text">
-                  <strong> Estado: </strong
-                  > {{ purchaseOrder?.status }}
+                  <strong> Estado: </strong> {{ purchaseOrder?.status }}
                 </p>
               </div>
             </div>
@@ -35,8 +45,7 @@
               <div class="card-header">Detalle:</div>
               <div class="card-body">
                 <p class="card-text">
-                  <strong> Proveedor: </strong
-                  > {{ purchaseOrder?.supplier }}
+                  <strong> Proveedor: </strong> {{ purchaseOrder?.supplier }}
                 </p>
                 <table class="table">
                   <thead>
@@ -47,7 +56,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let detail of purchaseOrder?.products; let i = index">
+                    <tr
+                      *ngFor="
+                        let detail of purchaseOrder?.products;
+                        let i = index
+                      "
+                    >
                       <td>{{ i + 1 }}</td>
                       <td>{{ detail.nameProduct }}</td>
                       <td>{{ detail.unitProduct }}</td>

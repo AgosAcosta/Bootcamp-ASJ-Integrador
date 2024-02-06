@@ -78,7 +78,6 @@ public class PurchaseOrderService {
         purchaseOrdersModel.setDeleteOrder(false);
         purchaseOrdersModel.setCreated_at(new Timestamp(System.currentTimeMillis()));
         purchaseOrdersModel.setUpdate_at(new Timestamp(System.currentTimeMillis()));
-        calculateTotal(purchaseOrdersModel);
         return purchaseOrderRepository.save(purchaseOrdersModel);
     }
 
@@ -184,17 +183,6 @@ public class PurchaseOrderService {
         }
         return Optional.empty();
     }
-    private void calculateTotal(PurchaseOrdersModel purchaseOrder) {
-        double total = 0.0;
-        for (DetailsPurchaseOrdersModel details : purchaseOrder.getDetailsPurchaseList()) {
-            double price = details.getProduct().getPriceProduct();
-            double quantity = details.getQuantityDetail();
-            total += price * quantity;
-        }
-        purchaseOrder.setTotalPurchaseOrder(total);
-        if (total < 0.01) {
-            throw new ValidationException("El total debe ser mayor o igual a 0.01");
-        }
-    }
+
 
 }

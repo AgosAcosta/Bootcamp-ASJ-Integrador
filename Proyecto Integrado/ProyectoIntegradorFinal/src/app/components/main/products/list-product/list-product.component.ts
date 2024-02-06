@@ -28,7 +28,6 @@ export class ListProductComponent implements OnInit {
 
   constructor(
     private serviceProduct: ServiceProductService,
-    private route: Router,
     private categoryProductService: CategoryProductService
   ) {}
 
@@ -36,7 +35,6 @@ export class ListProductComponent implements OnInit {
     this.getListProductActive();
     this.getListCategoryProduct();
   }
-
 
   getListProductActive() {
     this.productActive = true;
@@ -60,7 +58,6 @@ export class ListProductComponent implements OnInit {
     );
   }
 
-  
   deleteProduct(id: any, nameProduct: string) {
     Swal.fire({
       title: 'Eliminar Producto',

@@ -42,9 +42,7 @@ export class FormPurchaseOrderComponent implements OnInit {
   isUpdate: boolean = false;
   isSave: boolean = false;
 
-  allProducts: any[] = [];
   supplierPoin = true;
-
   supplierLogo: string = '';
 
   date = new Date();
@@ -60,7 +58,9 @@ export class FormPurchaseOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListSupplier();
+  }
 
+  getPurchaseOrderForUpdate() {
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
       if (id != undefined) {
@@ -93,6 +93,7 @@ export class FormPurchaseOrderComponent implements OnInit {
     this.serviceSupplier.getListSupplier().subscribe((data: Supplier[]) => {
       console.log('Proveedores:', data);
       this.suppliers = data;
+      this.getPurchaseOrderForUpdate(); //Esta funcion es porque necesita la lista de los proveedores para cargar el logo
     });
   }
 
