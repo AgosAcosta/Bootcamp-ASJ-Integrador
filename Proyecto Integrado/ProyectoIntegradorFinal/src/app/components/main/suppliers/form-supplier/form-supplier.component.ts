@@ -73,6 +73,7 @@ export class FormSupplierComponent {
   ) {}
 
   ngOnInit(): void {
+    this.getListCountry();
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
       if (id != undefined) {
@@ -80,6 +81,8 @@ export class FormSupplierComponent {
           (supplier) => {
             this.newsupplier = supplier;
             this.isUpdate = true;
+            this.onCountrySelected(supplier.countrySupplier);
+            console.log('ACTUALIZANDO PROVEEDOR', supplier);
           },
           (error) => {
             console.error('Error al obtener el producto por ID:', error);
@@ -89,7 +92,6 @@ export class FormSupplierComponent {
     });
     this.getListCategorySupplier();
     this.getListConditionAfip();
-    this.getListCountry();
   }
 
   getListCategorySupplier() {
