@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ConditionAfipService {
   constructor(private http: HttpClient) {}
-  private url = 'http://localhost:8080/conditionAfip';
+  private URL = 'http://localhost:8080/conditionAfip';
 
   public getConditionAfip(): Observable<any> {
-    return this.http.get(this.url);
+    return this.http.get(this.URL);
   }
 }

@@ -221,5 +221,4 @@ public class ProductService {
             throw new EntityNotFoundException("PROVEEDOR no encontrado con nombre: " + supplierName + "PRODUCTOS NO BORRADOS");
         }
     }
-
 }

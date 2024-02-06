@@ -14,6 +14,7 @@ import { ListCategorySupplierComponent } from './components/main/CategorySupplie
 import { FromCategorySupplierComponent } from './components/main/CategorySupplier/from-category-supplier/from-category-supplier.component';
 import { ListCategoryProductComponent } from './components/main/CategoryProduct/list-category-product/list-category-product.component';
 import { FormCategoryProductComponent } from './components/main/CategoryProduct/form-category-product/form-category-product.component';
+import { FormLoginComponent } from './components/main/Login/form-login/form-login.component';
 
 const routes: Routes = [
   { path: '', component: MenuComponent },
@@ -59,6 +60,10 @@ const routes: Routes = [
       { path: ':id', component: FormPurchaseOrderComponent },
       { path: 'detail/:id', component: DetailsPurchaseOrderComponent },
     ],
+  },
+  {
+    path: 'login',
+    children: [{ path: '', component: FormLoginComponent }],
   },
 ];
 

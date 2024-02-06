@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg" style="background-color: rgb(31, 54, 170)">
-  <div class="container-fluid" style="background-color: rgb(31, 54, 170)">
-    <a class="navbar-brand" routerLink="">Sistema de Gestión de Compras</a>
+<nav class="navbar navbar-expand-lg" style="background-color:#2757e9">
+  <div class="container-fluid" style="background-color: #2757e9">
+    <a class="navbar-brand" routerLink=""
+      ><i class="bi bi-basket3"></i> Sistema de Gestión de Compras</a
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -16,7 +18,7 @@
       class="collapse navbar-collapse justify-content-end"
       id="navbarNavAltMarkup"
     >
-      <div class="navbar-nav" style="background-color: rgb(31, 54, 170)">
+      <div class="navbar-nav" style="background-color: #2757e9">
         <div class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -30,9 +32,8 @@
             Proveedores
           </a>
           <div
-            class="dropdown-menu"
+            class="dropdown-menu colorItem"
             aria-labelledby="proveedoresDropdown"
-            style="background-color: rgb(31, 54, 170)"
           >
             <a class="dropdown-item" routerLink="list-supplier">Listado</a>
             <a class="dropdown-item" routerLink="list-supplier/new"
@@ -56,9 +57,8 @@
             Productos
           </a>
           <div
-            class="dropdown-menu"
+            class="dropdown-menu colorItem"
             aria-labelledby="productosDropdown"
-            style="background-color: rgb(31, 54, 170)"
           >
             <a class="dropdown-item" routerLink="list-product">Listado</a>
             <a class="dropdown-item" routerLink="list-product/new"
@@ -82,9 +82,8 @@
             Orden de Compra
           </a>
           <div
-            class="dropdown-menu"
+            class="dropdown-menu colorItem"
             aria-labelledby="ordenCompraDropdown"
-            style="background-color: rgb(31, 54, 170)"
           >
             <a class="dropdown-item" routerLink="list-purchase-order"
               >Listado</a
@@ -93,6 +92,11 @@
               >Formulario</a
             >
           </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link" ngbTooltip="Salir" (click)="loginOut()">
+            <i class="bi bi-box-arrow-right text-white"></i>
+          </button>
         </div>
       </div>
     </div>
