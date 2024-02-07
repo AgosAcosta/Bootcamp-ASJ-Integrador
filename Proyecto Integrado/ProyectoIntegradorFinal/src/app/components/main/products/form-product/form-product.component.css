@@ -20,6 +20,7 @@
 legend {
   font-size: 20px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 button {
@@ -65,7 +66,6 @@ fieldset {
   margin: 2px;
 }
 
-
-footer{
-text-align: center;
+footer {
+  text-align: center;
 }

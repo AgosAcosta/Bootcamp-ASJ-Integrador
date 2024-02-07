@@ -43,3 +43,12 @@ fieldset {
   margin-bottom: 15px;
   margin-top: 15px;
 }
+
+/* SWEETALERT */
+.custom-popup-class {
+  height: 100px;
+}
+
+.custom-title-class {
+  font-weight: bold;
+}

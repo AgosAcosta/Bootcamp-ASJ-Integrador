@@ -80,4 +80,13 @@ public class PurchaseOrderController {
 		return ResponseEntity.ok().body(response.get());
 	}
 
+	@GetMapping("/active/count")
+	public long countActivePurchaseOrder() {
+		return purchaseOrderService.countActivePurchaseOrder();
+	}
+
+	@GetMapping("/deleted/count")
+	public long countDeletedPurchaseOrder() {
+		return purchaseOrderService.countDeletedPurchaseOrder();
+	}
 }

@@ -26,11 +26,13 @@
                 </p>
                 <p class="card-text">
                   <strong> Fecha de Emisión:</strong>
-                  {{ purchaseOrder?.dateIssue | date : "dd-MM-yyyy" }}
+                  {{ purchaseOrder?.dateIssue | date : "dd-MM-yyyy" : "+0000" }}
                 </p>
                 <p class="card-text">
                   <strong> Fecha de Entrega:</strong>
-                  {{ purchaseOrder?.dateDelivery | date : "dd-MM-yyyy" }}
+                  {{
+                    purchaseOrder?.dateDelivery | date : "dd-MM-yyyy" : "+0000"
+                  }}
                 </p>
                 <p class="card-text">
                   <strong> Informacion de recepción: </strong>

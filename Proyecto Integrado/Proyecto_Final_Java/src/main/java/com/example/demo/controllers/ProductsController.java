@@ -110,4 +110,14 @@ public class ProductsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @GetMapping("/active/count")
+    public long countActiveProducts() {
+        return productService.countActiveProducts();
+    }
+
+    @GetMapping("/deleted/count")
+    public long countDeletedProducts() {
+        return productService.countDeletedProducts();
+    }
 }

@@ -14,4 +14,8 @@ public interface ProductRepository extends JpaRepository<ProductModel, Integer> 
     List<ProductModel> findByDeleteProductFalse();
 
     List<ProductModel> findBySupplierIdSupplier(Integer supplierId);
+    
+    long countByDeleteProductFalse();
+
+    long countByDeleteProductTrue();
 }

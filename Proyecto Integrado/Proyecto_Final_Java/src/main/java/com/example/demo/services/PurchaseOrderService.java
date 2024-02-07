@@ -163,9 +163,7 @@ public class PurchaseOrderService {
     }
 
     public Optional<PurchaseOrderDTO> findByDeletePurchaseOrderFalse(int id) {
-
         Optional<PurchaseOrdersModel> optional = purchaseOrderRepository.findById(id);
-
         if (optional.isPresent()) {
             PurchaseOrdersModel existingPurchaseOrder = optional.get();
             if (!existingPurchaseOrder.isDeleteOrder()) {
@@ -184,5 +182,12 @@ public class PurchaseOrderService {
         return Optional.empty();
     }
 
+    public long countActivePurchaseOrder() {
+        return purchaseOrderRepository.countByDeleteOrderFalse();
+    }
+
+    public long countDeletedPurchaseOrder() {
+        return purchaseOrderRepository.countByDeleteOrderTrue();
+    }
 
 }

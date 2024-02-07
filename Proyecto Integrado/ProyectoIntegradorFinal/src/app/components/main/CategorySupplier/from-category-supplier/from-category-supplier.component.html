@@ -36,24 +36,25 @@
               </div>
             </div>
           </fieldset>
-
-          <button
-            type="submit"
-            class="btn btn-success"
-            [disabled]="!myForm.valid || isSave"
-          >
-            Guardar
-          </button>
-          <button type="submit" class="btn btn-danger" (click)="ClearForm()">
-            Limpiar
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            routerLink="/list-category-supplier"
-          >
-            Volver
-          </button>
+          <div class="text-center">
+            <button
+              type="submit"
+              class="btn btn-success"
+              [disabled]="!myForm.valid || isSave"
+            >
+              Guardar
+            </button>
+            <button type="submit" class="btn btn-danger" (click)="ClearForm()">
+              Limpiar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              routerLink="/list-category-supplier"
+            >
+              Volver
+            </button>
+          </div>
         </div>
       </div>
     </form>

@@ -86,6 +86,7 @@
               <th>N° Orden</th>
               <th>Fecha de Emisión</th>
               <th>Fecha de Entrega</th>
+              <th>Proveedor</th>
               <th>Total</th>
               <th>Estado</th>
               <th>Acciones</th>
@@ -97,8 +98,9 @@
               [ngClass]="{ 'canceled-order': item.status === 'Cancelado' }"
             >
               <td>{{ item.idPurchaseOrder }}</td>
-              <td>{{ item.dateIssue | date : "dd-MM-yyyy" }}</td>
-              <td>{{ item.dateDelivery | date : "dd-MM-yyyy" }}</td>
+              <td>{{ item.dateIssue | date : "dd-MM-yyyy" : "+0000" }}</td>
+              <td>{{ item.dateDelivery | date : "dd-MM-yyyy" : "+0000" }}</td>
+              <td>{{ item.supplier }}</td>
               <td>{{ item.total | currency }}</td>
               <td>{{ item.status }}</td>
               <td>

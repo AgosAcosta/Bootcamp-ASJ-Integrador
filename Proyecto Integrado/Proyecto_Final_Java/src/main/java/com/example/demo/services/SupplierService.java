@@ -264,4 +264,13 @@ public class SupplierService {
         }
         return Optional.empty();
     }
+    
+    
+    public long countActiveSuppliers() {
+        return supplierRepository.countByDeleteSupplierFalse();
+    }
+
+    public long countDeletedSuppliers() {
+        return supplierRepository.countByDeleteSupplierTrue();
+    }
 }

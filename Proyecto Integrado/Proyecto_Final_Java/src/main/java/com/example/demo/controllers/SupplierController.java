@@ -85,9 +85,20 @@ public class SupplierController {
 		boolean response = supplierService.validateSupplierCuit(cuit);
 		return ResponseEntity.ok().body(response);
 	}
+	
 	@PatchMapping("/exists/code/{code}")
 	public ResponseEntity<Boolean> existsCode(@PathVariable String code) {
 		boolean response = supplierService.validateSupplierCode( code);
 		return ResponseEntity.ok().body(response);
 	}
+	
+    @GetMapping("/active/count")
+    public long countActiveSuppliers() {
+        return supplierService.countActiveSuppliers();
+    }
+
+    @GetMapping("/deleted/count")
+    public long countDeletedSuppliers() {
+        return supplierService.countDeletedSuppliers();
+    }
 }

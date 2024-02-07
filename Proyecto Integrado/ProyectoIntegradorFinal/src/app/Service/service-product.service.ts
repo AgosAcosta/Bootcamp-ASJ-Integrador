@@ -7,10 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ServiceProductService {
-  
   productList: Product[] = [];
   constructor(private http: HttpClient) {}
-
 
   private URL = 'http://localhost:8080/product';
 
@@ -52,5 +50,13 @@ export class ServiceProductService {
 
   public getProductsBySupplierName(supplierName: string): Observable<any> {
     return this.http.get<any>(`${this.URL}/${supplierName}/supplierName`);
+  }
+
+  public countActiveProducts(): Observable<any> {
+    return this.http.get(`${this.URL}/active/count`);
+  }
+
+  public countDeletedProducts(): Observable<any> {
+    return this.http.get(`${this.URL}/deleted/count`);
   }
 }

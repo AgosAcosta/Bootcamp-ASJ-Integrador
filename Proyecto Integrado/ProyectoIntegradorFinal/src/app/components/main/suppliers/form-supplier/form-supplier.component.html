@@ -1,18 +1,23 @@
 <div class="container">
-<div class="row mt-2">
-  
-  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-      <li class="breadcrumb-item"><a routerLink="/list-supplier">Listado de Proveedores</a></li>
-      <li class="breadcrumb-item active" aria-current="page">    <span>{{ !isUpdate ? "Nuevo Proveedor" : "Actualizando Proveedor" }}</span></li>
-    </ol>
-  </nav>
-</div>
+  <div class="row mt-2">
+    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item">
+          <a routerLink="/list-supplier">Listado de Proveedores</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <span>{{
+            !isUpdate ? "Nuevo Proveedor" : "Actualizando Proveedor"
+          }}</span>
+        </li>
+      </ol>
+    </nav>
+  </div>
 
   <form #myForm="ngForm" (ngSubmit)="createNewSupplier(myForm)">
     <main>
-      <div class="row ">
+      <div class="row">
         <div class="col-6">
           <section>
             <!-- Sección Información Empresa -->
@@ -34,7 +39,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="idSupplier">Código:</label>
+                    <label for="idSupplier">Código: <span class="fw-light">(*)</span></label>
                     <input
                       type="text"
                       class="form-control"
@@ -72,7 +77,7 @@
 
                 <div class="col">
                   <div class="form-group">
-                    <label for="nameSupplier">Razón Social:</label>
+                    <label for="nameSupplier">Razón Social: <span class="fw-light">(*)</span></label>
                     <input
                       type="text"
                       class="form-control"
@@ -111,7 +116,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="cuit">CUIT:</label>
+                    <label for="cuit">CUIT: <span class="fw-light">(*)</span></label>
                     <input
                       type="text"
                       class="form-control"
@@ -161,7 +166,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <label for="condicionAfip">Condición ante AFIP:</label>
+                    <label for="condicionAfip">Condición ante AFIP: <span class="fw-light">(*)</span></label>
                     <select
                       class="form-control"
                       name="condicionAfipSupplier"
@@ -193,7 +198,7 @@
               </div>
 
               <div class="form-group">
-                <label for="categorySupplier">Rubro:</label>
+                <label for="categorySupplier">Rubro: <span class="fw-light">(*)</span></label>
                 <div class="row d-flex align-items-center">
                   <div class="col">
                     <select
@@ -306,7 +311,9 @@
                         type="button"
                         class="btn btn-primary"
                         (click)="addCategory()"
-                        [disabled]="isSaveCategory || categorySupplierModal.invalid"
+                        [disabled]="
+                          isSaveCategory || categorySupplierModal.invalid
+                        "
                       >
                         Guardar
                       </button>
@@ -343,7 +350,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="emailSupplier">Email:</label>
+                    <label for="emailSupplier">Email: <span class="fw-light">(*)</span></label>
                     <input
                       type="email"
                       class="form-control"
@@ -377,7 +384,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <label for="telefono">Teléfono:</label>
+                    <label for="telefono">Teléfono: <span class="fw-light">(*)</span></label>
                     <input
                       type="number"
                       class="form-control"
@@ -415,7 +422,7 @@
             <fieldset>
               <legend>Dirección de la empresa</legend>
               <div class="form-group">
-                <label for="calle">Calle:</label>
+                <label for="calle">Calle: <span class="fw-light">(*)</span></label>
                 <input
                   type="text"
                   class="form-control"
@@ -447,7 +454,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="numero_Calle">Número:</label>
+                    <label for="numero_Calle">Número: <span class="fw-light">(*)</span></label>
                     <input
                       type="number"
                       class="form-control"
@@ -480,7 +487,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <label for="cp_Domicilio">Código Postal:</label>
+                    <label for="cp_Domicilio">Código Postal: <span class="fw-light">(*)</span></label>
                     <input
                       type="number"
                       class="form-control"
@@ -513,7 +520,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="pais">País:</label>
+                    <label for="pais">País: <span class="fw-light">(*)</span></label>
                     <select
                       class="form-control"
                       name="countrySupplier"
@@ -550,7 +557,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <label for="provinceSupplier">Provincia:</label>
+                    <label for="provinceSupplier">Provincia: <span class="fw-light">(*)</span></label>
                     <select
                       class="form-control"
                       name="provinceSupplier"
@@ -585,7 +592,7 @@
               </div>
 
               <div class="form-group">
-                <label for="locationSupplier">Localidad:</label>
+                <label for="locationSupplier">Localidad: <span class="fw-light">(*)</span></label>
                 <input
                   type="text"
                   class="form-control"
@@ -623,7 +630,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="namecontactSupplier">Nombre:</label>
+                    <label for="namecontactSupplier">Nombre: <span class="fw-light">(*)</span></label>
                     <input
                       type="text"
                       class="form-control"
@@ -659,7 +666,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <label for="apellido_contacto">Apellido:</label>
+                    <label for="apellido_contacto">Apellido: <span class="fw-light">(*)</span></label>
                     <input
                       type="text"
                       class="form-control"
@@ -700,7 +707,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="telefono_contacto">Teléfono:</label>
+                    <label for="telefono_contacto">Teléfono: <span class="fw-light">(*)</span></label>
                     <input
                       type="number"
                       class="form-control"
@@ -732,7 +739,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <label for="email_contacto">Email:</label>
+                    <label for="email_contacto">Email: <span class="fw-light">(*)</span></label>
                     <input
                       type="email"
                       class="form-control"
@@ -767,7 +774,9 @@
               </div>
 
               <div class="form-group">
-                <label for="rolcontactSupplier">Rol:</label>
+                <label for="rolcontactSupplier"
+                  >Rol: <span class="fw-light">(*)</span></label
+                >
                 <input
                   type="text"
                   class="form-control"

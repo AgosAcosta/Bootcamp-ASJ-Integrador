@@ -1,14 +1,6 @@
-.container-fluid {
-    margin-top: 20px;
-  }
-  
+
   h4 {
     margin-bottom: 20px;
-  }
-  
-  #newProduct {
-    float: right;
-    margin-bottom: 10px;
   }
   
   table {
@@ -35,24 +27,7 @@
     width: calc(100% - 100px); 
   }
   
-  table img {
-    max-width: 100px;
-    max-height: 100px;
-  }
-  
   a {
     margin-right: 5px;
   }
   
-  table tbody tr:hover {
-    background-color: #dae6ed;
-  }
-  
-  table strong {
-    font-weight: inherit;
-    text-decoration: underline;
-  }
-  
-  .canceled-order {
-    text-decoration: line-through;
-  }

@@ -1,10 +1,10 @@
 <div class="container">
-  <header class="row align-items-center">
+  <header class="row align-items-center mt-2">
     <div class="col-8">
-      <h4>Categoría Productos:</h4>
+      <h4 class="text-center">CATEGORÍAS DE PRODUCTOS</h4>
     </div>
-    <div class="col-4 text-end">
-      <a routerLink="new" class="btn btn-success" id="altaProveedores">
+    <div class="col-4 text-center">
+      <a routerLink="new" class="btn btn-success">
         <i class="bi bi-plus"></i> Agregar
       </a>
     </div>
@@ -42,7 +42,9 @@
             </a>
             <a
               class="btn btn-danger btn-sm ml-2"
-              (click)="deleteCategory(item.idCategoryProduct, item.categoryProduct)"
+              (click)="
+                deleteCategory(item.idCategoryProduct, item.categoryProduct)
+              "
               ngbTooltip="Eliminar"
             >
               <i class="bi bi-trash"></i>

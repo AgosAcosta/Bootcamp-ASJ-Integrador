@@ -6,4 +6,7 @@ import com.example.demo.models.PurchaseOrdersModel;
 
 public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrdersModel, Integer>{
 
+    long countByDeleteOrderFalse();
+
+    long countByDeleteOrderTrue();
 }

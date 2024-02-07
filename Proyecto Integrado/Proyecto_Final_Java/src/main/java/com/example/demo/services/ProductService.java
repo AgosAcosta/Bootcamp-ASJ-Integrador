@@ -221,4 +221,12 @@ public class ProductService {
             throw new EntityNotFoundException("PROVEEDOR no encontrado con nombre: " + supplierName + "PRODUCTOS NO BORRADOS");
         }
     }
+    
+    public long countActiveProducts() {
+        return productRepository.countByDeleteProductFalse();
+    }
+
+    public long countDeletedProducts() {
+        return productRepository.countByDeleteProductTrue();
+    }
 }

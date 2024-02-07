@@ -14,4 +14,8 @@ public interface SupplierRepository extends JpaRepository<SuppliersModel, Intege
 	Optional<SuppliersModel> findByNameSupplier(String name_supplier);
 	List<SuppliersModel> findByDeleteSupplierFalse();
 	List<SuppliersModel> findByDeleteSupplierTrue();
+	
+    long countByDeleteSupplierFalse();
+
+    long countByDeleteSupplierTrue();
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Supplier } from '../Models/supplier';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -45,5 +45,13 @@ export class ServiceSupplierService {
 
   public existsCode(code: string): Observable<boolean> {
     return this.http.patch<boolean>(`${this.URL}/exists/code/${code}`, null);
+  }
+
+  public countActiveSupplier(): Observable<any> {
+    return this.http.get(`${this.URL}/active/count`);
+  }
+
+  public countDeletedSupplier(): Observable<any> {
+    return this.http.get(`${this.URL}/deleted/count`);
   }
 }

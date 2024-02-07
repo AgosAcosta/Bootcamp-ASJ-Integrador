@@ -21,6 +21,7 @@
         id="user"
         placeholder="Ingrese usuario"
         [(ngModel)]="login.user"
+        ngbTooltip="User: usuario"
       />
     </div>
 
@@ -33,17 +34,19 @@
         id="password"
         placeholder="Ingrese contraseña"
         [(ngModel)]="login.password"
+        ngbTooltip="Password: 123456"
       />
     </div>
     <div class="text-center">
-      <a class="link" (click)="forgetPassword()">¿Has olvidado la contraseña?</a>
+      <a class="link" (click)="forgetPassword()"
+        >¿Has olvidado la contraseña?</a
+      >
     </div>
-
     <div class="text-center mt-2">
       <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">
         Ingresar
       </button>
     </div>
-    
   </form>
 </div>
+

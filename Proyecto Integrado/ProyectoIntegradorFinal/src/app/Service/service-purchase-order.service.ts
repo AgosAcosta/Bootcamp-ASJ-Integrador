@@ -39,4 +39,12 @@ export class ServicePurchaseOrderService {
   public cancelledPurchaseOrder(id: number): Observable<any> {
     return this.http.patch<any>(`${this.URL}/delete/${id}`, {});
   }
+
+  public countActivePurchaseOrder(): Observable<any> {
+    return this.http.get(`${this.URL}/active/count`);
+  }
+
+  public countDeletedPurchaseOrder(): Observable<any> {
+    return this.http.get(`${this.URL}/deleted/count`);
+  }
 }
