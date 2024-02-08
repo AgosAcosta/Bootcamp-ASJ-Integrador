@@ -103,6 +103,8 @@ export class FormProductComponent implements OnInit {
         toast: true,
         timer: 3000,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color: 'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -130,10 +132,12 @@ export class FormProductComponent implements OnInit {
       Swal.fire({
         title: 'Error, ya existe un producto con ese SKU',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 3000,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color: 'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -148,13 +152,15 @@ export class FormProductComponent implements OnInit {
       this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
         console.log('Creando un producto', data);
         Swal.fire({
-          title: 'Se creó con éxito el producto',
+          title: `Se creó con éxito el producto ${this.newProduct.nameProduct}`,
           icon: 'success',
-          position: 'bottom-left',
+          position: 'center',
           toast: true,
-          timer: 3000,
+          timer: 1500,
           showConfirmButton: false,
-          width: '300px',
+          background: '#eff5ff',
+          color: 'black',
+          width: '400px',
           customClass: {
             popup: 'custom-popup-class',
             title: 'custom-title-class',
@@ -172,10 +178,12 @@ export class FormProductComponent implements OnInit {
       Swal.fire({
         title: 'Error, ya existe un producto con ese SKU',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color: 'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -194,11 +202,13 @@ export class FormProductComponent implements OnInit {
           Swal.fire({
             title: `Se actualizo con éxito el producto ${this.newProduct.nameProduct}`,
             icon: 'success',
-            position: 'bottom-left',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
-            width: '300px',
+            background: '#eff5ff',
+            color: 'black',
+            width: '400px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
@@ -225,10 +235,12 @@ export class FormProductComponent implements OnInit {
           Swal.fire({
             title: 'Error, ya existe esa Categoría',
             icon: 'error',
-            position: 'bottom-left',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
+            background: '#eff5ff',
+            color: 'black',
             width: '300px',
             customClass: {
               popup: 'custom-popup-class',
@@ -248,11 +260,13 @@ export class FormProductComponent implements OnInit {
             Swal.fire({
               title: `Se creó con éxito el producto ${this.newProduct.nameProduct}`,
               icon: 'success',
-              position: 'bottom-left',
+              position: 'center',
               toast: true,
               timer: 1500,
               showConfirmButton: false,
-              width: '300px',
+              background: '#eff5ff',
+              color: 'black',
+              width: '400px',
               customClass: {
                 popup: 'custom-popup-class',
                 title: 'custom-title-class',

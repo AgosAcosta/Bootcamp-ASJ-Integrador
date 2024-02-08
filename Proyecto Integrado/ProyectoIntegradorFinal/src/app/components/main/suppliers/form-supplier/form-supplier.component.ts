@@ -165,10 +165,12 @@ export class FormSupplierComponent {
           Swal.fire({
             title: 'Error, ya existe ese Rubro',
             icon: 'error',
-            position: 'bottom-left',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
+            background: '#eff5ff',
+            color:'black',
             width: '300px',
             customClass: {
               popup: 'custom-popup-class',
@@ -186,11 +188,13 @@ export class FormSupplierComponent {
             Swal.fire({
               title: 'Se agregó con éxito el nuevo rubro',
               icon: 'success',
-              position: 'bottom-left',
+              position: 'center',
               toast: true,
               timer: 1500,
               showConfirmButton: false,
-              width: '300px',
+              background: '#eff5ff',
+              color:'black',
+              width: '400px',
               customClass: {
                 popup: 'custom-popup-class',
                 title: 'custom-title-class',
@@ -213,6 +217,8 @@ export class FormSupplierComponent {
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color:'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -247,10 +253,12 @@ export class FormSupplierComponent {
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese código',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color:'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -267,10 +275,12 @@ export class FormSupplierComponent {
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese CUIT',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color:'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -312,10 +322,12 @@ export class FormSupplierComponent {
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese código',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color:'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -332,10 +344,12 @@ export class FormSupplierComponent {
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese CUIT',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color:'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -352,11 +366,13 @@ export class FormSupplierComponent {
         Swal.fire({
           title: `Se creó con éxito el proveedor ${this.newsupplier.nameSupplier}`,
           icon: 'success',
-          position: 'bottom-left',
+          position: 'center',
           toast: true,
           timer: 1500,
           showConfirmButton: false,
-          width: '500px',
+          background: '#eff5ff',
+          color:'black',
+          width: '400px',
           customClass: {
             popup: 'custom-popup-class',
             title: 'custom-title-class',

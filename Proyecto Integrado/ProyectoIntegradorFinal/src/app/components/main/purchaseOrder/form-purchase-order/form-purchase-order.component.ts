@@ -173,6 +173,8 @@ export class FormPurchaseOrderComponent implements OnInit {
         toast: true,
         timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color: 'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -194,11 +196,13 @@ export class FormPurchaseOrderComponent implements OnInit {
           Swal.fire({
             title: `Se actualizo con éxito la orden de compra N°: ${this.newPurchaseOrder.idPurchaseOrder}`,
             icon: 'success',
-            position: 'bottom-right',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
-            width: '500px',
+            background: '#eff5ff',
+            color: 'black',
+            width: '400px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
@@ -218,11 +222,13 @@ export class FormPurchaseOrderComponent implements OnInit {
           Swal.fire({
             title: `Se creó con éxito la orden de compra del proveedor: ${this.newPurchaseOrder.supplier}`,
             icon: 'success',
-            position: 'bottom-right',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
-            width: '500px',
+            background: '#eff5ff',
+            color: 'black',
+            width: '400px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
