@@ -45,7 +45,7 @@ export class FromCategorySupplierComponent implements OnInit {
 
   createNewCategorySupplier(form: NgForm) {
     this.isSave = true;
-  
+
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
       Swal.fire({
@@ -53,8 +53,10 @@ export class FromCategorySupplierComponent implements OnInit {
         icon: 'error',
         position: 'center',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color: 'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -64,35 +66,39 @@ export class FromCategorySupplierComponent implements OnInit {
       this.isSave = false;
       return;
     }
-  
+
     const name = form.value.categorySupplier;
-  
-    this.categorySupplier.existsNameCategory(name).subscribe((existsName: boolean) => {
-      if (existsName) {
-        console.log('YA EXISTE ESE NOMBRE');
-        Swal.fire({
-          title: 'Error, ya existe un Rubro con ese nombre',
-          icon: 'error',
-          position: 'bottom-left',
-          toast: true,
-          timer: 3000,
-          showConfirmButton: false,
-          width: '300px',
-          customClass: {
-            popup: 'custom-popup-class',
-            title: 'custom-title-class',
-          },
-        });
-        this.newCategorySupplier.categorySupplier = '';
-        this.isSave = false;
-      } else {
-        if (this.isUpdate) {
-          this.updateCategory();
+
+    this.categorySupplier
+      .existsNameCategory(name)
+      .subscribe((existsName: boolean) => {
+        if (existsName) {
+          console.log('YA EXISTE ESE NOMBRE');
+          Swal.fire({
+            title: 'Error, ya existe un Rubro con ese nombre',
+            icon: 'error',
+            position: 'center',
+            toast: true,
+            timer: 1500,
+            showConfirmButton: false,
+            background: '#eff5ff',
+            color: 'black',
+            width: '300px',
+            customClass: {
+              popup: 'custom-popup-class',
+              title: 'custom-title-class',
+            },
+          });
+          this.newCategorySupplier.categorySupplier = '';
+          this.isSave = false;
         } else {
-          this.postCategory();
+          if (this.isUpdate) {
+            this.updateCategory();
+          } else {
+            this.postCategory();
+          }
         }
-      }
-    });
+      });
   }
 
   updateCategory() {
@@ -101,11 +107,13 @@ export class FromCategorySupplierComponent implements OnInit {
       Swal.fire({
         title: 'Error, ya existe un Rubro con ese nombre',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
-        width: '300px',
+        background: '#eff5ff',
+        color: 'black',
+        width: '400px',
         customClass: {
           popup: 'custom-popup-class',
           title: 'custom-title-class',
@@ -127,9 +135,11 @@ export class FromCategorySupplierComponent implements OnInit {
             icon: 'success',
             position: 'center',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
-            width: '300px',
+            background: '#eff5ff',
+            color: 'black',
+            width: '400px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
@@ -147,10 +157,12 @@ export class FromCategorySupplierComponent implements OnInit {
       Swal.fire({
         title: 'Error, ya existe un Rubro con ese nombre',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
+        background: '#eff5ff',
+        color: 'black',
         width: '300px',
         customClass: {
           popup: 'custom-popup-class',
@@ -171,9 +183,11 @@ export class FromCategorySupplierComponent implements OnInit {
             icon: 'success',
             position: 'center',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
-            width: '300px',
+            background: '#eff5ff',
+            color: 'black',
+            width: '400px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
