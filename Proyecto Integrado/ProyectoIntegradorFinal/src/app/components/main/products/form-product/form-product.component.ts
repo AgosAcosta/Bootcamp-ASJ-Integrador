@@ -174,7 +174,7 @@ export class FormProductComponent implements OnInit {
         icon: 'error',
         position: 'bottom-left',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -196,7 +196,7 @@ export class FormProductComponent implements OnInit {
             icon: 'success',
             position: 'bottom-left',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
             width: '300px',
             customClass: {
@@ -213,7 +213,7 @@ export class FormProductComponent implements OnInit {
   navigateToListSupplier() {
     setTimeout(() => {
       this.router.navigate(['/list-product']);
-    }, 1000);
+    }, 90);
   }
 
   addCategory() {
@@ -250,7 +250,7 @@ export class FormProductComponent implements OnInit {
               icon: 'success',
               position: 'bottom-left',
               toast: true,
-              timer: 3000,
+              timer: 1500,
               showConfirmButton: false,
               width: '300px',
               customClass: {

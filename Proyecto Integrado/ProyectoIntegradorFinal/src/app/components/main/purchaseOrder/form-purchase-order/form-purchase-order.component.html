@@ -17,6 +17,7 @@
 
   <form #myForm="ngForm" (ngSubmit)="createNewPuchseOrder(myForm)">
     <div class="row">
+      <div class="col" *ngIf="isUpdate"></div>
       <div class="col-6">
         <!-- Sección Información Orden -->
         <fieldset>
@@ -182,9 +183,10 @@
 
         <!-- Sección Detalle Orden -->
       </div>
-
-      <div class="col-6">
-        <fieldset *ngIf="!isUpdate">
+      <div class="col" *ngIf="isUpdate"></div>
+      
+      <div class="col-6" *ngIf="!isUpdate">
+        <fieldset>
           <div class="row">
             <div class="col">
               <div class="form-group">

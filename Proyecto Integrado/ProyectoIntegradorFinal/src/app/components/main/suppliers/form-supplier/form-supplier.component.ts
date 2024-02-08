@@ -167,7 +167,7 @@ export class FormSupplierComponent {
             icon: 'error',
             position: 'bottom-left',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
             width: '300px',
             customClass: {
@@ -288,7 +288,7 @@ export class FormSupplierComponent {
           Swal.fire({
             title: `Se actualizo con éxito el proveedor ${this.newsupplier.nameSupplier}`,
             icon: 'success',
-            position: 'bottom-left',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
