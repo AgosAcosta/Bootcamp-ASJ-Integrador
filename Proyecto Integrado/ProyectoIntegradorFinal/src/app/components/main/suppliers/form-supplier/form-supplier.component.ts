@@ -292,7 +292,9 @@ export class FormSupplierComponent {
             toast: true,
             timer: 1500,
             showConfirmButton: false,
-            width: '500px',
+            background: '#eff5ff',
+            color:'black',
+            width: '400px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',

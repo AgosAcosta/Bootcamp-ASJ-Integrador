@@ -40,7 +40,9 @@ public class SupplierService {
     ProvinceRepository provinceRepository;
 
 
-    //PROVEEDORES NO BORRADOS
+    /**
+     * getAllSupplier --- Busca y filtra los proveedores que no están eliminados
+     */
     public List<SupplierResponseDTO> getAllSupplier() {
         List<SuppliersModel> suppliersModelList = supplierRepository.findAll();
         List<SupplierResponseDTO> responseDTO = new ArrayList<>();
@@ -53,7 +55,9 @@ public class SupplierService {
         return responseDTO;
     }
 
-    //PROVEEDORES BORRADOS
+    /**
+     * getAllSupplierDelete --- Busca y filtra los proveedores que están eliminados
+     */
     public List<SupplierResponseDTO> getAllSupplierDelete() {
         List<SuppliersModel> suppliersModelList = supplierRepository.findAll();
         List<SupplierResponseDTO> responseDTO = new ArrayList<>();
@@ -66,7 +70,9 @@ public class SupplierService {
         return responseDTO;
     }
 
-
+    /**
+     * getSupplierById --- Busca por ID el proveedor.
+     */
     public Optional<SupplierResponseDTO> getSupplierById(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID del proveedor debe ser mayor que 0");
@@ -81,17 +87,9 @@ public class SupplierService {
         }
     }
 
-    public boolean validateSupplierCuit(String cuit) {
-        boolean existsByCuit = supplierRepository.existsByCuitSupplier(cuit);
-        return existsByCuit;
-    }
-
-    public boolean validateSupplierCode(String code) {
-        boolean existsByCode = supplierRepository.existsByCodeSupplierIgnoreCase(code);
-        return existsByCode;
-    }
-
-
+    /**
+     * postSupplier --- Realiza la creación de un nuevo proveedor.
+     */
     public SuppliersModel postSupplier(SupplierResponseDTO supplier) {
         SuppliersModel suppliers_Model = convertToEntity(supplier);
         suppliers_Model.setDeleteSupplier(false);
@@ -100,6 +98,9 @@ public class SupplierService {
         return supplierRepository.save(suppliers_Model);
     }
 
+    /**
+     * convertToEntity --- Convierte un DTO de proveedor en una entidad/modelo.
+     */
     public SuppliersModel convertToEntity(SupplierResponseDTO supplierRequestDTO) {
 
         SuppliersModel supplier = new SuppliersModel();
@@ -112,21 +113,17 @@ public class SupplierService {
         supplier.setEmailSupplier(supplierRequestDTO.getEmailSupplier());
         supplier.setTelSupplier(supplierRequestDTO.getTelSupplier());
 
-        //CONDICION 
         Optional<ConditionsAfipModel> conditionAfip = conditionsAfipRepository.findByCondition(supplierRequestDTO.getCondicionAfipSupplier());
         if (conditionAfip.isEmpty()) {
             throw new EntityNotFoundException("Condición AFIP no encontrada: " + supplierRequestDTO.getCondicionAfipSupplier());
         }
         supplier.setConditionAfip(conditionAfip.get());
 
-        //RUBRO 
         Optional<CategoriesSupplierModel> categorySupplier = categoriesSupplierRespository.findByCategorySupplier(supplierRequestDTO.getCategorySupplier());
         if (categorySupplier.isEmpty()) {
             throw new EntityNotFoundException("Categoría de proveedor no encontrada con ID: " + supplierRequestDTO.getCategorySupplier());
         }
         supplier.setCategorySupplier(categorySupplier.get());
-
-        //DIRECCION 
 
         DirectionsModel direction = new DirectionsModel();
         direction.setStreetSupplier(supplierRequestDTO.getStreetSupplier());
@@ -143,8 +140,6 @@ public class SupplierService {
 
         supplier.setDirection(direction);
 
-        //CONTACTO
-
         ContactsModel contact = new ContactsModel();
         contact.setNameContact(supplierRequestDTO.getNamecontactSupplier());
         contact.setLastNameContact(supplierRequestDTO.getLastNamecontactSupplier());
@@ -159,6 +154,9 @@ public class SupplierService {
         return supplier;
     }
 
+    /**
+     * updateSupplier --- Realiza la actualizacíón de un proveedor enviado por ID.
+     */
     public SuppliersModel updateSupplier(int id, SupplierResponseDTO supplier) {
 
         Optional<SuppliersModel> existingSupplierOptional = supplierRepository.findById(id);
@@ -172,6 +170,9 @@ public class SupplierService {
         return supplierRepository.save(existingSupplier);
     }
 
+    /**
+     * convertToEntityUpdate --- Convierte un DTO de proveedor en una entidad/modelo.
+     */
     public SuppliersModel convertToEntityUpdate(SupplierResponseDTO supplierRequestDTO, SuppliersModel suppliers_Model) {
 
         suppliers_Model.setUrlSupplier(supplierRequestDTO.getUrlLogo());
@@ -182,21 +183,17 @@ public class SupplierService {
         suppliers_Model.setEmailSupplier(supplierRequestDTO.getEmailSupplier());
         suppliers_Model.setTelSupplier(supplierRequestDTO.getTelSupplier());
 
-        //CONDICION 
         Optional<ConditionsAfipModel> conditionAfip = conditionsAfipRepository.findByCondition(supplierRequestDTO.getCondicionAfipSupplier());
         if (conditionAfip.isEmpty()) {
             throw new EntityNotFoundException("Condición AFIP no encontrada: " + supplierRequestDTO.getCondicionAfipSupplier());
         }
         suppliers_Model.setConditionAfip(conditionAfip.get());
 
-        //RUBRO 
         Optional<CategoriesSupplierModel> categorySupplier = categoriesSupplierRespository.findByCategorySupplier(supplierRequestDTO.getCategorySupplier());
         if (categorySupplier.isEmpty()) {
             throw new EntityNotFoundException("Categoría de proveedor no encontrada con ID: " + supplierRequestDTO.getCategorySupplier());
         }
         suppliers_Model.setCategorySupplier(categorySupplier.get());
-
-        //DIRECCION 
 
         DirectionsModel direction = new DirectionsModel();
         direction.setStreetSupplier(supplierRequestDTO.getStreetSupplier());
@@ -213,8 +210,6 @@ public class SupplierService {
 
         suppliers_Model.setDirection(direction);
 
-        //CONTACTO
-
         ContactsModel contact = new ContactsModel();
         contact.setNameContact(supplierRequestDTO.getNamecontactSupplier());
         contact.setLastNameContact(supplierRequestDTO.getLastNamecontactSupplier());
@@ -229,6 +224,9 @@ public class SupplierService {
         return suppliers_Model;
     }
 
+    /**
+     * findByDeleteSupplierFalse --- Método para eliminar de manera lógica un proveedor enviado por ID.
+     */
     public Optional<SupplierResponseDTO> findByDeleteSupplierFalse(int id) {
         Optional<SuppliersModel> optionalSupplier = supplierRepository.findById(id);
         if (optionalSupplier.isPresent()) {
@@ -243,6 +241,9 @@ public class SupplierService {
         return Optional.empty();
     }
 
+    /**
+     * findByDeleteSupplierTrue --- Método para activar un un proveedor enviado por ID.
+     */
     public Optional<SupplierResponseDTO> findByDeleteSupplierTrue(int id) {
         Optional<SuppliersModel> optionalSupplier = supplierRepository.findById(id);
         if (optionalSupplier.isPresent()) {
@@ -256,7 +257,22 @@ public class SupplierService {
         }
         return Optional.empty();
     }
-    
+
+    /**
+     * validateSupplierCuit --- Validación para verificar si el cuit del proveedor ya existe.
+     */
+    public boolean validateSupplierCuit(String cuit) {
+        boolean existsByCuit = supplierRepository.existsByCuitSupplier(cuit);
+        return existsByCuit;
+    }
+
+    /**
+     * validateSupplierCode --- Validación para verificar si el código del proveedor ya existe.
+     */
+    public boolean validateSupplierCode(String code) {
+        boolean existsByCode = supplierRepository.existsByCodeSupplierIgnoreCase(code);
+        return existsByCode;
+    }
     
     public long countActiveSuppliers() {
         return supplierRepository.countByDeleteSupplierFalse();

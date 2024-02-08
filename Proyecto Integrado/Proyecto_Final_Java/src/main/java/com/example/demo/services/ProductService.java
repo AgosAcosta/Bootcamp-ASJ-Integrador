@@ -3,7 +3,6 @@ package com.example.demo.services;
 import java.sql.Timestamp;
 import java.util.*;
 
-
 import com.example.demo.models.*;
 import com.example.demo.repositories.CategoriesProductRepository;
 import com.example.demo.repositories.SupplierRepository;
@@ -25,21 +24,23 @@ public class ProductService {
     @Autowired
     CategoriesProductRepository categoriesProductRepository;
 
-    // OBTENER TODOS LOS PRODUCTOS
+    /**
+     * getAllProducts --- Busca y filtra los productos que no están eliminados
+     */
     public List<ProductResponseDTO> getAllProducts() {
-
         List<ProductModel> product_Model = productRepository.findBySupplierDeleteSupplierIsFalse();
         List<ProductResponseDTO> responseDTOs = new ArrayList<>();
-
         for (ProductModel product : product_Model) {
             if (!product.isDeleteProduct()) {
                 ProductMapper.getProductResponse(product).ifPresent(responseDTOs::add);
             }
         }
-
         return responseDTOs;
     }
 
+    /**
+     * getAllProductsDelete --- Busca y filtra los productos que están eliminados
+     */
     public List<ProductResponseDTO> getAllProductsDelete() {
         List<ProductModel> product_Model = productRepository.findAll();
         List<ProductResponseDTO> responseDTOs = new ArrayList<ProductResponseDTO>();
@@ -51,8 +52,10 @@ public class ProductService {
         return responseDTOs;
     }
 
-    // OBTENER PRODUCTOS POR ID
-    public Optional<ProductResponseDTO> getroductById(int id) {
+    /**
+     * getroductById --- Busca por ID el producto.
+     */
+    public Optional<ProductResponseDTO> getProductById(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID del producto debe ser mayor que 0");
         }
@@ -64,12 +67,10 @@ public class ProductService {
         }
 
     }
-    public boolean validateProductCode(String code) {
-        boolean existsByCode = productRepository.existsByCodeProductIgnoreCase(code);
-        return existsByCode;
-    }
 
-    // POST PRODUCTOS
+    /**
+     * postProduct --- Realiza la creación de un nuevo producto.
+     */
     public ProductModel postProduct(ProductResponseDTO product) {
 
         ProductModel productModel = convertToEntity(product);
@@ -79,6 +80,9 @@ public class ProductService {
         return productRepository.save(productModel);
     }
 
+    /**
+     * convertToEntity --- Convierte un DTO de producto en una entidad/modelo.
+     */
     public ProductModel convertToEntity(ProductResponseDTO productResponseDTO) {
 
         ProductModel product = new ProductModel();
@@ -103,6 +107,9 @@ public class ProductService {
         return product;
     }
 
+    /**
+     * updateProduct --- Realiza la actualizacíón de un producto enviado por ID.
+     */
     public ProductModel updateProduct(int id, ProductResponseDTO product) {
         Optional<ProductModel> existProduct = productRepository.findById(id);
         if (existProduct.isEmpty()) {
@@ -114,6 +121,9 @@ public class ProductService {
         return productRepository.save(productModel);
     }
 
+    /**
+     * convertToEntityUpdate --- Convierte un DTO de producto en una entidad/modelo.
+     */
     public ProductModel convertToEntityUpdate(ProductResponseDTO productResponseDTO, ProductModel product) {
 
         product.setUrlProduct(productResponseDTO.getUrlLogo());
@@ -136,7 +146,10 @@ public class ProductService {
         return product;
     }
 
-    public Optional<ProductResponseDTO> finByDeleteProductFalse(int id){
+    /**
+     * findByDeleteProductFalse --- Método para eliminar de manera lógica un producto enviado por ID.
+     */
+    public Optional<ProductResponseDTO> findByDeleteProductFalse(int id){
         Optional<ProductModel> optionalProductModel = productRepository.findById(id);
         if(optionalProductModel.isPresent()){
             ProductModel existProduct = optionalProductModel.get();
@@ -151,6 +164,9 @@ public class ProductService {
         return Optional.empty();
     }
 
+    /**
+     * findByDeleteProductTrue --- Método para activar un un producto enviado por ID.
+     */
     public Optional<ProductResponseDTO> findByDeleteProductTrue(int id) {
         Optional<ProductModel> optionalProductModel = productRepository.findById(id);
         if (optionalProductModel.isPresent()) {
@@ -165,7 +181,9 @@ public class ProductService {
         return Optional.empty();
     }
 
-
+    /**
+     * getProductBySupplierId --- Método para buscar los productos del proveedor enviado por ID.
+     */
     public List<ProductResponseDTO> getProductBySupplierId(int supplierId) {
         Optional<SuppliersModel> suppliersModel = supplierRepository.findById(supplierId);
 
@@ -173,7 +191,6 @@ public class ProductService {
             SuppliersModel supplier = suppliersModel.get();
             List<ProductModel> productModels = productRepository.findBySupplierIdSupplier(supplier.getIdSupplier());
             List<ProductResponseDTO> responseDTO = new ArrayList<>();
-
             for (ProductModel product : productModels) {
                 responseDTO.add(ProductMapper.getProductResponse(product).get());
             }
@@ -183,18 +200,16 @@ public class ProductService {
         }
     }
 
-
-    //PROBANDO SI SE PUEDE MANDAR EL NOMBRE
-
+    /**
+     * getProductBySupplierName --- Método para buscar los productos del proveedor enviado por parametro.
+     */
     public List<ProductResponseDTO> getProductBySupplierName(String supplierName) {
         Optional<SuppliersModel> suppliersModel = supplierRepository.findByNameSupplier(supplierName);
-
         if (suppliersModel.isPresent()) {
             SuppliersModel supplier = suppliersModel.get();
             if (!supplier.isDeleteSupplier()) {
                 List<ProductModel> productModels = productRepository.findBySupplierIdSupplier(supplier.getIdSupplier());
                 List<ProductResponseDTO> responseDTO = new ArrayList<>();
-
                 for (ProductModel product : productModels) {
                      if (!product.isDeleteProduct()) {
                         responseDTO.add(ProductMapper.getProductResponse(product).get());
@@ -208,7 +223,14 @@ public class ProductService {
             throw new EntityNotFoundException("PROVEEDOR no encontrado con nombre: " + supplierName + "PRODUCTOS NO BORRADOS");
         }
     }
-    
+
+    /**
+     * validateProductCode --- Validación para verificar si el código de producto ya existe.
+     */
+    public boolean validateProductCode(String code) {
+        boolean existsByCode = productRepository.existsByCodeProductIgnoreCase(code);
+        return existsByCode;
+    }
     public long countActiveProducts() {
         return productRepository.countByDeleteProductFalse();
     }

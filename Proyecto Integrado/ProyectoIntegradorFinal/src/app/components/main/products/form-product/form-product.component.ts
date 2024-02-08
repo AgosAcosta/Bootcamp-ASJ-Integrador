@@ -192,7 +192,7 @@ export class FormProductComponent implements OnInit {
           console.log('ACTUALIZANDO PRODUCTO', data);
 
           Swal.fire({
-            title: 'Se actualizo con éxito el producto',
+            title: `Se actualizo con éxito el producto ${this.newProduct.nameProduct}`,
             icon: 'success',
             position: 'bottom-left',
             toast: true,
@@ -227,7 +227,7 @@ export class FormProductComponent implements OnInit {
             icon: 'error',
             position: 'bottom-left',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
             width: '300px',
             customClass: {
@@ -246,7 +246,7 @@ export class FormProductComponent implements OnInit {
           .subscribe((data) => {
             console.log('CREANDO NUEVO CATEGORIA', data);
             Swal.fire({
-              title: 'Se agrego con éxito la nueva categoría',
+              title: `Se creó con éxito el producto ${this.newProduct.nameProduct}`,
               icon: 'success',
               position: 'bottom-left',
               toast: true,

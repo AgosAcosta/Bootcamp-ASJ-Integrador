@@ -23,6 +23,9 @@ public class ProvinceService {
     @Autowired
     ProvinceRepository provinceRepository;
 
+    /**
+     * getAllCountry --- Busca los países.
+     */
     public List<CountryDTO> getAllCountry() {
         List<CountriesModel> countriesModels = countryRepository.findAll();
         List<CountryDTO> responseDTO = new ArrayList<CountryDTO>();
@@ -33,6 +36,9 @@ public class ProvinceService {
         return responseDTO;
     }
 
+    /**
+     * getProvincesByCountryId --- Busca y filtra las provincias del país enviado por ID
+     */
     public List<ProvincesDTO> getProvincesByCountryId(int countryId) {
         Optional<CountriesModel> countryOptional = countryRepository.findById(countryId);
 

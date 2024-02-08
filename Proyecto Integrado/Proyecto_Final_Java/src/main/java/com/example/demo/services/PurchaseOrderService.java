@@ -33,7 +33,9 @@ public class PurchaseOrderService {
     @Autowired
     ProductRepository productRepository;
 
-
+    /**
+     * getAllPurchaseOrder --- Busca y filtra las ordenes de compra que no están eliminadas
+     */
     public List<PurchaseOrderDTO> getAllPurchaseOrder() {
         List<PurchaseOrdersModel> purchaseOrdersModels = purchaseOrderRepository.findAll();
         List<PurchaseOrderDTO> responseDto = new ArrayList<>();
@@ -46,10 +48,12 @@ public class PurchaseOrderService {
         return responseDto;
     }
 
+    /**
+     * getAllPurchaseOrderDelete --- Busca y filtra las ordenes de compra que están eliminadas
+     */
     public List<PurchaseOrderDTO> getAllPurchaseOrderDelete() {
         List<PurchaseOrdersModel> purchaseOrdersModels = purchaseOrderRepository.findAll();
         List<PurchaseOrderDTO> responseDto = new ArrayList<>();
-
         for (PurchaseOrdersModel order : purchaseOrdersModels) {
             if (order.isDeleteOrder()) {
                 PurchaseOrderMapper.getPurchaseOrder(order).ifPresent(responseDto::add);
@@ -58,6 +62,9 @@ public class PurchaseOrderService {
         return responseDto;
     }
 
+    /**
+     * getPurchaseOrderrById --- Busca por ID la orden de compra.
+     */
     public Optional<PurchaseOrderDTO> getPurchaseOrderrById(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID de la orden de compra debe ser mayor que 0");
@@ -70,6 +77,9 @@ public class PurchaseOrderService {
         }
     }
 
+    /**
+     * postPurchaseOrder --- Realiza la creación de un nueva orden de compra.
+     */
     public PurchaseOrdersModel postPurchaseOrder(PurchaseOrderDTO purchaseOrder) {
         PurchaseOrdersModel purchaseOrdersModel = convertToEntity(purchaseOrder);
         purchaseOrdersModel.setDeleteOrder(false);
@@ -78,29 +88,28 @@ public class PurchaseOrderService {
         return purchaseOrderRepository.save(purchaseOrdersModel);
     }
 
+    /**
+     * convertToEntity --- Convierte un DTO de una orden de compra en una entidad/modelo.
+     */
     public PurchaseOrdersModel convertToEntity(PurchaseOrderDTO purchaseOrderDTO) {
 
         PurchaseOrdersModel purchaseOrdersModel = new PurchaseOrdersModel();
-
         purchaseOrdersModel.setDateIssuePurchaseOrder(purchaseOrderDTO.getDateIssue());
         purchaseOrdersModel.setDateDeliveryPurchaseOrder(purchaseOrderDTO.getDateDelivery());
         purchaseOrdersModel.setReceptionPurchaseOrder(purchaseOrderDTO.getRecepcion());
         purchaseOrdersModel.setTotalPurchaseOrder(purchaseOrderDTO.getTotal());
-
         Optional<SuppliersModel> supplier = supplierRepository.findByNameSupplier(purchaseOrderDTO.getSupplier());
         if (supplier.isEmpty()) {
             throw new EntityNotFoundException("Proveedor no encontrada: " + purchaseOrderDTO.getSupplier());
         } else {
             purchaseOrdersModel.setSupplier(supplier.get());
         }
-
         Optional<StatusPurchaseOrdersModel> statusOrder = statusPurchaseOrderRepository.findByStatus(purchaseOrderDTO.getStatus());
         if (statusOrder.isEmpty()) {
             throw new EntityNotFoundException("ESTADO ORDEN DE COMPRA no encontrada: " + purchaseOrderDTO.getStatus());
         } else {
             purchaseOrdersModel.setStatusOrder(statusOrder.get());
         }
-
         List<DetailsPurchaseOrdersModel> detailsList = new ArrayList<>();
         purchaseOrdersModel.setDetailsPurchaseList(detailsList);
         PurchaseOrdersModel purchaseOrders = purchaseOrderRepository.save(purchaseOrdersModel);
@@ -109,18 +118,17 @@ public class PurchaseOrderService {
 
         for (DetailsPurchaseOrderDTO detailsDTO : purchaseOrderDTO.getProducts()) {
             DetailsPurchaseOrdersModel detailsModel = convertToEntityDetail(detailsDTO);
-
             detailsModel.setPurchaseOrder(purchaseOrdersModel);
             detailPurchaseOrderRepository.save(detailsModel);
-
             detailsList.add(detailsModel);
         }
-
         purchaseOrdersModel.setDetailsPurchaseList(detailsList);
-
         return purchaseOrderRepository.save(purchaseOrdersModel);
     }
 
+    /**
+     * convertToEntityDetail --- Convierte un DTO de una orden de compra (detalle) en una entidad/modelo.
+     */
     public DetailsPurchaseOrdersModel convertToEntityDetail(DetailsPurchaseOrderDTO detailsPurchaseOrderDTO) {
         DetailsPurchaseOrdersModel detailsPurchaseOrdersModel = new DetailsPurchaseOrdersModel();
 
@@ -138,6 +146,9 @@ public class PurchaseOrderService {
         return detailsPurchaseOrdersModel;
     }
 
+    /**
+     * updatePurchaseOrder --- Realiza la actualizacíón de una orden de compra enviada por ID.
+     */
     public PurchaseOrdersModel updatePurchaseOrder(int orderId, Timestamp newDateDelivery, String newReception) {
         Optional<PurchaseOrdersModel> existingOrderOptional = purchaseOrderRepository.findById(orderId);
         PurchaseOrdersModel existingOrder = existingOrderOptional.orElseThrow(() -> new EntityNotFoundException("Orden de compra no encontrada con ID: " + orderId));
@@ -151,6 +162,9 @@ public class PurchaseOrderService {
         return purchaseOrderRepository.save(existingOrder);
     }
 
+    /**
+     * findByDeletePurchaseOrderFalse --- Método para eliminar de manera lógica (cancelar) una orden de compra enviado por ID.
+     */
     public Optional<PurchaseOrderDTO> findByDeletePurchaseOrderFalse(int id) {
         Optional<PurchaseOrdersModel> optional = purchaseOrderRepository.findById(id);
         if (optional.isPresent()) {

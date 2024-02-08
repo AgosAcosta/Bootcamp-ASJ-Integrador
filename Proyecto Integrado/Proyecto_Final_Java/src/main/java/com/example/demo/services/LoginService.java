@@ -11,6 +11,9 @@ public class LoginService {
     private final String user= "usuario";
     private final String password = "123456";
 
+    /**
+     * checkUser --- Controla si el usuario y contraseña son correctas
+     */
     public boolean checkUser(String username, String passwordLogin) {
         return user.equals(username) && password.equals(passwordLogin);
     }

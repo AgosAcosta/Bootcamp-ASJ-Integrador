@@ -39,7 +39,7 @@ public class ProductsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProductResponseDTO>> getProductById(@PathVariable int id) {
-        Optional<ProductResponseDTO> product = productService.getroductById(id);
+        Optional<ProductResponseDTO> product = productService.getProductById(id);
         if (product.isPresent()) {
             return ResponseEntity.ok(product);
         } else {
@@ -68,7 +68,7 @@ public class ProductsController {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<ProductResponseDTO> deleteById(@PathVariable Integer id) {
-        Optional<ProductResponseDTO> response = productService.finByDeleteProductFalse(id);
+        Optional<ProductResponseDTO> response = productService.findByDeleteProductFalse(id);
 
         if (response.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -100,7 +100,6 @@ public class ProductsController {
         return ResponseEntity.ok().body(response);
     }
 
-    //PROBANDO SI FUNCIONA
     @GetMapping("/{supplierName}/supplierName")
     public ResponseEntity<List<ProductResponseDTO>> getProductBySupplierId(@PathVariable String supplierName) {
         try {
