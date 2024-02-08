@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrl: './list-supplier.component.css',
 })
 export class ListSupplierComponent {
-  supplierList!: Supplier[];
+  supplierList: Supplier[] = [];
   supplierActive: boolean = true;
 
   currentCodeSortOrder: 'asc' | 'desc' = 'asc';

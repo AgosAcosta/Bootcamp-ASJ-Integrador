@@ -21,7 +21,7 @@
         <!-- Sección Información Orden -->
         <fieldset>
           <legend>Detalle de Orden de compra:</legend>
-          <div class="form-group">
+          <div class="form-group" *ngIf="isUpdate">
             <label for="idPurchaseOrder">N° Orden:</label>
             <input
               type="text"
@@ -45,8 +45,8 @@
                   class="form-control"
                   name="dateIssue"
                   id="dateIssue"
-                  [min]="date | date : 'yyyy-MM-dd'"
-                  [disabled]="isUpdate"
+                  [min]="date | date : 'yyyy-MM-dd' : '+0000'"
+                  disabled
                   [(ngModel)]="newPurchaseOrder.dateIssue"
                   [ngModelOptions]="{ standalone: true }"
                 />
@@ -63,10 +63,12 @@
                   name="dateDelivery"
                   id="dateDelivery"
                   [min]="getMinDateShippingTemplate()"
-                  required
                   [(ngModel)]="newPurchaseOrder.dateDelivery"
                   [ngModelOptions]="{ standalone: true }"
                 />
+              </div>
+              <div class="form-text" *ngIf="isDateInvalid">
+                <p>Debe seleccionar una fecha de entrega válida.</p>
               </div>
             </div>
           </div>
@@ -142,7 +144,7 @@
               *ngIf="detailProducts.unitProduct > 0"
               class="form-group d-flex align-items-center"
             >
-              <label >Total</label>
+              <label>Total</label>
               <input
                 type="text"
                 id="priceProduct"

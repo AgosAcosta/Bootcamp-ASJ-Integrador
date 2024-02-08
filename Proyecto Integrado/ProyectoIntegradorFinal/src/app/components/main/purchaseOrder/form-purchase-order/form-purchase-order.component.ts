@@ -46,6 +46,7 @@ export class FormPurchaseOrderComponent implements OnInit {
   supplierLogo: string = '';
 
   date = new Date();
+  isDateInvalid: boolean = false;
 
   constructor(
     public servicePurchaseOrder: ServicePurchaseOrderService,
@@ -58,6 +59,10 @@ export class FormPurchaseOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListSupplier();
+    this.newPurchaseOrder.dateIssue = this.datePipe.transform(
+      new Date(),
+      'yyyy-MM-dd'
+    )!;
   }
 
   getPurchaseOrderForUpdate() {
@@ -157,7 +162,9 @@ export class FormPurchaseOrderComponent implements OnInit {
 
   createNewPuchseOrder(form: NgForm) {
     this.isSave = true;
-    if (!form.valid) {
+    this.validationDate();
+
+    if (!form.valid || this.isDateInvalid) {
       console.log('Revisar los datos ingresados');
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
@@ -263,6 +270,12 @@ export class FormPurchaseOrderComponent implements OnInit {
     this.supplierPoin = true;
   }
 
+  validationDate() {
+    this.isDateInvalid =
+      this.getDateObject(this.newPurchaseOrder.dateDelivery).getTime() <
+      this.getMinDateShipping().getTime();
+  }
+
   getMinDateShippingTemplate(): string {
     let dateShipping = this.getMinDateShipping();
     return this.datePipe.transform(dateShipping, 'yyyy-MM-dd') || '2024-01-01';
@@ -270,7 +283,7 @@ export class FormPurchaseOrderComponent implements OnInit {
 
   getMinDateShipping(): Date {
     const day = 1000 * 60 * 60 * 24;
-    let daysDelay = 2;
+    let daysDelay = 3;
     let dateCreated = this.getDateObject(this.newPurchaseOrder.dateIssue);
     return new Date(day * daysDelay + dateCreated.getTime());
   }

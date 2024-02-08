@@ -11,7 +11,7 @@ import { CategoryProductService } from '../../../../Service/category-product.ser
   styleUrl: './list-product.component.css',
 })
 export class ListProductComponent implements OnInit {
-  productList!: Product[];
+  productList: Product[] = [];
   productActive: boolean = true;
 
   currentSortOrder: 'asc' | 'desc' = 'asc';
