@@ -19,10 +19,13 @@ public class CategoriesSupplierService {
 
     @Autowired
     CategoriesSupplierRespository categoriesSupplierRespository;
+
+    /**
+     * getAllCategorySupplier --- Busca y filtra los rubros de los proveedores que no están eliminados.
+     */
     public List<CategoriesSupplierDTO> getAllCategorySupplier() {
         List<CategoriesSupplierModel> categoriesSupplier = categoriesSupplierRespository.findAll();
         List<CategoriesSupplierDTO> responseDTO = new ArrayList<CategoriesSupplierDTO>();
-
         for (CategoriesSupplierModel category : categoriesSupplier) {
             if(!category.isDeleteCategorySupplier()){
                 CategoriesSupplierMapper.getCategorySupplier(category).ifPresent(responseDTO::add);
@@ -30,12 +33,15 @@ public class CategoriesSupplierService {
         }
         return responseDTO;
     }
+
+    /**
+     * getCategorySupplierById --- Busca por ID el rubro.
+     */
     public Optional<CategoriesSupplierDTO> getCategorySupplierById(int id){
         if (id <= 0) {
             throw new IllegalArgumentException("El ID del rubro proveedor debe ser mayor que 0");
         }
         Optional<CategoriesSupplierModel> optionalCategoriesSupplier = categoriesSupplierRespository.findById(id);
-
         if(optionalCategoriesSupplier.isPresent()){
             return CategoriesSupplierMapper.getCategorySupplier(optionalCategoriesSupplier.get());
         }else{
@@ -43,10 +49,9 @@ public class CategoriesSupplierService {
         }
     }
 
-    public boolean validateSupplierCategory(String category) {
-        boolean existsByCategory = categoriesSupplierRespository.existsByCategorySupplierIgnoreCase(category);
-        return existsByCategory;
-    }
+    /**
+     * postCategorySupplier --- Realiza la creación de un nuevo rubro.
+     */
 
     public CategoriesSupplierModel postCategorySupplier(CategoriesSupplierDTO category) {
         CategoriesSupplierModel categoriesSupplierModel = convertToEntity(category);
@@ -55,6 +60,10 @@ public class CategoriesSupplierService {
         categoriesSupplierModel.setUpdate_at(new Timestamp(System.currentTimeMillis()));
         return categoriesSupplierRespository.save(categoriesSupplierModel);
     }
+
+    /**
+     * convertToEntity --- Convierte un DTO de rubro en una entidad/modelo.
+     */
     public CategoriesSupplierModel convertToEntity(CategoriesSupplierDTO categoriesSupplierDTO) {
         CategoriesSupplierModel category = new CategoriesSupplierModel();
         category.setCategory_supplier(categoriesSupplierDTO.getCategorySupplier());
@@ -62,6 +71,9 @@ public class CategoriesSupplierService {
         return category;
     }
 
+    /**
+     * putCategorySupplier --- Realiza la actualizacíón de un rubro enviado por ID.
+     */
     public CategoriesSupplierModel putCategorySupplier(int id, CategoriesSupplierDTO category) {
         Optional<CategoriesSupplierModel> supplierModelOptional = categoriesSupplierRespository.findById(id);
         if(supplierModelOptional.isEmpty()){
@@ -73,12 +85,18 @@ public class CategoriesSupplierService {
         return categoriesSupplierRespository.save(categoriesSupplierModel);
     }
 
+    /**
+     * convertToEntityUpdate --- Convierte un DTO de rubro en una entidad/modelo.
+     */
     public CategoriesSupplierModel convertToEntityUpdate(CategoriesSupplierDTO categoriesSupplierDTO, CategoriesSupplierModel category) {
         category.setCategory_supplier(categoriesSupplierDTO.getCategorySupplier());
         categoriesSupplierRespository.save(category);
         return category;
     }
 
+    /**
+     * findByDeleteCategorySupplier --- Método para eliminar de manera lógica un rubro de un proveedor enviado por ID.
+     */
     public Optional<CategoriesSupplierDTO> findByDeleteCategorySupplier(int id) {
         Optional<CategoriesSupplierModel> optional = categoriesSupplierRespository.findById(id);
         if (optional.isPresent()) {
@@ -93,5 +111,12 @@ public class CategoriesSupplierService {
         return Optional.empty();
     }
 
+    /**
+     * validateSupplierCategory --- Validación para verificar si el nombre del rubro ya existe.
+     */
+    public boolean validateSupplierCategory(String category) {
+        boolean existsByCategory = categoriesSupplierRespository.existsByCategorySupplierIgnoreCase(category);
+        return existsByCategory;
+    }
 }
 

@@ -8,13 +8,10 @@ import java.util.Optional;
 
 import com.example.demo.dto.DetailsPurchaseOrderDTO;
 import com.example.demo.dto.PurchaseOrderDTO;
-import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.mapper.PurchaseOrderMapper;
-import com.example.demo.mapper.SupplierMapper;
 import com.example.demo.models.*;
 import com.example.demo.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,40 +107,32 @@ public class PurchaseOrderService {
 
         purchaseOrdersModel.setId(purchaseOrders.getId());
 
-//      DetailsPurchaseOrdersModel detailsModel = convertToEntityDetail(purchaseOrderDTO.getProducts().get(0));
-//
-//      DetailsPurchaseOrdersModel  detailsPurchaseOrdersModel = detailPurchaseOrderRepository.save(detailsModel);
-//
-//        detailsList.add(detailsPurchaseOrdersModel);
-
         for (DetailsPurchaseOrderDTO detailsDTO : purchaseOrderDTO.getProducts()) {
             DetailsPurchaseOrdersModel detailsModel = convertToEntityDetail(detailsDTO);
+
+            detailsModel.setPurchaseOrder(purchaseOrdersModel);
             detailPurchaseOrderRepository.save(detailsModel);
+
             detailsList.add(detailsModel);
         }
 
         purchaseOrdersModel.setDetailsPurchaseList(detailsList);
-        purchaseOrderRepository.save(purchaseOrdersModel);
 
-        return purchaseOrdersModel;
+        return purchaseOrderRepository.save(purchaseOrdersModel);
     }
 
     public DetailsPurchaseOrdersModel convertToEntityDetail(DetailsPurchaseOrderDTO detailsPurchaseOrderDTO) {
         DetailsPurchaseOrdersModel detailsPurchaseOrdersModel = new DetailsPurchaseOrdersModel();
 
         detailsPurchaseOrdersModel.setQuantityDetail(detailsPurchaseOrderDTO.getUnitProduct());
-       // detailsPurchaseOrdersModel.setPriceDetail(detailsPurchaseOrderDTO.getPriceProduct());
 
         Optional<ProductModel> product = productRepository.findByNameProduct(detailsPurchaseOrderDTO.getNameProduct());
         if (product.isEmpty()) {
             throw new EntityNotFoundException("PRODUCTO no encontrada: " + detailsPurchaseOrderDTO.getNameProduct());
         }
-//        detailsPurchaseOrdersModel.setProduct(product.get());
-        ProductModel productoModel = product.get();
+
         double price = product.get().getPriceProduct();
         detailsPurchaseOrdersModel.setPriceDetail(price);
-
-//        detailPurchaseOrderRepository.save(detailsPurchaseOrdersModel);
 
         detailsPurchaseOrdersModel.setProduct(product.get());
         return detailsPurchaseOrdersModel;

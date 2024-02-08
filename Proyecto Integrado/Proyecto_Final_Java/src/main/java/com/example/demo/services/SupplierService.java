@@ -19,8 +19,6 @@ import com.example.demo.models.ProvincesModel;
 import com.example.demo.models.SuppliersModel;
 import com.example.demo.repositories.CategoriesSupplierRespository;
 import com.example.demo.repositories.ConditionsAfipRepository;
-import com.example.demo.repositories.ContactRepository;
-import com.example.demo.repositories.DirectionRepository;
 import com.example.demo.repositories.ProvinceRepository;
 import com.example.demo.repositories.SupplierRepository;
 
@@ -34,12 +32,6 @@ public class SupplierService {
 
     @Autowired
     ConditionsAfipRepository conditionsAfipRepository;
-
-    @Autowired
-    ContactRepository contactRepository;
-
-    @Autowired
-    DirectionRepository directionRepository;
 
     @Autowired
     CategoriesSupplierRespository categoriesSupplierRespository;

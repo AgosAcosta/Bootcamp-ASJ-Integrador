@@ -3,10 +3,10 @@ package com.example.demo.models;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "purchase_orders")
@@ -33,10 +33,8 @@ public class PurchaseOrdersModel {
 	@Column(name="date_delivery_purchase_order",nullable = false)
 	private Timestamp dateDeliveryPurchaseOrder;
 
-
 	@Column(name="reception_purchase_order",nullable = false)
 	private String receptionPurchaseOrder;
-
 
 	@Column(name="total_purchase_order",nullable = false)
 	private double totalPurchaseOrder;
@@ -51,8 +49,10 @@ public class PurchaseOrdersModel {
 	@Column(nullable = true)
 	private boolean deleteOrder;
 
-	@OneToMany()
+	@OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.EAGER )
+	@JsonManagedReference
 	private List<DetailsPurchaseOrdersModel> detailsPurchaseList;
+
 
 	public PurchaseOrdersModel() {
 
@@ -158,5 +158,22 @@ public class PurchaseOrdersModel {
 
 	public void setDetailsPurchaseList(List<DetailsPurchaseOrdersModel> detailsPurchaseList) {
 		this.detailsPurchaseList = detailsPurchaseList;
+	}
+
+	@Override
+	public String toString() {
+		return "PurchaseOrdersModel{" +
+				"id=" + id +
+				", supplier=" + supplier +
+				", statusOrder=" + statusOrder +
+				", dateIssuePurchaseOrder=" + dateIssuePurchaseOrder +
+				", dateDeliveryPurchaseOrder=" + dateDeliveryPurchaseOrder +
+				", receptionPurchaseOrder='" + receptionPurchaseOrder + '\'' +
+				", totalPurchaseOrder=" + totalPurchaseOrder +
+				", created_at=" + created_at +
+				", update_at=" + update_at +
+				", deleteOrder=" + deleteOrder +
+				", detailsPurchaseList=" + detailsPurchaseList +
+				'}';
 	}
 }

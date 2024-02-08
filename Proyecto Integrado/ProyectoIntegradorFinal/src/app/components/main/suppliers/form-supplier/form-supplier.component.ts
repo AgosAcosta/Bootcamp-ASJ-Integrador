@@ -188,7 +188,7 @@ export class FormSupplierComponent {
               icon: 'success',
               position: 'bottom-left',
               toast: true,
-              timer: 3000,
+              timer: 1500,
               showConfirmButton: false,
               width: '300px',
               customClass: {
@@ -206,13 +206,12 @@ export class FormSupplierComponent {
     this.isSave = true;
     if (!form.valid) {
       console.log('Revisar los datos ingresados');
-
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
         position: 'center',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -250,7 +249,7 @@ export class FormSupplierComponent {
         icon: 'error',
         position: 'bottom-left',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -270,7 +269,7 @@ export class FormSupplierComponent {
         icon: 'error',
         position: 'bottom-left',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -287,13 +286,13 @@ export class FormSupplierComponent {
         .subscribe((data) => {
           console.log('Actualizando Proveedor:', data);
           Swal.fire({
-            title: 'Se actualizo con éxito el proveedor',
+            title: `Se actualizo con éxito el proveedor ${this.newsupplier.nameSupplier}`,
             icon: 'success',
             position: 'bottom-left',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
-            width: '300px',
+            width: '500px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
@@ -313,7 +312,7 @@ export class FormSupplierComponent {
         icon: 'error',
         position: 'bottom-left',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -333,7 +332,7 @@ export class FormSupplierComponent {
         icon: 'error',
         position: 'bottom-left',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -349,13 +348,13 @@ export class FormSupplierComponent {
         console.log('Creando un proveedor', data);
 
         Swal.fire({
-          title: 'Se creó con éxito el proveedor',
+          title: `Se creó con éxito el proveedor ${this.newsupplier.nameSupplier}`,
           icon: 'success',
           position: 'bottom-left',
           toast: true,
-          timer: 3000,
+          timer: 1500,
           showConfirmButton: false,
-          width: '300px',
+          width: '500px',
           customClass: {
             popup: 'custom-popup-class',
             title: 'custom-title-class',
@@ -370,7 +369,7 @@ export class FormSupplierComponent {
   navigateToListSupplier() {
     setTimeout(() => {
       this.router.navigate(['/list-supplier']);
-    }, 1500);
+    }, 90);
   }
 
   ClearForm() {

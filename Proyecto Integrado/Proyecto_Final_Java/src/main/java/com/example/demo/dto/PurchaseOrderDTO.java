@@ -21,7 +21,7 @@ public class PurchaseOrderDTO {
     private String recepcion;
     @NotNull(message = "El  proveedores no puede estar vacio")
     private String supplier;
-     @Valid
+    @Valid
     private List<DetailsPurchaseOrderDTO> products;
     @NotNull(message = "El total no puede estar vacio")
     @DecimalMin(value = "0.01", message = "El total debe ser mayor o igual a 0.01")

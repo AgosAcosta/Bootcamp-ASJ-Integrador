@@ -18,6 +18,9 @@ public class ConditionAfipService {
 	@Autowired
 	ConditionsAfipRepository conditionsAfipRepository;
 
+	/**
+	 * getAllCategorySupplier --- Busca y filtra la condición ante AFIP.
+	 */
 	public List<ConditionAfipDTO> getAllConditionAfip(){
 		List<ConditionsAfipModel> conditionsAfipModels = conditionsAfipRepository.findAll();
 		List<ConditionAfipDTO> conditionAfipDTOS = new ArrayList<ConditionAfipDTO>();
@@ -26,6 +29,10 @@ public class ConditionAfipService {
 		}
 		return conditionAfipDTOS;
 	}
+
+	/**
+	 * getConditionById --- Busca por ID la condición ante AFIP.
+	 */
 	public Optional<ConditionsAfipModel> getConditionById(int id) {
 		if (id <= 0) {
 			throw new IllegalArgumentException("El ID de la condicion debe ser mayor que 0");

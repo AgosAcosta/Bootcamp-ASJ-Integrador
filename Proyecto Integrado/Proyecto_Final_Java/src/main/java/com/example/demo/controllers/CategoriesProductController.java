@@ -28,15 +28,15 @@ public class CategoriesProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<CategoriesProductDTO>> getCategoriesProductsById(@PathVariable int id){
+    public ResponseEntity<Optional<CategoriesProductDTO>> getCategoriesProductsById(@PathVariable int id) {
         Optional<CategoriesProductDTO> category = categoriesProductService.getCategoryProductById(id);
-        if(category.isPresent()){
+        if (category.isPresent()) {
             return ResponseEntity.ok(category);
-        }
-        else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping()
     public ResponseEntity<Object> postCategories(@Valid @RequestBody CategoriesProductDTO categoriesProductDTO,
                                                  BindingResult bindingResult) {
@@ -49,12 +49,12 @@ public class CategoriesProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> putCategories(@PathVariable int id, @RequestBody CategoriesProductDTO categoriesProductDTO,
-                                                 BindingResult bindingResult) {
+                                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> control = new ErrorHandler().validacionInputs(bindingResult);
             return new ResponseEntity<>(control, HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(categoriesProductService.putCategoryProduct(id,categoriesProductDTO));
+        return ResponseEntity.ok(categoriesProductService.putCategoryProduct(id, categoriesProductDTO));
     }
 
     @PatchMapping("/delete/{id}")
@@ -65,6 +65,7 @@ public class CategoriesProductController {
         }
         return ResponseEntity.ok().body(response.get());
     }
+
     @PatchMapping("/exists/name/{category}")
     public ResponseEntity<Boolean> existeNameCategory(@PathVariable String category) {
         boolean response = categoriesProductService.validateProductCategory(category);

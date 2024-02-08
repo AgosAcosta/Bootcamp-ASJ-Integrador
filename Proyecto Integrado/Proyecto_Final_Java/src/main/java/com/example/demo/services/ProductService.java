@@ -22,21 +22,11 @@ public class ProductService {
     ProductRepository productRepository;
     @Autowired
     SupplierRepository supplierRepository;
-
     @Autowired
     CategoriesProductRepository categoriesProductRepository;
 
     // OBTENER TODOS LOS PRODUCTOS
     public List<ProductResponseDTO> getAllProducts() {
-//        List<ProductModel> product_Model = productRepository.findAll();
-//        List<ProductResponseDTO> responseDTOs = new ArrayList<ProductResponseDTO>();
-//        for (ProductModel product : product_Model) {
-//            if(!product.isDeleteProduct()){
-//                ProductMapper.getProductResponse(product).ifPresent(responseDTOs::add);
-//            }
-//
-//        }
-//        return responseDTOs;
 
         List<ProductModel> product_Model = productRepository.findBySupplierDeleteSupplierIsFalse();
         List<ProductResponseDTO> responseDTOs = new ArrayList<>();
@@ -48,8 +38,6 @@ public class ProductService {
         }
 
         return responseDTOs;
-
-
     }
 
     public List<ProductResponseDTO> getAllProductsDelete() {
@@ -89,7 +77,6 @@ public class ProductService {
         productModel.setCreated_at(new Timestamp(System.currentTimeMillis()));
         productModel.setUpdate_at(new Timestamp(System.currentTimeMillis()));
         return productRepository.save(productModel);
-
     }
 
     public ProductModel convertToEntity(ProductResponseDTO productResponseDTO) {

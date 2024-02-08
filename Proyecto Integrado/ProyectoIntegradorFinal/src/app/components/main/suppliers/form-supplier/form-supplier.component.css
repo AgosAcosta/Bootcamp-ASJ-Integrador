@@ -69,3 +69,12 @@ fieldset {
 .modal-footer button {
   margin: 2px;
 }
+
+/* SWEETALERT */
+.custom-popup-class {
+  height: 100px;
+}
+
+.custom-title-class {
+  font-weight: bold;
+}

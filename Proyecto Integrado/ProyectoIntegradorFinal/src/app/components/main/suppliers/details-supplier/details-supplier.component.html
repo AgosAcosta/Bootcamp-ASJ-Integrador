@@ -1,11 +1,14 @@
 <div class="container">
-
   <div class="row mt-2">
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-        <li class="breadcrumb-item"><a routerLink="/list-supplier">Listado de Proveedores</a></li>
-        <li class="breadcrumb-item active" aria-current="page"> Proveedor {{supplier?.nameSupplier}}</li>
+        <li class="breadcrumb-item">
+          <a routerLink="/list-supplier">Listado de Proveedores</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Proveedor {{ supplier?.nameSupplier }}
+        </li>
       </ol>
     </nav>
   </div>

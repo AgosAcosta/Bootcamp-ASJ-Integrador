@@ -164,7 +164,7 @@ export class FormPurchaseOrderComponent implements OnInit {
         icon: 'error',
         position: 'center',
         toast: true,
-        timer: 3000,
+        timer: 1500,
         showConfirmButton: false,
         width: '300px',
         customClass: {
@@ -185,13 +185,13 @@ export class FormPurchaseOrderComponent implements OnInit {
           console.log('Actualizando orden:', data);
 
           Swal.fire({
-            title: 'Se actualizo con éxito la orden de compra',
+            title: `Se actualizo con éxito la orden de compra N°: ${this.newPurchaseOrder.idPurchaseOrder}`,
             icon: 'success',
             position: 'bottom-right',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
-            width: '300px',
+            width: '500px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
@@ -199,7 +199,7 @@ export class FormPurchaseOrderComponent implements OnInit {
           }).then(() => {
             setTimeout(() => {
               this.router.navigate(['/list-purchase-order']);
-            }, 1500);
+            }, 90);
           });
         });
     } else {
@@ -209,13 +209,13 @@ export class FormPurchaseOrderComponent implements OnInit {
           console.log('CREANDO NUEVA ORDEN DE COMPRA', data);
 
           Swal.fire({
-            title: 'Se creó con éxito la orden de compra',
+            title: `Se creó con éxito la orden de compra del proveedor: ${this.newPurchaseOrder.supplier}`,
             icon: 'success',
             position: 'bottom-right',
             toast: true,
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
-            width: '300px',
+            width: '500px',
             customClass: {
               popup: 'custom-popup-class',
               title: 'custom-title-class',
@@ -223,7 +223,7 @@ export class FormPurchaseOrderComponent implements OnInit {
           }).then(() => {
             setTimeout(() => {
               this.router.navigate(['/list-purchase-order']);
-            }, 1500);
+            }, 90);
           });
         });
     }
@@ -249,7 +249,7 @@ export class FormPurchaseOrderComponent implements OnInit {
       supplier: '',
       products: [],
       total: 0,
-      status: 'Activa',
+      status: 'Pendiente',
     };
 
     this.detailProducts = {
