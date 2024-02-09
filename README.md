@@ -14,9 +14,7 @@ Pasos necesarios para correr el proyecto localmente:
   1. En el archivo POM:
   Boton derecho -> Run As -> 4 Maven Install
   
-  2. Cambiar credenciales en application.properties:
-
-  src/main/resources -> application.properties, cambiar el primer reglon por el siguiente
+  2. Cambiar credenciales en application.properties: src/main/resources -> application.properties, cambiar el primer reglon por el siguiente
 ```java
   spring.datasource.url = jdbc:sqlserver://localhost;encrypt=false;user=*NOMBRE DE USUARIO DE SQL*;password=*CONTRASEÑA DE SQL*;databaseName=bd_proyecto
 ```
