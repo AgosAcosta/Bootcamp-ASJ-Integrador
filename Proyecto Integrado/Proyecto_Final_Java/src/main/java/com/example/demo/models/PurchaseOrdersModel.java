@@ -33,7 +33,7 @@ public class PurchaseOrdersModel {
 	@Column(name="date_delivery_purchase_order",nullable = false)
 	private Timestamp dateDeliveryPurchaseOrder;
 
-	@Column(name="reception_purchase_order",nullable = false)
+	@Column(name="reception_purchase_order",nullable = false, columnDefinition = "TEXT")
 	private String receptionPurchaseOrder;
 
 	@Column(name="total_purchase_order",nullable = false)

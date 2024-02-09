@@ -626,7 +626,7 @@
                   name="locationSupplier"
                   id="locationSupplier"
                   [(ngModel)]="newsupplier.locationSupplier"
-                  minlength="4"
+                  minlength="3"
                   maxlength="40"
                   required
                   #locationSupplier="ngModel"
@@ -639,7 +639,7 @@
                 *ngIf="locationSupplier.errors?.['minlength']"
                 class="col-auto"
               >
-                <span class="form-text">Debe tener al menos 4 caracteres </span>
+                <span class="form-text">Debe tener al menos 3 caracteres </span>
               </div>
               <div
                 *ngIf="locationSupplier.errors?.['required']"
@@ -666,7 +666,7 @@
                       name="namecontactSupplier"
                       id="namecontactSupplier"
                       [(ngModel)]="newsupplier.namecontactSupplier"
-                      minlength="4"
+                      minlength="3"
                       maxlength="40"
                       required
                       #namecontactSupplier="ngModel"
@@ -679,7 +679,7 @@
                       class="col-auto"
                     >
                       <span class="form-text"
-                        >Debe tener al menos 4 caracteres y un maximo de
+                        >Debe tener al menos 3 caracteres y un maximo de
                         40</span
                       >
                     </div>
@@ -704,7 +704,7 @@
                       name="lastNamecontactSupplier"
                       id="lastNamecontactSupplier"
                       [(ngModel)]="newsupplier.lastNamecontactSupplier"
-                      minlength="4"
+                      minlength="3"
                       maxlength="40"
                       required
                       #lastNamecontactSupplier="ngModel"
@@ -719,7 +719,7 @@
                       class="col-auto"
                     >
                       <span class="form-text"
-                        >Debe tener al menos 4 caracteres y un maximo de
+                        >Debe tener al menos 3 caracteres y un maximo de
                         40</span
                       >
                     </div>

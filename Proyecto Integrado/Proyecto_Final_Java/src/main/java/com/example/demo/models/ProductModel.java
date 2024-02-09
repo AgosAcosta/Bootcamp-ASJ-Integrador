@@ -47,7 +47,7 @@ public class ProductModel {
 	private String nameProduct;
 
 
-	@Column( name="description_product",nullable = false)
+	@Column( name="description_product",nullable = false, columnDefinition = "TEXT")
 	private String descriptionProduct;
 
 

@@ -37,7 +37,7 @@ public class SupplierResponseDTO {
 	@Max(value = 9999, message = "El número de la calle debe ser como máximo 4 caracter ")
 	private int cpSupplier;
 	@NotNull(message = "La localidad no puede estar vacia")
-	@Size(min = 4, max = 40, message = "La localidad debe tener entre 4 y 40 caracteres")
+	@Size(min = 3, max = 40, message = "La localidad debe tener entre 3 y 40 caracteres")
 	private String locationSupplier;
 	@NotNull(message = "La provincia no puede estar vacia")
 	private String provinceSupplier;
@@ -53,10 +53,10 @@ public class SupplierResponseDTO {
 	@Pattern(regexp = "\\d+", message = "El número de teléfono solo puede contener dígitos")
 	private String telSupplier;
 	@NotNull(message = "El nombre de contacto no puede estar vacia")
-	@Size(min = 4, max = 40, message = "El nombre de contacto debe tener entre 4 y 40 caracteres")
+	@Size(min = 3, max = 40, message = "El nombre de contacto debe tener entre 3 y 40 caracteres")
 	private String namecontactSupplier;
 	@NotNull(message = "El Apellido de contacto no puede estar vacia")
-	@Size(min = 4, max = 40, message = "El Apellido de contacto debe tener entre 4 y 40 caracteres")
+	@Size(min = 3, max = 40, message = "El Apellido de contacto debe tener entre 3 y 40 caracteres")
 	private String lastNamecontactSupplier;
 	@NotNull(message = "El número de teléfono no puede estar vacio")
 	@Size(min = 10, max = 15, message = "El número de teléfono debe tener entre 10 y 15 caracteres")
