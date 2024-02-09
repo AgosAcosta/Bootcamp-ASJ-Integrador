@@ -1,9 +1,20 @@
 <div class="container">
   <header class="row align-items-center mt-2">
+    <div class="col-5">
+      <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Listado de Rubros
+          </li>
+        </ol>
+      </nav>
+    </div>
+
     <div class="col-8">
       <h4 class="text-center">RUBROS DE PROVEEDORES</h4>
     </div>
-    <div class="col-4 text-center  ">
+    <div class="col-4 text-center">
       <a routerLink="new" class="btn btn-success">
         <i class="bi bi-plus"></i> Agregar
       </a>
@@ -45,7 +56,9 @@
             </a>
             <a
               class="btn btn-danger btn-sm ml-2"
-              (click)="deleteCategory(item.idCategorySupplier, item.categorySupplier)"
+              (click)="
+                deleteCategory(item.idCategorySupplier, item.categorySupplier)
+              "
               ngbTooltip="Eliminar"
             >
               <i class="bi bi-trash"></i>

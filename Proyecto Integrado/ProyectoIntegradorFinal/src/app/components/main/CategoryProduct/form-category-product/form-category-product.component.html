@@ -1,5 +1,20 @@
 <main>
   <div class="container">
+
+    <div class="row mt-2">
+      <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item">
+            <a routerLink="/list-category-product"> Listado de Categorías</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <span>{{ !isUpdate ? "Nueva Categoría" : "Actualizando Categoría" }}</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
     <form #myForm="ngForm" (ngSubmit)="createnewCategoryProduct(myForm)">
       <div class="row">
         <div class="col-6">
