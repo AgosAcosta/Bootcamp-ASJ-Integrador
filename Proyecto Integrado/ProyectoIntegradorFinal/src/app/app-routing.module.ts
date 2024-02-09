@@ -17,7 +17,7 @@ import { FormCategoryProductComponent } from './components/main/CategoryProduct/
 import { FormLoginComponent } from './components/main/Login/form-login/form-login.component';
 
 const routes: Routes = [
-  { path: '', component: MenuComponent },
+  { path: '', component: MenuComponent, pathMatch: 'full' },
   {
     path: 'list-supplier',
     children: [
@@ -64,6 +64,10 @@ const routes: Routes = [
   {
     path: 'login',
     children: [{ path: '', component: FormLoginComponent }],
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
 

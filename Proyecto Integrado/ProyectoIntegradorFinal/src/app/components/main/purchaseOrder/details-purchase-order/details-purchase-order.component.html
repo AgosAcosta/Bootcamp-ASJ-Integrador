@@ -87,6 +87,7 @@
         class="btn btn-success btn-m"
         [routerLink]="['/list-purchase-order', purchaseOrder?.idPurchaseOrder]"
         style="margin-right: 5px"
+        *ngIf="purchaseOrder?.status === 'Pendiente'"
       >
         Editar
       </button>

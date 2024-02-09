@@ -46,7 +46,7 @@ export class FormCategoryProductComponent {
   }
 
   createnewCategoryProduct(form: NgForm) {
-    this.isSave = true; 
+    this.isSave = true;
 
     if (!form.valid) {
       Swal.fire({
@@ -77,7 +77,7 @@ export class FormCategoryProductComponent {
           Swal.fire({
             title: 'Error, ya existe una categoría con ese nombre',
             icon: 'error',
-            position: 'bottom-left',
+            position: 'center',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
@@ -106,7 +106,7 @@ export class FormCategoryProductComponent {
       Swal.fire({
         title: 'Error, ya existe un categoría con ese nombre',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
@@ -129,7 +129,7 @@ export class FormCategoryProductComponent {
         )
         .subscribe((data) => {
           Swal.fire({
-            title: 'Se actualizo con éxito la categoría',
+            title: `Se actualizo con éxito la categoría ${this.newCategoryProduct.categoryProduct}`,
             icon: 'success',
             position: 'center',
             toast: true,
@@ -153,7 +153,7 @@ export class FormCategoryProductComponent {
       Swal.fire({
         title: 'Error, ya existe un Rubro con ese nombre',
         icon: 'error',
-        position: 'bottom-left',
+        position: 'center',
         toast: true,
         timer: 1500,
         showConfirmButton: false,
@@ -173,7 +173,7 @@ export class FormCategoryProductComponent {
         .postCategoriesProduct(this.newCategoryProduct)
         .subscribe((data) => {
           Swal.fire({
-            title: 'Se creó con éxito la categoría',
+            title: `Se creó con éxito la categoría ${this.newCategoryProduct.categoryProduct}`,
             icon: 'success',
             position: 'center',
             toast: true,

@@ -15,8 +15,8 @@
         <h4>
           {{
             purchaseOrderActive
-              ? "ORDENES DE COMPRA ACTIVAS"
-              : "ORDENES DE COMPRA ELIMINADAS"
+              ? "ORDENES DE COMPRA PENDIENTES"
+              : "ORDENES DE COMPRA CANCELADAS"
           }}
         </h4>
       </div>
@@ -35,8 +35,8 @@
             <label
               class="form-check-label"
               for="radActive"
-              ngbTooltip="Ordenes de compras activas"
-              >Activas</label
+              ngbTooltip="Ordenes de compras pendientes"
+              >Pendientes</label
             >
           </div>
           <div class="form-check form-check-inline">
@@ -52,8 +52,8 @@
             <label
               class="form-check-label"
               for="radDeleted"
-              ngbTooltip="Ordenes de compras eliminadas"
-              >Eliminadas</label
+              ngbTooltip="Ordenes de compras canceladas"
+              >Canceladas</label
             >
           </div>
         </div>

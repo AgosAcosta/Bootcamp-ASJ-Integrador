@@ -127,7 +127,7 @@ export class FromCategorySupplierComponent implements OnInit {
         )
         .subscribe((data) => {
           Swal.fire({
-            title: 'Se actualizo con éxito el Rubro',
+            title: `Se actualizo con éxito el rubro ${this.newCategorySupplier.categorySupplier}`,
             icon: 'success',
             position: 'center',
             toast: true,
@@ -172,7 +172,7 @@ export class FromCategorySupplierComponent implements OnInit {
         .postCategoriesSupplier(this.newCategorySupplier)
         .subscribe((data) => {
           Swal.fire({
-            title: 'Se creó con éxito el Rubro',
+            title: `Se creó con éxito el Rubro ${this.newCategorySupplier.categorySupplier}`,
             icon: 'success',
             position: 'center',
             toast: true,

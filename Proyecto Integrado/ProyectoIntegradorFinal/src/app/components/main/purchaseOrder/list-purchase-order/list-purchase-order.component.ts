@@ -55,14 +55,14 @@ export class ListPurchaseOrderComponent implements OnInit {
 
   statusPucharseOrder(id: any) {
     Swal.fire({
-      title: 'Eliminar Producto',
+      title: 'Cancelar Orden de Compra',
       text: `¿Estás seguro de que deseas cancelar la orden de compra N° ${id}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminarlo',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, Cancelar',
+      cancelButtonText: 'Volver',
     }).then((result) => {
       if (result.isConfirmed) {
         const updatedOrder = this.servicePurchaseOrder
