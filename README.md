@@ -24,6 +24,8 @@ Pasos necesarios para correr el proyecto localmente:
   *http://localhost:8080/product -> Verifica los productos activos.
   *http://localhost:8080/purchaseOrder -> Verifica las ordenes de compra pendientes.
 
+  *Aclaración*: En src/main/resources se encuentra el archivo data.sql donde están los datos precargados 
+
 - En el proyecto de Angular se debe ejecutar:
   1. Dentro del proyecto de Angular se debe ejecutar en Terminal el comando:
 ```javascript
