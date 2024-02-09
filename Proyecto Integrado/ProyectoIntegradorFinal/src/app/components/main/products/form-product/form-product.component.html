@@ -1,12 +1,16 @@
 <div class="container">
-
   <div class="row mt-2">
-  
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-        <li class="breadcrumb-item"><a routerLink="/list-product">Listado de Productos</a></li>
-        <li class="breadcrumb-item active" aria-current="page">    <span>{{ !isUpdate ? "Nuevo Producto" : "Actualizando Producto" }}</span></li>
+        <li class="breadcrumb-item">
+          <a routerLink="/list-product">Listado de Productos</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <span>{{
+            !isUpdate ? "Nuevo Producto" : "Actualizando Producto"
+          }}</span>
+        </li>
       </ol>
     </nav>
   </div>
@@ -34,7 +38,9 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="codeProduct">SKU: <span class="fw-light">(*)</span></label>
+                  <label for="codeProduct"
+                    >SKU: <span class="fw-light">(*)</span></label
+                  >
                   <input
                     type="text"
                     class="form-control"
@@ -66,7 +72,9 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="supplierName">Proveedor: <span class="fw-light">(*)</span></label>
+                  <label for="supplierName"
+                    >Proveedor: <span class="fw-light">(*)</span></label
+                  >
                   <select
                     class="form-control"
                     name="supplierName"
@@ -94,7 +102,9 @@
             </div>
 
             <div class="form-group">
-              <label for="categoryProduct">Categoria: <span class="fw-light">(*)</span></label>
+              <label for="categoryProduct"
+                >Categoria: <span class="fw-light">(*)</span></label
+              >
               <div class="row d-flex align-items-center">
                 <div class="col">
                   <select
@@ -140,7 +150,9 @@
             </div>
 
             <div class="form-group">
-              <label for="nameProduct">Nombre: <span class="fw-light">(*)</span></label>
+              <label for="nameProduct"
+                >Nombre: <span class="fw-light">(*)</span></label
+              >
               <input
                 type="text"
                 class="form-control"
@@ -163,7 +175,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="descripcionProducto">Descripción: <span class="fw-light">(*)</span></label>
+              <label for="descripcionProducto"
+                >Descripción: <span class="fw-light">(*)</span></label
+              >
               <textarea
                 type="text"
                 class="form-control"
@@ -192,7 +206,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="precioProducto">Precio: <span class="fw-light">(*)</span></label>
+              <label for="precioProducto"
+                >Precio: <span class="fw-light">(*)</span></label
+              >
               <div class="input-group">
                 <span class="input-group-text">$</span>
                 <input
@@ -232,7 +248,12 @@
           >
             Guardar
           </button>
-          <button type="submit" class="btn btn-danger" (click)="ClearForm()">
+          <button
+            type="submit"
+            class="btn btn-danger"
+            (click)="ClearForm()"
+            *ngIf="!isUpdate"
+          >
             Limpiar
           </button>
           <button
@@ -300,7 +321,12 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cerrar
         </button>
-        <button type="button" class="btn btn-primary" (click)="addCategory()"   [disabled]="isSaveCategory || categoryProductModal.invalid">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addCategory()"
+          [disabled]="isSaveCategory || categoryProductModal.invalid"
+        >
           Agregar
         </button>
       </div>

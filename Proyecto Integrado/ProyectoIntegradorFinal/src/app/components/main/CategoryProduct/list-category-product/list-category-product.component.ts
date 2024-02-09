@@ -20,7 +20,6 @@ export class ListCategoryProductComponent {
   getListCategory() {
     this.categoryProductService.getListCategoryProduct().subscribe((data) => {
       this.categoryProductList = data;
-      console.log('Cargando Lista de categorias', data);
     });
   }
 
@@ -39,7 +38,6 @@ export class ListCategoryProductComponent {
         this.categoryProductService
           .deleteCategoriesProduct(id)
           .subscribe((data) => {
-            console.log('CAMBIANDO EL DELETE', data);
             this.getListCategory();
           });
       }

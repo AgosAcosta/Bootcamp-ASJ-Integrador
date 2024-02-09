@@ -23,7 +23,6 @@ export class DetailsPurchaseOrderComponent implements OnInit {
       if (id != undefined) {
         this.servicePucharseOrder.getPurchaseOrderById(Number(id)).subscribe(
           (prod) => {
-            console.log('ORDEN DE COMPRA obtenido por ID:', prod);
             this.purchaseOrder = prod;
           },
           (error) => {

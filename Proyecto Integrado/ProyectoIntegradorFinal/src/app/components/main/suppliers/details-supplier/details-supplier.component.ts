@@ -22,7 +22,6 @@ export class DetailsSupplierComponent implements OnInit {
       if (id != undefined) {
         this.serviceSuppliers.getSuppliertById(Number(id)).subscribe(
           (supplierResponse) => {
-            console.log('Proveedor obtenido por ID:', supplierResponse);
             this.supplier = supplierResponse;
           },
           (error) => {

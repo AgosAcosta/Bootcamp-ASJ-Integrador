@@ -72,7 +72,6 @@ export class FormProductComponent implements OnInit {
     this.categoryProductService.getListCategoryProduct().subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
-          console.log('Categoria productos:', data);
           this.categories = data.map(
             (category: CategoryProduct) => category.categoryProduct
           );
@@ -86,7 +85,6 @@ export class FormProductComponent implements OnInit {
 
   getListSupplier() {
     this.serviceSupplier.getListSupplier().subscribe((data: Supplier[]) => {
-      console.log('Proveedores:', data);
       this.suppliers = data.map((supplier: Supplier) => supplier.nameSupplier);
     });
   }
@@ -94,8 +92,6 @@ export class FormProductComponent implements OnInit {
   createNewProduct(form: NgForm) {
     this.isSave = true;
     if (!form.valid) {
-      console.log('Revisar los datos ingresados');
-
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
@@ -128,7 +124,6 @@ export class FormProductComponent implements OnInit {
 
   postProduct() {
     if (this.existsCode) {
-      console.log('YA EXISTE ESTE CODIGO');
       Swal.fire({
         title: 'Error, ya existe un producto con ese SKU',
         icon: 'error',
@@ -150,7 +145,6 @@ export class FormProductComponent implements OnInit {
       return;
     } else {
       this.serviceProduct.postProduct(this.newProduct).subscribe((data) => {
-        console.log('Creando un producto', data);
         Swal.fire({
           title: `Se creó con éxito el producto ${this.newProduct.nameProduct}`,
           icon: 'success',
@@ -174,7 +168,6 @@ export class FormProductComponent implements OnInit {
 
   updateProduct() {
     if (this.existsCode) {
-      console.log('YA EXISTE ESTE CODIGO');
       Swal.fire({
         title: 'Error, ya existe un producto con ese SKU',
         icon: 'error',
@@ -197,8 +190,6 @@ export class FormProductComponent implements OnInit {
       this.serviceProduct
         .updateProduct(this.newProduct.idProduct, this.newProduct)
         .subscribe((data) => {
-          console.log('ACTUALIZANDO PRODUCTO', data);
-
           Swal.fire({
             title: `Se actualizo con éxito el producto ${this.newProduct.nameProduct}`,
             icon: 'success',
@@ -256,7 +247,6 @@ export class FormProductComponent implements OnInit {
         this.categoryProductService
           .postCategoriesProduct(this.newCategory)
           .subscribe((data) => {
-            console.log('CREANDO NUEVO CATEGORIA', data);
             Swal.fire({
               title: `Se creó con éxito el producto ${this.newProduct.nameProduct}`,
               icon: 'success',

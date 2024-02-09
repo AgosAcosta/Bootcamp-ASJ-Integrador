@@ -58,7 +58,12 @@
             >
               Guardar
             </button>
-            <button type="submit" class="btn btn-danger" (click)="ClearForm()">
+            <button
+              type="submit"
+              class="btn btn-danger"
+              (click)="ClearForm()"
+              *ngIf="!isUpdate"
+            >
               Limpiar
             </button>
             <button

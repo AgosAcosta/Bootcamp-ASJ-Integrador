@@ -21,7 +21,7 @@ export class FormLoginComponent {
     this.loginService.checkLogin(this.login).subscribe({
       next: (result) => {
         if (result) {
-          console.log('Inicio de sesión exitoso');
+ 
           this.loginService.setLoggedIn(true);
           Swal.fire({
             title: 'Ingresando...',
@@ -40,9 +40,7 @@ export class FormLoginComponent {
             this.router.navigate(['']);
           });
         } else {
-          console.log('Inicio de sesión fallido');
-
-          this.loginService.setLoggedIn(false);
+           this.loginService.setLoggedIn(false);
           this.loginService.setLogin(false);
 
           Swal.fire({

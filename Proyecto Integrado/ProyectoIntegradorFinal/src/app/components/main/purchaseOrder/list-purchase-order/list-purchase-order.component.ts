@@ -32,7 +32,6 @@ export class ListPurchaseOrderComponent implements OnInit {
 
     this.servicePurchaseOrder.getListPurchaseOrder().subscribe(
       (data: PurchaseOrder[]) => {
-        console.log('Obteniendo orden de compra', data);
         this.purchaseOrderList = data;
       },
       (error) => {
@@ -46,7 +45,6 @@ export class ListPurchaseOrderComponent implements OnInit {
 
     this.servicePurchaseOrder.getListPurchaseOrderDelete().subscribe(
       (data: PurchaseOrder[]) => {
-        console.log('Obteniendo orden de compra eliminadas', data);
         this.purchaseOrderList = data;
       },
       (error) => {
@@ -70,7 +68,6 @@ export class ListPurchaseOrderComponent implements OnInit {
         const updatedOrder = this.servicePurchaseOrder
           .cancelledPurchaseOrder(id)
           .subscribe((data) => {
-            console.log('CAMBIANDO ESTADO', data);
             this.listPurchaseOrderActive();
           });
       }

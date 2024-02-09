@@ -35,7 +35,6 @@ export class ListSupplierComponent {
     this.supplierActive = true;
     this.supplierService.getListSupplier().subscribe((data) => {
       this.supplierList = data;
-      console.log('Cargando Lista', data);
     });
   }
 
@@ -43,7 +42,6 @@ export class ListSupplierComponent {
     this.supplierActive = false;
     this.supplierService.getListSupplierDelete().subscribe((data) => {
       this.supplierList = data;
-      console.log('Cargando Lista proveedores borrados', data);
     });
   }
 
@@ -60,7 +58,6 @@ export class ListSupplierComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.supplierService.deleteSupplier(id).subscribe((data) => {
-          console.log('CAMBIANDO EL DELETE', data);
           this.getListSupplierActive();
         });
       }
@@ -79,8 +76,7 @@ export class ListSupplierComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.supplierService.activeSupplier(id).subscribe((data) => {
-          console.log('CAMBIANDO ACTIVE', data);
+        this.supplierService.activeSupplier(id).subscribe((data) => {  
           this.getListSupplierActive();
         });
       }

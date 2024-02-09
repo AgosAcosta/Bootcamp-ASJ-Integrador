@@ -20,8 +20,7 @@ export class ListCategorySupplierComponent {
   getListCategory() {
     this.categorySupplierService.getCategoriesSupplier().subscribe((data) => {
       this.categorySupplierList = data;
-      console.log('Cargando Lista de categorias', data);
-    });
+     });
   }
 
   deleteCategory(id: number, category: string) {
@@ -39,7 +38,6 @@ export class ListCategorySupplierComponent {
         this.categorySupplierService
           .deleteCategoriesSupplier(id)
           .subscribe((data) => {
-            console.log('CAMBIANDO EL DELETE', data);
             this.getListCategory();
           });
       }

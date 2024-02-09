@@ -28,13 +28,7 @@ export class NavbarComponent {
       },
     }).then(() => {
       this.loginService.setLogin(false);
-
-      console.log('Cerrando sesion');
       this.router.navigate(['/login']);
     });
-
-
-
   }
 }
-

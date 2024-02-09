@@ -47,7 +47,6 @@ export class FromCategorySupplierComponent implements OnInit {
     this.isSave = true;
 
     if (!form.valid) {
-      console.log('Revisar los datos ingresados');
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
@@ -73,7 +72,6 @@ export class FromCategorySupplierComponent implements OnInit {
       .existsNameCategory(name)
       .subscribe((existsName: boolean) => {
         if (existsName) {
-          console.log('YA EXISTE ESE NOMBRE');
           Swal.fire({
             title: 'Error, ya existe un Rubro con ese nombre',
             icon: 'error',
@@ -103,7 +101,6 @@ export class FromCategorySupplierComponent implements OnInit {
 
   updateCategory() {
     if (this.existsName) {
-      console.log('YA EXISTE ESE NOMBRE');
       Swal.fire({
         title: 'Error, ya existe un Rubro con ese nombre',
         icon: 'error',
@@ -129,7 +126,6 @@ export class FromCategorySupplierComponent implements OnInit {
           this.newCategorySupplier
         )
         .subscribe((data) => {
-          console.log('ACTUALIZANDO categoria', data);
           Swal.fire({
             title: 'Se actualizo con éxito el Rubro',
             icon: 'success',
@@ -153,7 +149,6 @@ export class FromCategorySupplierComponent implements OnInit {
 
   postCategory() {
     if (this.existsName) {
-      console.log('YA EXISTE ESE NOMBRE');
       Swal.fire({
         title: 'Error, ya existe un Rubro con ese nombre',
         icon: 'error',
@@ -176,8 +171,6 @@ export class FromCategorySupplierComponent implements OnInit {
       this.categorySupplier
         .postCategoriesSupplier(this.newCategorySupplier)
         .subscribe((data) => {
-          console.log('CREANDO categoria', data);
-
           Swal.fire({
             title: 'Se creó con éxito el Rubro',
             icon: 'success',

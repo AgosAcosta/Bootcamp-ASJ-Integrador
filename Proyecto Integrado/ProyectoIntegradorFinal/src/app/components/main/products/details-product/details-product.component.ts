@@ -23,7 +23,6 @@ export class DetailsProductComponent implements OnInit {
       if (id != undefined) {
         this.serviceProduct.getProductById(Number(id)).subscribe(
           (prod) => {
-            console.log('Proveedor obtenido por ID:', prod);
             this.product = prod;
           },
           (error) => {

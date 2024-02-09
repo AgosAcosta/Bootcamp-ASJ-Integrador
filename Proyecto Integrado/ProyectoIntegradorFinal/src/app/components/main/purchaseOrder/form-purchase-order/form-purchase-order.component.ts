@@ -32,7 +32,7 @@ export class FormPurchaseOrderComponent implements OnInit {
     idProduct: '',
     nameProduct: '',
     priceProduct: 0,
-    unitProduct: 0,
+    unitProduct: 1,
   };
 
   selectedProduct: any;
@@ -96,18 +96,15 @@ export class FormPurchaseOrderComponent implements OnInit {
 
   getListSupplier() {
     this.serviceSupplier.getListSupplier().subscribe((data: Supplier[]) => {
-      console.log('Proveedores:', data);
       this.suppliers = data;
       this.getPurchaseOrderForUpdate(); //Esta funcion es porque necesita la lista de los proveedores para cargar el logo
     });
   }
 
   onSupplierSelected(supplierName: string) {
-    console.log('supplierName', supplierName);
     const selectedSupplier = this.suppliers.find(
       (supplier) => supplier.nameSupplier === supplierName
     );
-    console.log('SELECT', selectedSupplier);
     if (selectedSupplier) {
       this.serviceProduct
         .getProductsBySupplierName(selectedSupplier.nameSupplier)
@@ -117,7 +114,6 @@ export class FormPurchaseOrderComponent implements OnInit {
             nameProduct: product.nameProduct,
             priceProduct: product.priceProduct,
           }));
-          console.log('Productos del proveedor:', this.products);
         });
 
       this.supplierLogo = selectedSupplier.urlLogo;
@@ -131,8 +127,6 @@ export class FormPurchaseOrderComponent implements OnInit {
   }
 
   addOrderDetails() {
-    console.log('PRODUCTOS :', this.detailProducts);
-
     const selectedProduct = this.products.find(
       (product) => product.nameProduct === this.detailProducts.nameProduct
     );
@@ -153,10 +147,9 @@ export class FormPurchaseOrderComponent implements OnInit {
 
         this.newPurchaseOrder.products.push(newDetail);
       }
-      this.selectedProduct.priceProduct = '';
+      //this.selectedProduct.priceProduct = '';
       this.supplierPoin = false;
       this.calculateTotal();
-      console.log('PRODUCTOS DETALLE:', this.newPurchaseOrder.products);
     }
   }
 
@@ -165,7 +158,6 @@ export class FormPurchaseOrderComponent implements OnInit {
     this.validationDate();
 
     if (!form.valid || this.isDateInvalid) {
-      console.log('Revisar los datos ingresados');
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
@@ -191,8 +183,6 @@ export class FormPurchaseOrderComponent implements OnInit {
           this.newPurchaseOrder
         )
         .subscribe((data) => {
-          console.log('Actualizando orden:', data);
-
           Swal.fire({
             title: `Se actualizo con éxito la orden de compra N°: ${this.newPurchaseOrder.idPurchaseOrder}`,
             icon: 'success',
@@ -217,8 +207,6 @@ export class FormPurchaseOrderComponent implements OnInit {
       this.servicePurchaseOrder
         .postPurchaseOrder(this.newPurchaseOrder)
         .subscribe((data) => {
-          console.log('CREANDO NUEVA ORDEN DE COMPRA', data);
-
           Swal.fire({
             title: `Se creó con éxito la orden de compra del proveedor: ${this.newPurchaseOrder.supplier}`,
             icon: 'success',
@@ -249,30 +237,35 @@ export class FormPurchaseOrderComponent implements OnInit {
       const unit = product.unitProduct;
       total += price * unit;
     }
-    console.log('Total:', total);
     this.newPurchaseOrder.total = total;
   }
 
-  ClearForm() {
-    this.newPurchaseOrder = {
-      idPurchaseOrder: 0,
-      dateIssue: new Date(),
-      dateDelivery: new Date(),
-      recepcion: '',
-      supplier: '',
-      products: [],
-      total: 0,
-      status: 'Pendiente',
-    };
+  removeProduct(index: number) {
+    this.newPurchaseOrder.products.splice(index, 1);
+    this.calculateTotal();
 
+    if (this.newPurchaseOrder.products.length == 0) {
+      this.supplierPoin = true;
+    }
+  }
+
+  ClearForm() {
     this.detailProducts = {
       idProduct: '',
       nameProduct: '',
       priceProduct: 0,
-      unitProduct: 0,
+      unitProduct: 1,
     };
 
-    this.selectedProduct.priceProduct;
+    this.newPurchaseOrder.dateDelivery = this.getMinDateShippingTemplate();
+    this.newPurchaseOrder.recepcion = '';
+    this.newPurchaseOrder.supplier = '';
+    this.newPurchaseOrder.products = [];
+    this.newPurchaseOrder.total = 0;
+
+    this.products = [];
+
+    this.selectedProduct.priceProduct = 0;
     this.supplierPoin = true;
   }
 

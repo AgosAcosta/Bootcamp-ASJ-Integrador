@@ -46,10 +46,9 @@ export class FormCategoryProductComponent {
   }
 
   createnewCategoryProduct(form: NgForm) {
-    this.isSave = true;
+    this.isSave = true; 
 
     if (!form.valid) {
-      console.log('Revisar los datos ingresados');
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
@@ -75,7 +74,6 @@ export class FormCategoryProductComponent {
       .existsNameCategory(name)
       .subscribe((existsName: boolean) => {
         if (existsName) {
-          console.log('YA EXISTE ESE NOMBRE');
           Swal.fire({
             title: 'Error, ya existe una categoría con ese nombre',
             icon: 'error',
@@ -105,7 +103,6 @@ export class FormCategoryProductComponent {
 
   updateCategory() {
     if (this.existsName) {
-      console.log('YA EXISTE ESE NOMBRE');
       Swal.fire({
         title: 'Error, ya existe un categoría con ese nombre',
         icon: 'error',
@@ -131,7 +128,6 @@ export class FormCategoryProductComponent {
           this.newCategoryProduct
         )
         .subscribe((data) => {
-          console.log('ACTUALIZANDO categoria', data);
           Swal.fire({
             title: 'Se actualizo con éxito la categoría',
             icon: 'success',
@@ -154,7 +150,6 @@ export class FormCategoryProductComponent {
   }
   postCategory() {
     if (this.existsName) {
-      console.log('YA EXISTE ESE NOMBRE');
       Swal.fire({
         title: 'Error, ya existe un Rubro con ese nombre',
         icon: 'error',
@@ -177,7 +172,6 @@ export class FormCategoryProductComponent {
       this.categoryProductService
         .postCategoriesProduct(this.newCategoryProduct)
         .subscribe((data) => {
-          console.log('CREANDO categoria', data);
           Swal.fire({
             title: 'Se creó con éxito la categoría',
             icon: 'success',

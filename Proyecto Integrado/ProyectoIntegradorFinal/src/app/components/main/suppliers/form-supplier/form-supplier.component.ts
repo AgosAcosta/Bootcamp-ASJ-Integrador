@@ -81,8 +81,7 @@ export class FormSupplierComponent {
           (supplier) => {
             this.newsupplier = supplier;
             this.isUpdate = true;
-            this.onCountrySelected(supplier.countrySupplier);
-            console.log('ACTUALIZANDO PROVEEDOR', supplier);
+            this.onCountrySelected(supplier.countrySupplier);            
           },
           (error) => {
             console.error('Error al obtener el producto por ID:', error);
@@ -97,7 +96,6 @@ export class FormSupplierComponent {
   getListCategorySupplier() {
     this.categorySupplierService.getCategoriesSupplier().subscribe(
       (data: CategorySupplier[]) => {
-        console.log('Rubro proveedores:', data);
         this.categoriesSupplier = data.map(
           (categorySupplier: CategorySupplier) =>
             categorySupplier.categorySupplier
@@ -112,7 +110,6 @@ export class FormSupplierComponent {
   getListConditionAfip() {
     this.conditionAfipService.getConditionAfip().subscribe(
       (data: ConditionAfip[]) => {
-        console.log('Condicion Afip:', data);
         this.conditionsAfip = data.map(
           (condicionAfipSupplier: ConditionAfip) =>
             condicionAfipSupplier.conditionAfip
@@ -127,7 +124,6 @@ export class FormSupplierComponent {
   getListCountry() {
     this.ubicationService.getListCountries().subscribe(
       (data: Country[]) => {
-        console.log('Paises:', data);
         this.countries = data.map((countries: Country) => countries.country);
       },
       (error) => {
@@ -139,13 +135,10 @@ export class FormSupplierComponent {
   onCountrySelected(country: string) {
     const selectedCountryId =
       this.countries.findIndex((c) => c === country) + 1;
-    console.log('ID del país seleccionado:', selectedCountryId);
-
     this.ubicationService
       .getListProvincesByCountry(selectedCountryId)
       .subscribe(
         (data: Provinces[]) => {
-          console.log('Provincias:', data);
           this.provinces = data.map(
             (provinces: Provinces) => provinces.province
           );
@@ -184,7 +177,6 @@ export class FormSupplierComponent {
         this.categorySupplierService
           .postCategoriesSupplier(this.newCategory)
           .subscribe((data) => {
-            console.log('CREANDO NUEVO RUBRO', data);
             Swal.fire({
               title: 'Se agregó con éxito el nuevo rubro',
               icon: 'success',
@@ -209,7 +201,6 @@ export class FormSupplierComponent {
   createNewSupplier(form: NgForm) {
     this.isSave = true;
     if (!form.valid) {
-      console.log('Revisar los datos ingresados');
       Swal.fire({
         title: 'Error, revisar los campos obligatorios',
         icon: 'error',
@@ -248,8 +239,6 @@ export class FormSupplierComponent {
 
   updateSupplier() {
     if (this.existsCode) {
-      console.log('YA EXISTE ESTE CODIGO');
-
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese código',
         icon: 'error',
@@ -270,8 +259,6 @@ export class FormSupplierComponent {
 
       return;
     } else if (this.existsCuit) {
-      console.log('YA EXISTE ESTE CUIT');
-
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese CUIT',
         icon: 'error',
@@ -294,7 +281,6 @@ export class FormSupplierComponent {
       this.supplierService
         .updateSupplier(this.newsupplier.idSupplier, this.newsupplier)
         .subscribe((data) => {
-          console.log('Actualizando Proveedor:', data);
           Swal.fire({
             title: `Se actualizo con éxito el proveedor ${this.newsupplier.nameSupplier}`,
             icon: 'success',
@@ -318,7 +304,6 @@ export class FormSupplierComponent {
 
   createSupplier() {
     if (this.existsCode) {
-      console.log('YA EXISTE ESTE CODIGO');
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese código',
         icon: 'error',
@@ -339,8 +324,6 @@ export class FormSupplierComponent {
 
       return;
     } else if (this.existsCuit) {
-      console.log('YA EXISTE ESTE CUIT');
-
       Swal.fire({
         title: 'Error, ya existe un proveedor con ese CUIT',
         icon: 'error',
@@ -361,7 +344,6 @@ export class FormSupplierComponent {
       return;
     } else {
       this.supplierService.postSupplier(this.newsupplier).subscribe((data) => {
-        console.log('Creando un proveedor', data);
 
         Swal.fire({
           title: `Se creó con éxito el proveedor ${this.newsupplier.nameSupplier}`,

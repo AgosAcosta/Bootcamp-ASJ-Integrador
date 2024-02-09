@@ -40,14 +40,12 @@ export class ListProductComponent implements OnInit {
     this.productActive = true;
     this.serviceProduct.getListProducts().subscribe((data) => {
       this.productList = data;
-      console.log('Cargando Lista', data);
     });
   }
 
   getListCategoryProduct() {
     this.categoryProductService.getListCategoryProduct().subscribe(
       (data: CategoryProduct[]) => {
-        console.log('Categorías de productos:', data);
         this.categories = data.map(
           (category: CategoryProduct) => category.categoryProduct
         );
@@ -71,7 +69,6 @@ export class ListProductComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.serviceProduct.deleteProduct(id).subscribe((data) => {
-          console.log('Eliminando producto', data);
           this.getListProductActive();
         });
       }
@@ -82,8 +79,6 @@ export class ListProductComponent implements OnInit {
     this.productActive = false;
     this.serviceProduct.getListProductsDelete().subscribe((data) => {
       this.productList = data;
-      console.log('Cargando Lista productos borrados', data);
-
       this.sortProductListByName();
     });
   }
@@ -101,7 +96,6 @@ export class ListProductComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.serviceProduct.activeProduct(id).subscribe((data) => {
-          console.log('CAMBIANDO ACTIVO PRODUCTO', data);
           this.getListProductActive();
 
           this.sortProductListByName();
