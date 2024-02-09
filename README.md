@@ -11,27 +11,27 @@ Pasos necesarios para correr el proyecto localmente:
   CREATE DATABASE bd_proyecto;
 ```
 - En el proyecto de Java se debe ejecutar:
-  1- En el archivo POM:
+  1. En el archivo POM:
   Boton derecho -> Run As -> 4 Maven Install
   
-  2- Cambiar credenciales en application.properties:
+  2. Cambiar credenciales en application.properties:
 
   src/main/resources -> application.properties, cambiar el primer reglon por el siguiente
 ```java
   spring.datasource.url = jdbc:sqlserver://localhost;encrypt=false;user=*NOMBRE DE USUARIO DE SQL*;password=*CONTRASEÑA DE SQL*;databaseName=bd_proyecto
 ```
-  3- Ejecutar proyecto (*puerto 8080*). Para verificar que este corriendo de manera existosa, se puede verificar en consola que muestre el mensaje de "Proyecto Funcionando" o se puede probar algunas de las siguientes URL:
+  3. Ejecutar proyecto (*puerto 8080*). Para verificar que este corriendo de manera existosa, se puede verificar en consola que muestre el mensaje de "Proyecto Funcionando" o se puede probar algunas de las siguientes URL:
 
   *http://localhost:8080/supplier -> Verifica los proveedores activos.
   *http://localhost:8080/product -> Verifica los productos activos.
   *http://localhost:8080/purchaseOrder -> Verifica las ordenes de compra pendientes.
 
 - En el proyecto de Angular se debe ejecutar:
-  1- Dentro del proyecto de Angular se debe ejecutar en Terminal el comando:
+  1. Dentro del proyecto de Angular se debe ejecutar en Terminal el comando:
 ```javascript
  npm install
 ```
-  2- Ejecutar proyecto (*puerto 4200*) con el comando
+  2. Ejecutar proyecto (*puerto 4200*) con el comando
   ```angular
  ng s -o
   ```
